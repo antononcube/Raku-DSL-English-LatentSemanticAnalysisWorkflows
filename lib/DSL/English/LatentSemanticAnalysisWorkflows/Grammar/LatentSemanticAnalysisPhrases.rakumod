@@ -52,7 +52,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     rule stemming-rules-phrase { 'stemming' ['rules']? }
     rule stop-words-phrase { 'stop' 'words' }
 
-    rule text-corpus-thrase { 'texts' | 'text' [ 'corpus' | 'collection' ]? }
+    rule text-corpus-phrase { 'texts' | 'text' [ 'corpus' | 'collection' ]? }
 
     # Topics and thesaurus
     rule statistical-thesaurus-phrase { <statistical>? <thesaurus> }
