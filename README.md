@@ -36,20 +36,20 @@ Open a Raku IDE or type `raku` in the command line program. Try this Raku code:
 ```raku
 use DSL::English::LatentSemanticAnalysisWorkflows;
 
-say to_LSAMon_R("extract 12 topics using method NNMF and max steps 12");
+say ToLatentSemanticAnalysisWorkflowCode("extract 12 topics using method NNMF and max steps 12", "R-LSAMon");
 # LSAMonExtractTopics( numberOfTopics = 12, method = "NNMF",  maxSteps = 12)
 ``` 
     
 Here is a more complicated pipeline specification:
 
 ```raku
-say to_LSAMon_R(
+say ToLatentSemanticAnalysisWorkflowCode(
   "create from textHamlet;
    make document term matrix with stemming FALSE and automatic stop words;
    apply LSI functions global weight function IDF, local term weight function TermFrequency, normalizer function Cosine;
    extract 12 topics using method NNMF and max steps 12 and 20 min number of documents per term;
    show topics table with 12 terms;
-   show thesaurus table for king, castle, denmark;")
+   show thesaurus table for king, castle, denmark;", "R-LSAMon")
 ```
 
 The command above should print out R code for the R package `LSAMon-R`, \[AA1\]:
