@@ -1,0 +1,88 @@
+use v6;
+
+use DSL::Shared::Roles::English::CommonParts;
+
+# Latent Semantic Analysis (LSA) phrases
+role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnalysisPhrases
+        does DSL::Shared::Roles::English::CommonParts {
+
+    # For some reason using <item> below gives the error: "Too many positionals passed; expected 1 argument but got 2".
+
+    # LSA specific
+    token analysis { 'analysis' }
+    token component { 'component' }
+    token decomposition { 'decomposition' }
+    token document { 'document' }
+    token documents { 'documents' }
+    token entries { 'entries' }
+    token factorization { 'factorization' }
+    token identifier { 'identifier' }
+    token independent { 'independent' }
+    token indexing { 'indexing' }
+    token ingest { 'ingest' | 'load' | 'use' | 'get' }
+    token item { 'item' }
+    token latent { 'latent' }
+    token matrix { 'matrix' }
+    token negative { 'negative' }
+    token nonnegative { 'non-negative' | 'nonnegative' }
+    token partition { 'partition' }
+    token principal { 'principal' }
+    token query { 'query' }
+    token represent { 'represent' }
+    token semantic { 'semantic' }
+    token singular { 'singular' }
+    token synonym { 'synonym' }
+    token synonyms { 'synonyms' }
+    token table-noun { 'table' }
+    token term { 'term' }
+    token thesaurus { 'thesaurus' }
+    token threshold { 'threshold' }
+    token topic { 'topic' }
+    token topics { 'topics' }
+    token weight { 'weight' }
+    token word { 'word' }
+
+    rule doc-term-mat { [ <document> | 'item' ] [ <term> | <word> ] <matrix> }
+    rule lsa-object { <lsa-phrase>? 'object' }
+    rule lsa-phrase { <latent> <semantic> <analysis> | 'lsa' | 'LSA' }
+    rule lsi-phrase { <latent> <semantic> <indexing> | 'lsi' | 'LSI' }
+    rule matrix-entries { [ <doc-term-mat> | <matrix> ]? <entries> }
+    rule number-of-terms-phrase { <number-of>? <terms> }
+    rule the-outliers { <the-determiner> <outliers> }
+
+    # Document term matrix creation related
+    rule data-element { 'sentence' | 'paragraph' | 'section' | 'chapter' | 'word' }
+    rule data-elements { 'sentences' | 'paragraphs' | 'sections' | 'chapters' | 'words' }
+
+    rule docs { 'document' | 'documents' | 'item' | 'items' }
+    rule terms { 'word' | 'words' | 'term' | 'terms' }
+
+    rule stemming-rules-phrase { 'stemming' ['rules']? }
+    rule stop-words-phrase { 'stop' 'words' }
+
+    rule text-corpus-phrase { 'texts' | 'text' [ 'corpus' | 'collection' ]? }
+
+    # Topics and thesaurus
+    rule statistical-thesaurus-phrase { <statistical>? <thesaurus> }
+    rule topics-table-phrase { 'topics' 'table' }
+
+    # LSI specific
+    token frequency { 'frequency' }
+    token function { 'function' }
+    token functions { 'function' | 'functions' }
+    token global { 'global' }
+    token local { 'local' }
+    token normalization { 'normalization' }
+    token normalizer { 'normalizer' }
+    token normalizing { 'normalizing' }
+
+    rule global-function-phrase { <global> <term> ?<weight>? <function> }
+    rule local-function-phrase { <local> <term>? <weight>? <function> }
+    rule normalizer-function-phrase { [ <normalizer> | <normalizing> | <normalization> ] <term>? <weight>? <function>? }
+
+    # Matrix factorization specific
+    rule ICA-phrase { <independent> <component> <analysis> }
+    rule NNMF-phrase { [ <non-prefix> <negative> | <nonnegative> ] <matrix> <factorization> }
+    rule PCA-phrase { <principal> <component> <analysis> }
+    rule SVD-phrase { <singular> <value-noun> <decomposition> }
+}

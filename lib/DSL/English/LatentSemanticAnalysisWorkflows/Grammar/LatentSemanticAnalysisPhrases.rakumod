@@ -1,6 +1,7 @@
 use v6;
 
 use DSL::Shared::Roles::English::CommonParts;
+use DSL::Shared::Utilities::FuzzyMatching;
 
 # Latent Semantic Analysis (LSA) phrases
 role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnalysisPhrases
@@ -9,38 +10,46 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     # For some reason using <item> below gives the error: "Too many positionals passed; expected 1 argument but got 2".
 
     # LSA specific
-    token analysis { 'analysis' }
-    token document { 'document' }
-    token documents { 'documents' }
-    token entries { 'entries' }
-    token identifier { 'identifier' }
-    token indexing { 'indexing' }
-    token ingest { 'ingest' | 'load' | 'use' | 'get' }
-    token item { 'item' }
-    token latent { 'latent' }
-    token matrix { 'matrix' }
-    token partition { 'partition' }
-    token represent { 'represent' }
-    token semantic { 'semantic' }
-    token table-noun { 'table' }
-    token term { 'term' }
-    token threshold { 'threshold' }
-    token thesaurus { 'thesaurus' }
-    token topic { 'topic' }
-    token topics { 'topics' }
-    token query { 'query' }
-    token weight { 'weight' }
-    token word { 'word' }
-    token synonyms { 'synonyms' }
-    token synonym { 'synonym' }
+    token analysis { 'analysis' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'analysis') }> }
+    token component { 'component' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'component') }> }
+    token decomposition { 'decomposition' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'decomposition') }> }
+    token document { 'document' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'document') }> }
+    token documents { 'documents' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'documents') }> }
+    token entries { 'entries' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'entries') }> }
+    token factorization { 'factorization' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'factorization') }> }
+    token identifier { 'identifier' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'identifier') }> }
+    token independent { 'independent' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'independent') }> }
+    token indexing { 'indexing' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'indexing') }> }
+    token ingest { 'ingest' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'ingest') }> | 'load' | 'use' | 'get' }
+    token item { 'item' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'item') }> }
+    token latent { 'latent' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'latent') }> }
+    token matrix { 'matrix' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'matrix') }> }
+    token negative { 'negative' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'negative') }> }
+    token nonnegative { 'non-negative' | 'nonnegative' }
+    token partition { 'partition' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'partition') }> }
+    token principal { 'principal' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'principal') }> }
+    token query { 'query' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'query') }> }
+    token represent { 'represent' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'represent') }> }
+    token semantic { 'semantic' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'semantic') }> }
+    token singular { 'singular' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'singular') }> }
+    token synonym { 'synonym' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'synonym') }> }
+    token synonyms { 'synonyms' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'synonyms') }> }
+    token table-noun { 'table' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'table') }> }
+    token term { 'term' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'term') }> }
+    token thesaurus { 'thesaurus' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'thesaurus') }> }
+    token threshold { 'threshold' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'threshold') }> }
+    token topic { 'topic' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'topic') }> }
+    token topics { 'topics' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'topics') }> }
+    token weight { 'weight' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'weight') }> }
+    token word { 'word' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'word') }> }
 
+    rule doc-term-mat { [ <document> | 'item' ] [ <term> | <word> ] <matrix> }
     rule lsa-object { <lsa-phrase>? 'object' }
     rule lsa-phrase { <latent> <semantic> <analysis> | 'lsa' | 'LSA' }
     rule lsi-phrase { <latent> <semantic> <indexing> | 'lsi' | 'LSI' }
-    rule doc-term-mat { [ <document> | 'item' ] [ <term> | <word> ] <matrix> }
     rule matrix-entries { [ <doc-term-mat> | <matrix> ]? <entries> }
-    rule the-outliers { <the-determiner> <outliers> }
     rule number-of-terms-phrase { <number-of>? <terms> }
+    rule the-outliers { <the-determiner> <outliers> }
 
     # Document term matrix creation related
     rule data-element { 'sentence' | 'paragraph' | 'section' | 'chapter' | 'word' }
@@ -59,22 +68,22 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     rule topics-table-phrase { 'topics' 'table' }
 
     # LSI specific
-    token frequency { 'frequency' }
-    token function { 'function' }
-    token functions { 'function' | 'functions' }
-    token global { 'global' }
-    token local { 'local' }
-    token normalization { 'normalization' }
-    token normalizer { 'normalizer' }
-    token normalizing { 'normalizing' }
+    token frequency { 'frequency' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'frequency') }> }
+    token function { 'function' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'function') }> }
+    token functions { 'function' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'function') }> | 'functions' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'functions') }> }
+    token global { 'global' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'global') }> }
+    token local { 'local' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'local') }> }
+    token normalization { 'normalization' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'normalization') }> }
+    token normalizer { 'normalizer' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'normalizer') }> }
+    token normalizing { 'normalizing' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'normalizing') }> }
 
     rule global-function-phrase { <global> <term> ?<weight>? <function> }
     rule local-function-phrase { <local> <term>? <weight>? <function> }
     rule normalizer-function-phrase { [ <normalizer> | <normalizing> | <normalization> ] <term>? <weight>? <function>? }
 
     # Matrix factorization specific
-    rule SVD-phrase { 'singular' 'value' 'decomposition' }
-    rule PCA-phrase { 'principal' 'component' 'analysis' }
-    rule NNMF-phrase { [ 'non' 'negative' | 'non-negative' | 'nonnegative' ] 'matrix' 'facotrization' }
-    rule ICA-phrase { 'independent' 'component' 'analysis' }
+    rule ICA-phrase { <independent> <component> <analysis> }
+    rule NNMF-phrase { [ <non-prefix> <negative> | <nonnegative> ] <matrix> <factorization> }
+    rule PCA-phrase { <principal> <component> <analysis> }
+    rule SVD-phrase { <singular> <value-noun> <decomposition> }
 }
