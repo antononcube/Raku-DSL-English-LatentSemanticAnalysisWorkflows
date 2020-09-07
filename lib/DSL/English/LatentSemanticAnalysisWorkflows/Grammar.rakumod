@@ -83,7 +83,7 @@ grammar DSL::English::LatentSemanticAnalysisWorkflows::Grammar
     # Create command
     rule create-command { <create-simple> | <create-by-dataset> }
     rule simple-way-phrase { <in-preposition> <a-determiner>? <simple-way-phrase> | <directly-adverb> | <simply-adverb> }
-    rule create-simple { <create-directive> <a-determiner>? <simple>? <object> <simple-way-phrase>? | <simple> <object> [ <creation> | <making> ] }
+    rule create-simple { <create-directive> <a-determiner>? <simple>? <object> <simple-way-phrase>? | <simple> <object> [ <creation-noun> | <making> ] }
     rule create-by-dataset {
         [ <create-simple> | <create-directive> ] [ <.by-preposition> | <.with-preposition> | <.from-preposition> ]? <dataset-name> }
 

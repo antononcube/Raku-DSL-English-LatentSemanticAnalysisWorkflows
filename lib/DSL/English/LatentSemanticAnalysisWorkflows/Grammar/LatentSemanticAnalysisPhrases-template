@@ -1,10 +1,11 @@
 use v6;
 
-use DSL::Shared::Roles::English::CommonParts;
+use DSL::Shared::Roles::English::PipelineCommand;
+use DSL::Shared::Utilities::FuzzyMatching;
 
 # Latent Semantic Analysis (LSA) phrases
 role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnalysisPhrases
-        does DSL::Shared::Roles::English::CommonParts {
+        does DSL::Shared::Roles::English::PipelineCommand {
 
     # For some reason using <item> below gives the error: "Too many positionals passed; expected 1 argument but got 2".
 
@@ -33,13 +34,11 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     token singular { 'singular' }
     token synonym { 'synonym' }
     token synonyms { 'synonyms' }
-    token table-noun { 'table' }
     token term { 'term' }
     token thesaurus { 'thesaurus' }
     token threshold { 'threshold' }
     token topic { 'topic' }
     token topics { 'topics' }
-    token weight { 'weight' }
     token word { 'word' }
 
     rule doc-term-mat { [ <document> | 'item' ] [ <term> | <word> ] <matrix> }
@@ -68,8 +67,8 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
 
     # LSI specific
     token frequency { 'frequency' }
-    token function { 'function' }
-    token functions { 'function' | 'functions' }
+    #token function { 'function' }
+    #token functions { 'function' | 'functions' }
     token global { 'global' }
     token local { 'local' }
     token normalization { 'normalization' }

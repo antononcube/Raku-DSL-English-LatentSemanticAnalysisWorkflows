@@ -1,11 +1,11 @@
 use v6;
 
-use DSL::Shared::Roles::English::CommonParts;
+use DSL::Shared::Roles::English::PipelineCommand;
 use DSL::Shared::Utilities::FuzzyMatching;
 
 # Latent Semantic Analysis (LSA) phrases
 role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnalysisPhrases
-        does DSL::Shared::Roles::English::CommonParts {
+        does DSL::Shared::Roles::English::PipelineCommand {
 
     # For some reason using <item> below gives the error: "Too many positionals passed; expected 1 argument but got 2".
 
@@ -34,13 +34,11 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     token singular { 'singular' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'singular') }> }
     token synonym { 'synonym' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'synonym') }> }
     token synonyms { 'synonyms' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'synonyms') }> }
-    token table-noun { 'table' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'table') }> }
     token term { 'term' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'term') }> }
     token thesaurus { 'thesaurus' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'thesaurus') }> }
     token threshold { 'threshold' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'threshold') }> }
     token topic { 'topic' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'topic') }> }
     token topics { 'topics' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'topics') }> }
-    token weight { 'weight' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'weight') }> }
     token word { 'word' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'word') }> }
 
     rule doc-term-mat { [ <document> | 'item' ] [ <term> | <word> ] <matrix> }
@@ -69,8 +67,8 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
 
     # LSI specific
     token frequency { 'frequency' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'frequency') }> }
-    token function { 'function' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'function') }> }
-    token functions { 'function' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'function') }> | 'functions' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'functions') }> }
+    #token function { 'function' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'function') }> }
+    #token functions { 'function' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'function') }> | 'functions' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'functions') }> }
     token global { 'global' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'global') }> }
     token local { 'local' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'local') }> }
     token normalization { 'normalization' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'normalization') }> }
