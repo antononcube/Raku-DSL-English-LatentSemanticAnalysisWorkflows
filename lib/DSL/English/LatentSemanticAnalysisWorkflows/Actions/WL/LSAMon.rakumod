@@ -180,7 +180,10 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon
   method what-are-the-term-nns($/) { make 'LSAMonEchoStatisticalThesaurus[ "Words" -> ' ~ $<thesaurus-words-spec>.made ~ ']'; }
 
   method thesaurus-words-spec($/) { make $/.values[0].made; }
-  method thesaurus-words-list($/) { make '{ "' ~ $<variable-name>>>.made.join('", "') ~ '" }'; }
+  method thesaurus-words-list($/) {
+    my @words = $/.values[0].made.substr(1,*-1).subst(:g, '"', '').split(', ');
+    make '{' ~ map( { '"' ~ $_ ~ '"' }, @words ).join(', ') ~ '}';
+  }
 
   # Representation commands
   method represent-query-command($/) { make $/.values[0].made; }

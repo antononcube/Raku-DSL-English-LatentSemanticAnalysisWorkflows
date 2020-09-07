@@ -51,12 +51,12 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon
   # method TOP($/) { make "Not implemented"; }
 
   # General
-  method dataset-name($/) { make $/.values[0].made; }
-  method variable-name($/) { make $/.Str; }
-  method list-separator($/) { make ','; }
+  # General
   method variable-names-list($/) { make 'c(' ~ $<variable-name>>>.made.join(', ') ~ ')'; }
-  method integer-value($/) { make $/.Str; }
-  method number-value($/) { make $/.Str; }
+  method quoted-variable-names-list($/) { make 'c(' ~ $<quoted-variable-name>>>.made.join(', ') ~ ')'; }
+  method mixed-quoted-variable-names-list($/) { make 'c(' ~ $<mixed-quoted-variable-name>>>.made.join(', ') ~ ')'; }
+  method quoted-keyword-variable-names-list($/) { make 'c(' ~ $<quoted-keyword-variable-name>>>.made.join(', ') ~ ')'; }
+  method mixed-quoted-keyword-variable-names-list($/) { make 'c(' ~ $<mixed-quoted-keyword-variable-name>>>.made.join(', ') ~ ')'; }
 
   # Trivial
   method trivial-parameter($/) { make $/.values[0].made; }
@@ -189,7 +189,10 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon
   method what-are-the-term-nns($/) { make 'LSAMonEchoStatisticalThesaurus( words = ' ~ $<thesaurus-words-spec>.made ~ ')'; }
 
   method thesaurus-words-spec($/) { make $/.values[0].made; }
-  method thesaurus-words-list($/) { make 'c("' ~ $<variable-name>>>.made.join('", "') ~ '")'; }
+  method thesaurus-words-list($/) {
+    my @words = $/.values[0].made.substr(2,*-1).subst(:g, '"', '').split(', ');
+    make 'c(' ~ map( { '"' ~ $_ ~ '"' }, @words ).join(', ') ~ ')';
+  }
 
   # Representation commands
   method represent-query-command($/) { make $/.values[0].made; }

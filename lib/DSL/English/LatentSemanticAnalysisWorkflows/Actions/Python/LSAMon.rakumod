@@ -49,25 +49,13 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
 
   # Top
   method TOP($/) { make $/.values[0].made; }
-  # method TOP($/) { make "Not implemented"; }
 
   # General
-  method dataset-name($/) { make $/.values[0].made; }
-  method variable-name($/) { make $/.Str; }
-  method list-separator($/) { make ','; }
   method variable-names-list($/) { make '[' ~ $<variable-name>>>.made.join(', ') ~ ']'; }
-  method integer-value($/) { make $/.Str; }
-  method number-value($/) { make $/.Str; }
-  method apply-verb($/) { make $/.Str; }
-
-  # Trivial
-  method trivial-parameter($/) { make $/.values[0].made; }
-  method trivial-parameter-none($/) { make 'NA'; }
-  method trivial-parameter-empty($/) { make '[]'; }
-  method trivial-parameter-automatic($/) { make 'NULL'; }
-  method trivial-parameter-false($/) { make 'FALSE'; }
-  method trivial-parameter-true($/) { make 'TRUE'; }
-
+  method quoted-variable-names-list($/) { make '[' ~ $<quoted-variable-name>>>.made.join(', ') ~ ']'; }
+  method mixed-quoted-variable-names-list($/) { make '[' ~ $<mixed-quoted-variable-name>>>.made.join(', ') ~ ']'; }
+  method quoted-keyword-variable-names-list($/) { make '[' ~ $<quoted-keyword-variable-name>>>.made.join(', ') ~ ']'; }
+  method mixed-quoted-keyword-variable-names-list($/) { make '[' ~ $<mixed-quoted-keyword-variable-name>>>.made.join(', ') ~ ']'; }
 
   # Data load commands
   method data-load-command($/) { make $/.values[0].made; }
@@ -191,7 +179,10 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
   method what-are-the-term-nns($/) { make 'obj = LSAMonEchoStatisticalThesaurus( lsaObj = obj, words = ' ~ $<thesaurus-words-spec>.made ~ ')'; }
 
   method thesaurus-words-spec($/) { make $/.values[0].made; }
-  method thesaurus-words-list($/) { make 'c("' ~ $<variable-name>>>.made.join('", "') ~ '")'; }
+  method thesaurus-words-list($/) {
+    my @words = $/.values[0].made.substr(1,*-1).subst(:g, '"', '').split(', ');
+    make '[' ~ map( { '"' ~ $_ ~ '"' }, @words ).join(', ') ~ ']';
+  }
 
   # Representation commands
   method represent-query-command($/) { make $/.values[0].made; }

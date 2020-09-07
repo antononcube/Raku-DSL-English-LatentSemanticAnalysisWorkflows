@@ -173,7 +173,7 @@ grammar DSL::English::LatentSemanticAnalysisWorkflows::Grammar
     rule show-thesaurus-table-command { [ <compute-and-display> | <display-directive> ] <statistical>? <thesaurus> <table-noun>? <thesaurus-words-spec>? }
     rule what-are-the-term-nns { <what-pronoun> <are-verb> <the-determiner>? <top-noun>? <nearest-neighbors-phrase> <thesaurus-words-spec> }
     rule thesaurus-words-spec { [ <.for-preposition> | <.of-preposition> ] <thesaurus-words-list>}
-    rule thesaurus-words-list { <variable-name>+ % <list-separator> }
+    rule thesaurus-words-list { <mixed-quoted-variable-names-list> }
 
     # Representation command
     rule represent-query-command { <represent-query-by-topics> | <represent-query-by-terms> }
