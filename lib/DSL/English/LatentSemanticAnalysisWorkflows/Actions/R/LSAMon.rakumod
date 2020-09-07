@@ -39,11 +39,12 @@
 =end comment
 
 use v6;
-#use lib '.';
-#use lib '../../../EBNF/English/RakuPerl6/';
-use DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
 
-class DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon {
+use DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
+use DSL::Shared::Actions::English::R::PipelineCommand;
+
+class DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon
+        is DSL::Shared::Actions::English::R::PipelineCommand {
 
   # Top
   method TOP($/) { make $/.values[0].made; }
@@ -199,8 +200,17 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon {
   method query-variable($/) { make $/.Str; }
   method query-text($/) { make $/.Str; }
 
-  # Pipeline command
-  method pipeline-command($/) { make  $/.values[0].made; }
-  method get-pipeline-value($/) { make 'LSAMonEchoValue()'; }
+  # Pipeline command overwrites
+  ## Value
+  method take-pipeline-value($/) { make 'LSAMonTakeValue()'; }
+  method echo-pipeline-value($/) { make 'LSAMonEchoValue()'; }
+  method echo-pipeline-funciton-value($/) { make 'LSAMonEchoFunctionValue( ' ~ $<pipeline-function-spec>.made ~ ' )'; }
 
+  ## Context
+  method take-pipeline-context($/) { make 'LSAMonTakeContext()'; }
+  method echo-pipeline-context($/) { make 'LSAMonEchoContext'; }
+  method echo-pipeline-function-context($/) { make 'LSAMonEchoFunctionContext( ' ~ $<pipeline-function-spec>.made ~ ' )'; }
+
+  ## Echo messages
+  method echo-command($/) { make 'LSAMonEcho( ' ~ $<echo-message-spec>.made ~ ' )'; }
 }

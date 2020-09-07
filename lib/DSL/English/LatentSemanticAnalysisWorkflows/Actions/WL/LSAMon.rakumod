@@ -39,31 +39,23 @@
 =end comment
 
 use v6;
-#use lib '.';
-#use lib '../../../EBNF/English/RakuPerl6/';
-use DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
 
-class DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon {
+use DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
+use DSL::Shared::Actions::English::WL::PipelineCommand;
+
+class DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon
+        is DSL::Shared::Actions::English::WL::PipelineCommand {
 
   # Top
   method TOP($/) { make $/.values[0].made; }
   # method TOP($/) { make "Not implemented"; }
 
   # General
-  method dataset-name($/) { make $/.values[0].made; }
-  method variable-name($/) { make $/.Str; }
-  method list-separator($/) { make ','; }
   method variable-names-list($/) { make '{' ~ $<variable-name>>>.made.join(', ') ~ '}'; }
-  method integer-value($/) { make $/.Str; }
-  method number-value($/) { make $/.Str; }
-
-  # Trivial
-  method trivial-parameter($/) { make $/.values[0].made; }
-  method trivial-parameter-none($/) { make 'None'; }
-  method trivial-parameter-empty($/) { make '{}'; }
-  method trivial-parameter-automatic($/) { make 'Automatic'; }
-  method trivial-parameter-false($/) { make 'False'; }
-  method trivial-parameter-true($/) { make 'True'; }
+  method quoted-variable-names-list($/) { make '{' ~ $<quoted-variable-name>>>.made.join(', ') ~ '}'; }
+  method mixed-quoted-variable-names-list($/) { make '{' ~ $<mixed-quoted-variable-name>>>.made.join(', ') ~ '}'; }
+  method quoted-keyword-variable-names-list($/) { make '{' ~ $<quoted-keyword-variable-name>>>.made.join(', ') ~ '}'; }
+  method mixed-quoted-keyword-variable-names-list($/) { make '{' ~ $<mixed-quoted-keyword-variable-name>>>.made.join(', ') ~ '}'; }
 
 
   # Data load commands
@@ -199,8 +191,18 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon {
   method query-variable($/) { make $/.Str; }
   method query-text($/) { make $/.Str; }
 
-  # Pipeline command
-  method pipeline-command($/) { make  $/.values[0].made; }
-  method get-pipeline-value($/) { make 'LSAMonEchoValue[]'; }
+  # Pipeline command overwrites
+  ## Value
+  method take-pipeline-value($/) { make 'LSAMonTakeValue[]'; }
+  method echo-pipeline-value($/) { make 'LSAMonEchoValue[]'; }
+  method echo-pipeline-funciton-value($/) { make 'LSAMonEchoFunctionValue[ ' ~ $<pipeline-function-spec>.made ~ ' ]'; }
+
+  ## Context
+  method take-pipeline-context($/) { make 'LSAMonTakeContext[]'; }
+  method echo-pipeline-context($/) { make 'LSAMonEchoContext[]'; }
+  method echo-pipeline-function-context($/) { make 'LSAMonEchoFunctionContext[ ' ~ $<pipeline-function-spec>.made ~ ' ]'; }
+
+  ## Echo messages
+  method echo-command($/) { make 'LSAMonEcho[ ' ~ $<echo-message-spec>.made ~ ' ]'; }
 
 }
