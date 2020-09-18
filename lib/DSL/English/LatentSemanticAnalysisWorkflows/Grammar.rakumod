@@ -85,7 +85,7 @@ grammar DSL::English::LatentSemanticAnalysisWorkflows::Grammar
     rule simple-way-phrase { <in-preposition> <a-determiner>? <simple-way-phrase> | <directly-adverb> | <simply-adverb> }
     rule create-simple { <create-directive> <a-determiner>? <simple>? <object> <simple-way-phrase>? | <simple> <object> [ <creation-noun> | <making> ] }
     rule create-by-dataset {
-        [ <create-simple> | <create-directive> ] [ <.by-preposition> | <.with-preposition> | <.from-preposition> ]? <dataset-name> }
+        [ <create-simple> | <create-directive> | <use-directive> ] [ <.by-preposition> | <.with-preposition> | <.from-preposition> ]? <dataset-name> }
 
     # Make document-term matrix command
     rule make-doc-term-matrix-command { [ <compute-directive> | <generate-directive> ] [ <.the-determiner> | <.a-determiner> ]? <doc-term-mat> <doc-term-matrix-parameters-spec>? }
