@@ -50,15 +50,17 @@ my $pLSAMONCOMMAND = DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
 #show thesaurus table for sing, left, home;
 #';
 
-my $command = '
-create from aText;
+my $command = "
+DSL TARGET Python-LSAMon;
+use aTexts;
 make document term matrix with automatic stop words and without stemming rules;
 echo data summary;
+echo context function Keys;
 apply lsi functions global weight function idf, local term weight function none, normalizer function cosine;
-extract 12 topics using method NNMF and max steps 12;
+extract 12 topics using method singular value decomposition and max steps 12;
 show topics table with 12 columns and 10 terms;
 show thesaurus table for sing, left, home;
-';
+";
 
 
 say "\n=======\n";

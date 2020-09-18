@@ -14,6 +14,8 @@ interpretation of English natural speech commands that specify Latent Semantic A
 
 unit module DSL::English::LatentSemanticAnalysisWorkflows;
 
+use DSL::Shared::Utilities::MetaSpecifications;
+
 use DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
 use DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon;
 use DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon;
@@ -57,15 +59,21 @@ multi ToLatentSemanticAnalysisWorkflowCode ( Str $command where not has-semicolo
 
 multi ToLatentSemanticAnalysisWorkflowCode ( Str $command where has-semicolon($command), Str $target = 'R-LSAMon' ) {
 
-    die 'Unknown target.' unless %targetToAction{$target}:exists;
+    my $specTarget = get-dsl-spec( $command, 'target');
+
+    $specTarget = !$specTarget ?? $target !! $specTarget.value;
+
+    die 'Unknown target.' unless %targetToAction{$specTarget}:exists;
 
     my @commandLines = $command.trim.split(/ ';' \s* /);
 
     @commandLines = grep { $_.Str.chars > 0 }, @commandLines;
 
-    my @cmdLines = map { ToLatentSemanticAnalysisWorkflowCode($_, $target) }, @commandLines;
+    my @cmdLines = map { ToLatentSemanticAnalysisWorkflowCode($_, $specTarget) }, @commandLines;
 
-    return @cmdLines.join( %targetToSeparator{$target} ).trim;
+    @cmdLines = grep { $_.^name eq 'Str' }, @cmdLines;
+
+    return @cmdLines.join( %targetToSeparator{$specTarget} ).trim;
 }
 
 #-----------------------------------------------------------
