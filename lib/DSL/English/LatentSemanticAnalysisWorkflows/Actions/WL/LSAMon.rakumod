@@ -195,7 +195,11 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon
   method query-text($/) { make $/.Str; }
 
   # Pipeline command overwrites
+  ## Object
+  method assign-pipeline-object-to($/) { make 'LSAMonAssignTo[ ' ~ $/.values[0].made ~ ' ]'; }
+
   ## Value
+  method assign-pipeline-value-to($/) { make 'LSAMonAssignValueTo[ ' ~ $/.values[0].made ~ ' ]'; }
   method take-pipeline-value($/) { make 'LSAMonTakeValue[]'; }
   method echo-pipeline-value($/) { make 'LSAMonEchoValue[]'; }
   method echo-pipeline-funciton-value($/) { make 'LSAMonEchoFunctionValue[ ' ~ $<pipeline-function-spec>.made ~ ' ]'; }
