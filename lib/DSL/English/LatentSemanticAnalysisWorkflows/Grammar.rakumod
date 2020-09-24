@@ -52,6 +52,7 @@ grammar DSL::English::LatentSemanticAnalysisWorkflows::Grammar
         does DSL::Shared::Roles::ErrorHandling {
     # TOP
     regex TOP {
+        <pipeline-command> |
         <data-load-command> |
         <create-command> |
         <make-doc-term-matrix-command> |
@@ -62,8 +63,7 @@ grammar DSL::English::LatentSemanticAnalysisWorkflows::Grammar
         <thesaurus-extraction-command> |
         <show-topics-command> |
         <show-thesaurus-command> |
-        <represent-query-command> |
-        <pipeline-command> }
+        <represent-query-command> }
 
     # Load data
     rule data-load-command { <load-data> | <use-lsa-object> }
