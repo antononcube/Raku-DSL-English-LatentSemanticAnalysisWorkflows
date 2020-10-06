@@ -14,7 +14,7 @@ interpretation of English natural speech commands that specify Latent Semantic A
 
 unit module DSL::English::LatentSemanticAnalysisWorkflows;
 
-use DSL::Shared::Utilities::MetaSpecifications;
+use DSL::Shared::Utilities::MetaSpecsProcessing;
 
 use DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
 use DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon;
@@ -61,7 +61,7 @@ multi ToLatentSemanticAnalysisWorkflowCode ( Str $command where has-semicolon($c
 
     my $specTarget = get-dsl-spec( $command, 'target');
 
-    $specTarget = !$specTarget ?? $target !! $specTarget.value;
+    $specTarget = $specTarget ?? $specTarget<DSLTARGET> !! $target;
 
     die 'Unknown target.' unless %targetToAction{$specTarget}:exists;
 
