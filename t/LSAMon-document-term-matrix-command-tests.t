@@ -3,7 +3,7 @@ use lib 'lib';
 use DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
 use Test;
 
-plan 7;
+plan 10;
 
 # Shortcut
 my $pLSAMONCOMMAND = DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
@@ -32,5 +32,14 @@ ok $pLSAMONCOMMAND.parse('make document term matrix with automatic stop words an
 
 ok $pLSAMONCOMMAND.parse('make the document term matrix without stemming and with automatic stop words'),
         'make the document term matrix without stemming and with automatic stop words';
+
+ok $pLSAMONCOMMAND.parse('make the document term matrix with `Automatic` stemming rules and with `Automatic` stop words'),
+        'make the document term matrix with `Automatic` stemming rules and with `Automatic` stop words';
+
+ok $pLSAMONCOMMAND.parse('make the document term matrix using default stemming rules and with default stop words'),
+        'make the document term matrix using default stemming rules and with default stop words';
+
+ok $pLSAMONCOMMAND.parse('make the document term matrix with stemming'),
+        'make the document term matrix with stemming';
 
 done-testing;
