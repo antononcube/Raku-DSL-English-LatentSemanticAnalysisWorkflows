@@ -3,7 +3,7 @@ use lib 'lib';
 use DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
 use Test;
 
-plan 10;
+plan 13;
 
 # Shortcut
 my $pLSAMONCOMMAND = DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
@@ -41,5 +41,14 @@ ok $pLSAMONCOMMAND.parse('make the document term matrix using default stemming r
 
 ok $pLSAMONCOMMAND.parse('make the document term matrix with stemming'),
         'make the document term matrix with stemming';
+
+ok $pLSAMONCOMMAND.parse('make the document term matrix with stemming and without stop words'),
+        'make the document term matrix with stemming and without stop words';
+
+ok $pLSAMONCOMMAND.parse('make the document term matrix without stemming'),
+        'make the document term matrix without stemming';
+
+ok $pLSAMONCOMMAND.parse('make the document term matrix without stop words'),
+        'make the document term matrix without stop words';
 
 done-testing;
