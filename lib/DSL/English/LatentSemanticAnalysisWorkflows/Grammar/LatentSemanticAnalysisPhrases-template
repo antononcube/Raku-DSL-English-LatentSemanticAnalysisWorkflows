@@ -33,6 +33,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     token rules-noun { 'rules' }
     token semantic { 'semantic' }
     token stemming-noun { 'stemming' }
+    token stop-noun { 'stop' }
     token singular { 'singular' }
     token synonym { 'synonym' }
     token synonyms { 'synonyms' }

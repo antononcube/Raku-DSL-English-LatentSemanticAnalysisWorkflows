@@ -34,6 +34,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     token semantic { 'semantic' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'semantic') }> }
     token singular { 'singular' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'singular') }> }
     token stemming-noun { 'stemming' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'stemming') }> }
+    token stop-noun { 'stop' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'stop') }> }
     token synonym { 'synonym' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'synonym') }> }
     token synonyms { 'synonyms' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'synonyms') }> }
     token term { 'term' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'term') }> }
@@ -41,7 +42,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     token threshold { 'threshold' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'threshold') }> }
     token topic { 'topic' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'topic') }> }
     token topics { 'topics' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'topics') }> }
-    token word { 'word' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'word') }> }
+    token word { 'word' | ([\w]+) <?{ $0.Str ne 'words' and is-fuzzy-match( $0.Str, 'word') }> }
 
     rule doc-term-mat { [ <document> | 'item' ] [ <term> | <word> ] <matrix> }
     rule lsa-object { <lsa-phrase>? 'object' }
@@ -59,7 +60,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     rule terms { 'word' | 'words' | 'term' | 'terms' }
 
     rule stemming-rules-phrase { <stemming-noun> <rules-noun>? }
-    rule stop-words-phrase { 'stop' 'words' }
+    rule stop-words-phrase { <stop-noun> <words-noun> }
 
     rule text-corpus-phrase { 'texts' | 'text' [ 'corpus' | 'collection' ]? }
 
