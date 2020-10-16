@@ -94,6 +94,7 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon
   method doc-term-matrix-stemming-rules($/) { make $/.values[0].made; }
   method stemming-rules-spec($/) { make 'stemWordsQ = ' ~ $/.values[0].made; }
   method no-stemming-rules-spec($/) { make 'stemWordsQ = FALSE'; }
+  method stemming-spec-simple($/) {  make 'stemWordsQ = NULL'; }
 
   method doc-term-matrix-stop-words($/) { make $/.values[0].made; }
   method stop-words-spec($/) { make 'stopWords = ' ~ $/.values[0].made; }

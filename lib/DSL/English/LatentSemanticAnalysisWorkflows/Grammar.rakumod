@@ -91,20 +91,21 @@ grammar DSL::English::LatentSemanticAnalysisWorkflows::Grammar
     rule make-doc-term-matrix-command { [ <compute-directive> | <generate-directive> ] [ <.the-determiner> | <.a-determiner> ]? <doc-term-mat> <doc-term-matrix-parameters-spec>? }
 
     rule doc-term-matrix-parameters-spec { <.using-preposition> <doc-term-matrix-parameters-list> }
-    rule doc-term-matrix-parameters-list { <doc-term-matrix-parameter>+ % <list-separator> }
+    rule doc-term-matrix-parameters-list { <doc-term-matrix-parameter>+ % [ <.list-separator> <.using-preposition>? ]}
     rule doc-term-matrix-parameter { <doc-term-matrix-stemming-rules> | <doc-term-matrix-stop-words> }
 
-    rule no-stemming-rules-spec { [ <.no-determiner> | <.without-preposition> ] <.stemming-rules-phrase> }
-    rule doc-term-matrix-stemming-rules { <no-stemming-rules-spec> | <.stemming-rules-phrase> <stemming-rules-spec> | <stemming-rules-spec> <.stemming-rules-phrase> }
-    rule stemming-rules-spec { <variable-name> | <trivial-parameter> }
+    rule no-stemming-rules-spec { [ <no-determiner> | <without-preposition> ] <stemming-rules-phrase> }
+    rule doc-term-matrix-stemming-rules { <no-stemming-rules-spec> | <.stemming-rules-phrase> <stemming-rules-spec> | <stemming-rules-spec> <.stemming-rules-phrase> | <stemming-spec-simple> }
+    rule stemming-rules-spec { <variable-name> | <trivial-parameter> | <wl-expr> }
+    rule stemming-spec-simple { <stemming-rules-phrase> }
 
     rule doc-term-matrix-stop-words { <.stop-words-phrase> <stop-words-spec> | <stop-words-spec> <.stop-words-phrase> }
-    rule stop-words-spec { <variable-name> | <trivial-parameter> }
+    rule stop-words-spec { <variable-name> | <trivial-parameter> | <wl-expr> }
 
     rule trivial-parameter { <trivial-parameter-none> | <trivial-parameter-empty> | <trivial-parameter-automatic> | <trivial-parameter-false> | <trivial-parameter-true> }
     rule trivial-parameter-none { 'none' | 'no' | 'NA' }
     rule trivial-parameter-empty { 'empty' | '{}' | 'c()' }
-    rule trivial-parameter-automatic { 'automatic' | 'NULL' }
+    rule trivial-parameter-automatic { 'automatic' | 'NULL' | 'default' }
     rule trivial-parameter-false { 'False' | 'FALSE' | 'F' | 'false' }
     rule trivial-parameter-true { 'True' | 'TRUE' | 'T' | 'true' }
 
