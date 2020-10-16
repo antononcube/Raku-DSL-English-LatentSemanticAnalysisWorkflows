@@ -96,11 +96,12 @@ grammar DSL::English::LatentSemanticAnalysisWorkflows::Grammar
 
     rule no-stemming-rules-spec { [ <no-determiner> | <without-preposition> ] <stemming-rules-phrase> }
     rule doc-term-matrix-stemming-rules { <no-stemming-rules-spec> | <.stemming-rules-phrase> <stemming-rules-spec> | <stemming-rules-spec> <.stemming-rules-phrase> | <stemming-spec-simple> }
-    rule stemming-rules-spec { <variable-name> | <trivial-parameter> | <wl-expr> }
+    rule stemming-rules-spec { <trivial-parameter> | <wl-expr> }
     rule stemming-spec-simple { <stemming-rules-phrase> }
 
-    rule doc-term-matrix-stop-words { <.stop-words-phrase> <stop-words-spec> | <stop-words-spec> <.stop-words-phrase> }
-    rule stop-words-spec { <variable-name> | <trivial-parameter> | <wl-expr> }
+    rule doc-term-matrix-stop-words { <.stop-words-phrase> <stop-words-spec> || <stop-words-spec> <.stop-words-phrase> || <stop-words-simple-spec> }
+    rule stop-words-spec { <trivial-parameter> | <wl-expr> }
+    rule stop-words-simple-spec { <stop-words-phrase> }
 
     rule trivial-parameter { <trivial-parameter-none> | <trivial-parameter-empty> | <trivial-parameter-automatic> | <trivial-parameter-false> | <trivial-parameter-true> }
     rule trivial-parameter-none { 'none' | 'no' | 'NA' }
