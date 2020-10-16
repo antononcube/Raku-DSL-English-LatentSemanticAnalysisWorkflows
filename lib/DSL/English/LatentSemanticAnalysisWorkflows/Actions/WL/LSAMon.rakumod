@@ -89,6 +89,8 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon
 
   method doc-term-matrix-stop-words($/) { make $/.values[0].made; }
   method stop-words-spec($/) { make '"StopWords" -> ' ~ $/.values[0].made; }
+  method no-stop-words-spec($/) { make '"StopWords" -> None'; }
+  method stop-words-simple-spec($/) { make '"StopWords" -> Automatic'; }
 
   # Data transformation commands
   method data-transformation-command($/) { make 'LSMonFailure["Not implemented yet."]'; }

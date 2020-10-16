@@ -88,6 +88,8 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
 
   method doc-term-matrix-stop-words($/) { make $/.values[0].made; }
   method stop-words-spec($/) { make 'stopWords = ' ~ $/.values[0].made; }
+  method no-stop-words-spec($/) { make 'stopWords = false' }
+  method stop-words-simple-spec($/) { make 'stopWords = NULL'; }
 
   # Data transformation commands
   method data-transformation-command($/) { make 'obj = LSMonFailure( lsaObj = obj, "Not implemented yet.")'; }
