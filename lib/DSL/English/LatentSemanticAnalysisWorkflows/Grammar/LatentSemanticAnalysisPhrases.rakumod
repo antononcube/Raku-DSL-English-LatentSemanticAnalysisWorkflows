@@ -30,8 +30,10 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     token principal { 'principal' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'principal') }> }
     token query { 'query' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'query') }> }
     token represent { 'represent' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'represent') }> }
+    token rules-noun { 'rules' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'rules') }> }
     token semantic { 'semantic' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'semantic') }> }
     token singular { 'singular' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'singular') }> }
+    token stemming-noun { 'stemming' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'stemming') }> }
     token synonym { 'synonym' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'synonym') }> }
     token synonyms { 'synonyms' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'synonyms') }> }
     token term { 'term' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'term') }> }
@@ -56,7 +58,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     rule docs { 'document' | 'documents' | 'item' | 'items' }
     rule terms { 'word' | 'words' | 'term' | 'terms' }
 
-    rule stemming-rules-phrase { 'stemming' ['rules']? }
+    rule stemming-rules-phrase { <stemming-noun> <rules-noun>? }
     rule stop-words-phrase { 'stop' 'words' }
 
     rule text-corpus-phrase { 'texts' | 'text' [ 'corpus' | 'collection' ]? }

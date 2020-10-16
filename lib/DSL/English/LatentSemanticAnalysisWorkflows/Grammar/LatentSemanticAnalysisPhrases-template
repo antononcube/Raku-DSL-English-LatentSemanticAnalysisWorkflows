@@ -30,7 +30,9 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     token principal { 'principal' }
     token query { 'query' }
     token represent { 'represent' }
+    token rules-noun { 'rules' }
     token semantic { 'semantic' }
+    token stemming-noun { 'stemming' }
     token singular { 'singular' }
     token synonym { 'synonym' }
     token synonyms { 'synonyms' }
