@@ -145,9 +145,9 @@ grammar DSL::English::LatentSemanticAnalysisWorkflows::Grammar
     rule topics-parameters-list { <topics-parameter>+ % <list-separator> }
 
     rule topics-parameter { <topics-max-iterations> | <topics-initialization> | <min-number-of-documents-per-term> | <topics-method>}
-    rule topics-max-iterations { <max-iterations-phrase> <number-value> | <number-value> <max-iterations-phrase> }
+    rule topics-max-iterations { <.max-iterations-phrase> <number-value> | <number-value> <.max-iterations-phrase> }
     rule topics-initialization {  <random-adjective>? <number-value> <columns> <clusters> }
-    rule min-number-of-documents-per-term { <min-number-of-documents-per-term-phrase> <number-value> | <number-value> <min-number-of-documents-per-term-phrase> }
+    rule min-number-of-documents-per-term { <.min-number-of-documents-per-term-phrase> <number-value> | <number-value> <.min-number-of-documents-per-term-phrase> }
     rule min-number-of-documents-per-term-phrase { <minimum> <number-of> <documents> <per-preposition> <terms> }
     rule topics-method {[ <.the-determiner>? <.method-noun> ]? <topics-method-name> }
 
