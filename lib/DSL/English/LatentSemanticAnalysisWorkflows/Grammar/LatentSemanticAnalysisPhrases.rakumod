@@ -7,7 +7,7 @@ use DSL::Shared::Utilities::FuzzyMatching;
 role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnalysisPhrases
         does DSL::Shared::Roles::English::PipelineCommand {
 
-    # For some reason using <item> below gives the error: "Too many positionals passed; expected 1 argument but got 2".
+    # For some reason using <item-noun> below gives the error: "Too many positionals passed; expected 1 argument but got 2".
 
     # LSA specific
     token analysis { 'analysis' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'analysis') }> }
@@ -21,7 +21,8 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     token independent { 'independent' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'independent') }> }
     token indexing { 'indexing' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'indexing') }> }
     token ingest { 'ingest' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'ingest') }> | 'load' | 'use' | 'get' }
-    token item { 'item' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'item') }> }
+    token item-noun { 'item' | ([\w]+) <?{ $0.Str ne 'items' and is-fuzzy-match( $0.Str, 'item') }> }
+    token items-noun { 'items' | ([\w]+) <?{ $0.Str ne 'item' and is-fuzzy-match( $0.Str, 'items') }> }
     token latent { 'latent' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'latent') }> }
     token matrix { 'matrix' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'matrix') }> }
     token negative { 'negative' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'negative') }> }
@@ -44,11 +45,12 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     token topics { 'topics' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'topics') }> }
     token word { 'word' | ([\w]+) <?{ $0.Str ne 'words' and is-fuzzy-match( $0.Str, 'word') }> }
 
-    rule doc-term-mat { [ <document> | 'item' ] [ <term> | <word> ] <matrix> }
-    rule lsa-object { <lsa-phrase>? 'object' }
+    token document-term-phrase {[ <document> | 'doc' | 'item' ] [ '-' | '-vs-' | \h+ ] [ <term> | <word> ] }
+    rule doc-term-mat-phrase { <document-term-phrase> <matrix> }
+    rule lsa-object { <lsa-phrase>? <object-noun> }
     rule lsa-phrase { <latent> <semantic> <analysis> | 'lsa' | 'LSA' }
     rule lsi-phrase { <latent> <semantic> <indexing> | 'lsi' | 'LSI' }
-    rule matrix-entries { [ <doc-term-mat> | <matrix> ]? <entries> }
+    rule matrix-entries { [ <doc-term-mat-phrase> | <matrix> ]? <entries> }
     rule number-of-terms-phrase { <number-of>? <terms> }
     rule the-outliers { <the-determiner> <outliers> }
 
@@ -56,7 +58,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     rule data-element { 'sentence' | 'paragraph' | 'section' | 'chapter' | 'word' }
     rule data-elements { 'sentences' | 'paragraphs' | 'sections' | 'chapters' | 'words' }
 
-    rule docs { 'document' | 'documents' | 'item' | 'items' }
+    rule docs { <document> | <documents> | 'docs' | <item-noun> | <items-noun> }
     rule terms { 'word' | 'words' | 'term' | 'terms' }
 
     rule stemming-rules-phrase { <stemming-noun> <rules-noun>? }

@@ -58,6 +58,7 @@ grammar DSL::English::LatentSemanticAnalysisWorkflows::Grammar
         <make-doc-term-matrix-command> |
         <data-transformation-command> |
         <data-statistics-command> |
+        <statistics-command> |
         <lsi-apply-command> |
         <topics-extraction-command> |
         <thesaurus-extraction-command> |
@@ -88,7 +89,7 @@ grammar DSL::English::LatentSemanticAnalysisWorkflows::Grammar
         [ <create-simple> | <create-directive> | <use-directive> ] [ <.by-preposition> | <.with-preposition> | <.from-preposition> ]? <dataset-name> }
 
     # Make document-term matrix command
-    rule make-doc-term-matrix-command { [ <compute-directive> | <generate-directive> ] [ <.the-determiner> | <.a-determiner> ]? <doc-term-mat> <doc-term-matrix-parameters-spec>? }
+    rule make-doc-term-matrix-command { [ <compute-directive> | <generate-directive> ] [ <.the-determiner> | <.a-determiner> ]? <doc-term-mat-phrase> <doc-term-matrix-parameters-spec>? }
 
     rule doc-term-matrix-parameters-spec { <.using-preposition> <doc-term-matrix-parameters-list> }
     rule doc-term-matrix-parameters-list { <doc-term-matrix-parameter>+ % [ <.list-separator> <.using-preposition>? ]}
@@ -117,20 +118,21 @@ grammar DSL::English::LatentSemanticAnalysisWorkflows::Grammar
     rule data-type-filler { <data-noun> | <records> }
 
     # Data statistics command
-    rule data-statistics-command { <summarize-data> }
-    rule summarize-data { <summarize-directive> <the-determiner>? <data> | <display-directive> <data>? [ <summary> | <summaries> ] }
+    rule data-statistics-command { <summarize-data> | <docs-term-matrix-statistics> }
+    rule summarize-data { <summarize-directive> <the-determiner>? <data> | <display-directive> <data>? [ <summary> | <summaries> ] | <data-noun> <summary> }
+    rule docs-term-matrix-statistics { <doc-term-mat-phrase> <statistics-noun> }
 
     # LSI command is programmed as a role.
     # <lsi-apply-command>
 
     # Statistics command
-    rule statistics-command {<statistics-preamble> [ <statistic-spec> | [ <docs-per-term> | <terms-per-doc> ] [ <statistic-spec> ]? ] }
-    rule statistics-preamble {[ <compute-and-display> | <display-directive> ] [ <the-determiner> | <a-determiner> | <some-determiner> ]?}
-    rule docs-per-term {<docs> <per-preposition>? <terms> }
-    rule terms-per-doc {<terms> <per-preposition>? <docs> }
+    rule statistics-command { <.statistics-preamble> [ <docs-per-term> | <terms-per-doc> ] }
+    rule statistics-preamble { [ <compute-and-display> | <display-directive> ] [ <the-determiner> | <a-determiner> | <some-determiner> ]? }
+    rule docs-per-term { <docs> <per-preposition>? <terms> <statistic-spec>? }
+    rule terms-per-doc { <terms> <per-preposition>? <docs> <statistic-spec>? }
     rule statistic-spec { <diagram-spec> | <summary-spec> }
-    rule diagram-spec { <histogram>}
-    rule summary-spec { <summary> | <statistics> }
+    rule diagram-spec { <histogram> }
+    rule summary-spec { <summary> | <statistics-noun> }
 
     # Thesaurus command
     rule thesaurus-extraction-command {[ <compute-directive> | <extract-directive> ] <thesaurus-spec>}
