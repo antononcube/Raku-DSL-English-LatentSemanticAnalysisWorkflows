@@ -104,8 +104,11 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon
   # Data transformation commands
   method data-transformation-command($/) { make 'LSMonFailure("Not implemented yet.")'; }
 
-  # Data statistics commands.
+  # Data statistics commands
   method data-statistics-command($/) { make 'LSAMonEchoDocumentTermMatrixStatistics( )'; }
+
+  # Statistics command
+  method statistics-command($/) { make 'Not implemented'; }
 
   # LSI command is programmed as a role.
   method lsi-apply-command($/) { make 'LSAMonApplyTermWeightFunctions(' ~ $/.values[0].made ~ ')'; }

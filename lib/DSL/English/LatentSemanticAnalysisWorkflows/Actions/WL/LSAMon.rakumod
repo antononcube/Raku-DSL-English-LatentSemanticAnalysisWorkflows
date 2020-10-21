@@ -57,7 +57,6 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon
   method quoted-keyword-variable-names-list($/) { make '{' ~ $<quoted-keyword-variable-name>>>.made.join(', ') ~ '}'; }
   method mixed-quoted-keyword-variable-names-list($/) { make '{' ~ $<mixed-quoted-keyword-variable-name>>>.made.join(', ') ~ '}'; }
 
-
   # Data load commands
   method data-load-command($/) { make $/.values[0].made; }
   method load-data($/) { make 'LSAMonSetData[' ~ $/.values[0].made ~ ']'; }
@@ -96,7 +95,30 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon
   method data-transformation-command($/) { make 'LSMonFailure["Not implemented yet."]'; }
 
   # Data statistics commands.
-  method data-statistics-command($/) { make 'LSAMonEchoDocumentTermMatrixStatistics[ ]'; }
+  method data-statistics-command($/) { make $/.values[0].made; }
+  method summarize-data($/) { make 'LSAMonEchoDocumentTermMatrixStatistics[ ]'; }
+  method docs-term-matrix-statistics($/) { make 'LSAMonEchoDocumentTermMatrixStatistics[ ]'; }
+
+  # Statistics command
+  method statistics-command($/) { make $/.values[0].made; }
+  method terms-per-doc($/) {
+    if $<statistic-spec> and $<statistic-spec>.Str eq 'histogram' {
+      make 'LSAMonEchoFunctionContext[ Histogram[ RowSums[Unitize[#documentTermMatrix]], AxesLabel -> { "Number of terms", "Number of documents"}, ImageSize -> Medium]& ]';
+    } elsif  $<statistic-spec> and $<statistic-spec>.Str eq 'summary' {
+      make 'LSAMonEchoFunctionContext[ RecordsSummary[RowSums[Unitize[#documentTermMatrix]]]& ]';
+    } else {
+      make 'LSAMonEchoFunctionContext[Row[{RecordsSummary[#], Histogram[#, AxesLabel -> {"Number of terms", "Number of documents"}, ImageSize -> Medium]}] &@ RowSums[Unitize[#documentTermMatrix]] &]';
+    }
+  }
+  method docs-per-term($/) {
+    if $<statistic-spec> and $<statistic-spec>.Str eq 'histogram' {
+      make 'LSAMonEchoFunctionContext[ Histogram[ ColumnSums[Unitize[#documentTermMatrix]], AxesLabel -> {"Number of documents", "Number of terms"}, ImageSize -> Medium]& ]';
+    } elsif  $<statistic-spec> and $<statistic-spec>.Str eq 'summary' {
+      make 'LSAMonEchoFunctionContext[ RecordsSummary[ColumnSums[Unitize[#documentTermMatrix]]]& ]';
+    } else {
+      make 'LSAMonEchoFunctionContext[Row[{RecordsSummary[#], Histogram[#, AxesLabel -> {"Number of documents", "Number of terms"}, ImageSize -> Medium]}] &@ ColumnSums[Unitize[#documentTermMatrix]] &]';
+    }
+  }
 
   # LSI command is programmed as a role.
   method lsi-apply-command($/) { make 'LSAMonApplyTermWeightFunctions[' ~ $/.values[0].made ~ ']'; }
