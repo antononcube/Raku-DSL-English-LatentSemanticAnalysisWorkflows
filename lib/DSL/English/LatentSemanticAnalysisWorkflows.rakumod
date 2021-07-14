@@ -24,20 +24,26 @@ use DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon;
 my %targetToAction =
     "Python"           => DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon,
     "Python-LSAMon"    => DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon,
+    "Python::LSAMon"   => DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon,
     "R"                => DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon,
     "R-LSAMon"         => DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon,
+    "R::LSAMon"        => DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon,
     "Mathematica"      => DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon,
     "WL"               => DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon,
-    "WL-LSAMon"        => DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon;
+    "WL-LSAMon"        => DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon,
+    "WL::LSAMon"       => DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon;
 
 my %targetToSeparator{Str} =
     "R"                => " %>%\n",
     "R-LSAMon"         => " %>%\n",
+    "R::LSAMon"        => " %>%\n",
     "Mathematica"      => " ==>\n",
     "Python"           => "\n",
     "Python-LSAMon"    => "\n",
+    "Python::LSAMon"   => "\n",
     "WL"               => " ==>\n",
-    "WL-LSAMon"        => " ==>\n";
+    "WL-LSAMon"        => " ==>\n",
+    "WL::LSAMon"       => " ==>\n";
 
 
 #-----------------------------------------------------------
@@ -46,9 +52,9 @@ sub has-semicolon (Str $word) {
 }
 
 #-----------------------------------------------------------
-proto ToLatentSemanticAnalysisWorkflowCode(Str $command, Str $target = "R-LSAMon" ) is export {*}
+proto ToLatentSemanticAnalysisWorkflowCode(Str $command, Str $target = 'R-LSAMon' ) is export {*}
 
-multi ToLatentSemanticAnalysisWorkflowCode ( Str $command where not has-semicolon($command), Str $target = "R-LSAMon" ) {
+multi ToLatentSemanticAnalysisWorkflowCode ( Str $command where not has-semicolon($command), Str $target = 'R-LSAMon' ) {
 
     die 'Unknown target.' unless %targetToAction{$target}:exists;
 

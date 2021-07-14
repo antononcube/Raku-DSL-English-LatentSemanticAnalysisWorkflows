@@ -50,6 +50,12 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
   # Top
   method TOP($/) { make $/.values[0].made; }
 
+  # workflow-command-list
+  method workflow-commands-list($/) { make $/.values>>.made.join(";\n"); }
+
+  # workflow-command
+  method workflow-command($/) { make $/.values[0].made; }
+
   # General
   method variable-names-list($/) { make '[' ~ $<variable-name>>>.made.join(', ') ~ ']'; }
   method quoted-variable-names-list($/) { make '[' ~ $<quoted-variable-name>>>.made.join(', ') ~ ']'; }

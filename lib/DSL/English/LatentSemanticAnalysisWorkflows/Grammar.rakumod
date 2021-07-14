@@ -50,8 +50,16 @@ grammar DSL::English::LatentSemanticAnalysisWorkflows::Grammar
         does DSL::Shared::Roles::English::PipelineCommand
         does DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnalysisPhrases
         does DSL::Shared::Roles::ErrorHandling {
+
+
     # TOP
-    regex TOP {
+    rule TOP { <workflow-command> }
+
+    # Workflow commands list
+    rule workflow-commands-list { [ [ <.ws>? <workflow-command> <.ws>? ]+ % <.list-of-commands-separator> ] <.list-of-commands-separator>? }
+
+    # Workflow command
+    rule workflow-command {
         <pipeline-command> |
         <data-load-command> |
         <create-command> |

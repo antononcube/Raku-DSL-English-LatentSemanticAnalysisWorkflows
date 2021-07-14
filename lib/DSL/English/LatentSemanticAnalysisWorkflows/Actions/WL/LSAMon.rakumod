@@ -48,7 +48,12 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon
 
   # Top
   method TOP($/) { make $/.values[0].made; }
-  # method TOP($/) { make "Not implemented"; }
+
+  # workflow-command-list
+  method workflow-commands-list($/) { make $/.values>>.made.join("==>\n"); }
+
+  # workflow-command
+  method workflow-command($/) { make $/.values[0].made; }
 
   # General
   method variable-names-list($/) { make '{' ~ $<variable-name>>>.made.join(', ') ~ '}'; }
