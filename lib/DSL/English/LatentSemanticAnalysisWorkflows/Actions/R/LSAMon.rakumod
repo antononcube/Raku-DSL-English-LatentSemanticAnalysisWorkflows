@@ -50,7 +50,7 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon
   method TOP($/) { make $/.values[0].made; }
 
   # workflow-command-list
-  method workflow-commands-list($/) { make $/.values>>.made.join("%>%\n"); }
+  method workflow-commands-list($/) { make $/.values>>.made.join(" %>%\n"); }
 
   # workflow-command
   method workflow-command($/) { make $/.values[0].made; }
