@@ -2,10 +2,24 @@ use lib './lib';
 use lib '.';
 use DSL::English::LatentSemanticAnalysisWorkflows;
 
-# Shortcut
-my $pLSAMONCOMMAND = DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
+# Shortcuts
+#-----------------------------------------------------------
+my $pCOMMAND = DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
 
-#say $pLSAMONCOMMAND.parse("from aText create");
+sub lsa-parse( Str:D $command, Str:D :$rule = 'TOP' ) {
+        $pCOMMAND.parse($command, :$rule);
+}
+
+sub lsa-interpret( Str:D $command,
+                   Str:D:$rule = 'TOP',
+                   :$actions = DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon.new) {
+        $pCOMMAND.parse( $command, :$rule, :$actions ).made;
+}
+
+#----------------------------------------------------------
+
+#
+#say $pLSAMONCOMMAND.subparse('create document term matrix with stemming rules and with stop words', rule => 'make-doc-term-matrix-command' );
 
 #
 #say DSL::English::LatentSemanticAnalysisWorkflows::Grammar.parse('apply to item term matrix entries the functions cosine');
@@ -50,7 +64,7 @@ my $pLSAMONCOMMAND = DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
 #show thesaurus table for sing, left, home;
 #';
 
-my $command = "
+my $commands = "
 DSL TARGET Python-LSAMon;
 use aTexts;
 make document term matrix with automatic stop words and without stemming rules;
@@ -62,21 +76,32 @@ show topics table with 12 columns and 10 terms;
 show thesaurus table for sing, left, home;
 ";
 
-
-say "\n=======\n";
-
-say to_LSAMon_Python($command);
-
-say "\n=======\n";
-
-say to_LSAMon_R($command);
-
-say "\n=======\n";
-
-say to_LSAMon_WL($command);
-
-say "\n=======\n";
+#my $commands = "
+#use aJobDescriptions;
+#make document-term matrix;
+#show terms per document statistics;
+#show terms per document histogram;
+#show terms per document summary;
+#show docs per word statistics;
+#show docs per word histogram;
+#show docs per word summary;
 #
+#";
+
+
+say "\n", '=' x 60;
+say '-' x 3, 'WL-LSAMon:';
+say '=' x 60;
+
+#say lsa-parse( $commands, rule => 'workflow-commands-list' );
+say lsa-interpret(
+        $commands,
+        rule => 'workflow-commands-list',
+        actions => DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon.new);
+#say ToLatentSemanticAnalysisWorkflowCode($commands, 'WL-LSAMon');
+
+say '=' x 60;
+
 #my $commandBulgarian = '
 #създай от aText;
 #направи документи-термини матрица без коренуване и с автоматични стоп думи;
