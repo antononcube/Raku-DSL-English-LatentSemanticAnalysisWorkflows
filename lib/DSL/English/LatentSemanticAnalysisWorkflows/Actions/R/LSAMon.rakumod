@@ -215,10 +215,10 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon
 
   # Pipeline command overwrites
   ## Object
-  method assign-pipeline-object-to($/) { make 'function(x) { assign( x = "' ~ $/.values[0].made ~ '", value = x ); x }'; }
+  method assign-pipeline-object-to($/) { make '(function(x) { assign( x = "' ~ $/.values[0].made ~ '", value = x, envir = .GlobalEnv ); x })'; }
 
   ## Value
-  method assign-pipeline-value-to($/) { make 'function(x) { assign( x = "' ~ $/.values[0].made ~ '", value = LSAMonTakeValue(x) ); x }'; }
+  method assign-pipeline-value-to($/) { make '(function(x) { assign( x = "' ~ $/.values[0].made ~ '", value = LSAMonTakeValue(x), envir = .GlobalEnv ); x })'; }
   method take-pipeline-value($/) { make 'LSAMonTakeValue()'; }
   method echo-pipeline-value($/) { make 'LSAMonEchoValue()'; }
   method echo-pipeline-funciton-value($/) { make 'LSAMonEchoFunctionValue( ' ~ $<pipeline-function-spec>.made ~ ' )'; }
