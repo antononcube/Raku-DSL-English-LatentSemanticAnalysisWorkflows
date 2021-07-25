@@ -126,21 +126,21 @@ grammar DSL::English::LatentSemanticAnalysisWorkflows::Grammar
     rule data-type-filler { <data-noun> | <records> }
 
     # Data statistics command
-    rule data-statistics-command { <summarize-data> | <docs-term-matrix-statistics> }
+    rule data-statistics-command { <summarize-data> }
     rule summarize-data { <summarize-directive> <the-determiner>? <data> | <display-directive> <data>? [ <summary> | <summaries> ] | <data-noun> <summary> }
-    rule docs-term-matrix-statistics { <doc-term-mat-phrase> <statistics-noun> }
 
     # LSI command is programmed as a role.
     # <lsi-apply-command>
 
     # Statistics command
-    rule statistics-command { <.statistics-preamble> [ <docs-per-term> | <terms-per-doc> ] }
+    rule statistics-command { <.statistics-preamble> [ <docs-term-matrix-statistics> | <docs-per-term> | <terms-per-doc> ] }
     rule statistics-preamble { [ <compute-and-display> | <display-directive> ] [ <the-determiner> | <a-determiner> | <some-determiner> ]? }
     rule docs-per-term { <docs> <per-preposition>? <terms> <statistic-spec>? }
     rule terms-per-doc { <terms> <per-preposition>? <docs> <statistic-spec>? }
     rule statistic-spec { <diagram-spec> | <summary-spec> }
     rule diagram-spec { <histogram> }
     rule summary-spec { <summary> | <statistics-noun> }
+    rule docs-term-matrix-statistics { <doc-term-mat-phrase> <statistics-noun> }
 
     # Thesaurus command
     rule thesaurus-extraction-command {[ <compute-directive> | <extract-directive> ] <thesaurus-spec>}
