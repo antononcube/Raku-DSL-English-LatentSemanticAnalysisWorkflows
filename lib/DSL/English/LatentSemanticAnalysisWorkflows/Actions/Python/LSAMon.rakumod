@@ -79,7 +79,7 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
     if $<doc-term-matrix-parameters-spec> {
       make 'obj = LSAMonMakeDocumentTermMatrix( lsaObj = obj, ' ~ $<doc-term-matrix-parameters-spec>.made ~ ')';
     } else {
-      make 'LSAMonMakeDocumentTermMatrix( lsaObj = ob j)';
+      make 'obj = LSAMonMakeDocumentTermMatrix( lsaObj = obj )';
     }
   }
 
@@ -198,8 +198,8 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
 
   # Representation commands
   method represent-query-command($/) { make $/.values[0].made; }
-  method represent-query-by-topics($/) { make 'LSAMonRepresentByTopics( query = ' ~ $<query-spec>.made ~ ')'; }
-  method represent-query-by-terms($/) { make 'LSAMonRepresentByTerms( query = ' ~ $<query-spec>.made ~ ')'; }
+  method represent-query-by-topics($/) { make 'obj = LSAMonRepresentByTopics( query = ' ~ $<query-spec>.made ~ ')'; }
+  method represent-query-by-terms($/) { make 'obj = LSAMonRepresentByTerms( query = ' ~ $<query-spec>.made ~ ')'; }
   method query-spec($/) { make $/.values[0].made; }
   method query-words-list($/) { make '"' ~ $<variable-name>>>.made.join(' ') ~ '"'; }
   method query-variable($/) { make $/.Str; }
