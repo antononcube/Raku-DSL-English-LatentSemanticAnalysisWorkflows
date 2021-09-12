@@ -37,13 +37,13 @@ my %targetToSeparator{Str} =
     "R"                => " %>%\n",
     "R-LSAMon"         => " %>%\n",
     "R::LSAMon"        => " %>%\n",
-    "Mathematica"      => " ==>\n",
+    "Mathematica"      => " \\[DoubleLongRightArrow]\n",
     "Python"           => "\n",
     "Python-LSAMon"    => "\n",
     "Python::LSAMon"   => "\n",
-    "WL"               => " ==>\n",
-    "WL-LSAMon"        => " ==>\n",
-    "WL::LSAMon"       => " ==>\n";
+    "WL"               => " \\[DoubleLongRightArrow]\n",
+    "WL-LSAMon"        => " \\[DoubleLongRightArrow]\n",
+    "WL::LSAMon"       => " \\[DoubleLongRightArrow]\n";
 
 
 #-----------------------------------------------------------
@@ -79,7 +79,9 @@ multi ToLatentSemanticAnalysisWorkflowCode ( Str $command where has-semicolon($c
 
     @cmdLines = grep { $_.^name eq 'Str' }, @cmdLines;
 
-    return @cmdLines.join( %targetToSeparator{$specTarget} ).trim;
+    my Str $res = @cmdLines.join( %targetToSeparator{$specTarget} ).trim;
+
+    return $res.subst( / ^^ \h* <{ '\'' ~ %targetToSeparator{$specTarget}.trim ~ '\'' }> \h* /, ''):g
 }
 
 #-----------------------------------------------------------

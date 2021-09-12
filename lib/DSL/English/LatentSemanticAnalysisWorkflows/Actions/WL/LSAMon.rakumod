@@ -50,7 +50,7 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon
   method TOP($/) { make $/.values[0].made; }
 
   # workflow-command-list
-  method workflow-commands-list($/) { make $/.values>>.made.join(" ==>\n"); }
+  method workflow-commands-list($/) { make $/.values>>.made.join(" \\[DoubleLongRightArrow]\n"); }
 
   # workflow-command
   method workflow-command($/) { make $/.values[0].made; }
@@ -242,4 +242,10 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon
   ## Echo messages
   method echo-command($/) { make 'LSAMonEcho[ ' ~ $<echo-message-spec>.made ~ ' ]'; }
 
+  ## Setup code
+  method setup-code-command($/) {
+    make q:to/SETUPEND/
+    Import["https://raw.githubusercontent.com/antononcube/MathematicaForPrediction/master/MonadicProgramming/MonadicLatentSemanticAnalysis.m"];
+    SETUPEND
+  }
 }

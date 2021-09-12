@@ -230,4 +230,16 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon
 
   ## Echo messages
   method echo-command($/) { make 'LSAMonEcho( ' ~ $<echo-message-spec>.made ~ ' )'; }
+
+  ## Setup code
+  method setup-code-command($/) {
+    make q:to/SETUPEND/
+      #devtools::install_github(repo = "antononcube/R-packages", subdir = "NonNegativeMatrixFactorization")
+      #devtools::install_github(repo = "antononcube/R-packages", subdir = "LSAMon-R")
+      library(magrittr)
+      library(irlba)
+      library(NonNegativeMatrixFactorization)
+      library(LSAMon)
+      SETUPEND
+  }
 }

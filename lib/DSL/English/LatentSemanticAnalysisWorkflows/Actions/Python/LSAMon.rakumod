@@ -206,5 +206,9 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
   method query-text($/) { make $/.Str; }
 
   # Pipeline command overwrites
-  ## None
+
+  ## Setup code
+  method setup-code-command($/) {
+    make "print(\"Not implemented\")\n";
+  }
 }
