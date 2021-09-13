@@ -8,20 +8,20 @@ interpretation of English natural speech commands that specify Latent Semantic A
 =head1 Synopsis
 
     use DSL::English::LatentSemanticAnalysisWorkflows;
-    my $rcode = to_LSAMon_R("make the document term matrix");
+    my $rcode = ToLatentSemanticAnalysisWorkflowCode("make the document term matrix");
 
 =end pod
 
 unit module DSL::English::LatentSemanticAnalysisWorkflows;
 
-use DSL::Shared::Utilities::MetaSpecsProcessing;
+use DSL::Shared::Utilities::CommandProcessing;
 
 use DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
 use DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon;
 use DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon;
 use DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon;
 
-my %targetToAction =
+my %targetToAction{Str} =
     "Python"           => DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon,
     "Python-LSAMon"    => DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon,
     "Python::LSAMon"   => DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon,
@@ -33,7 +33,7 @@ my %targetToAction =
     "WL-LSAMon"        => DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon,
     "WL::LSAMon"       => DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon;
 
-my %targetToSeparator{Str} =
+my Str %targetToSeparator{Str} =
     "R"                => " %>%\n",
     "R-LSAMon"         => " %>%\n",
     "R::LSAMon"        => " %>%\n",
@@ -54,34 +54,14 @@ sub has-semicolon (Str $word) {
 #-----------------------------------------------------------
 proto ToLatentSemanticAnalysisWorkflowCode(Str $command, Str $target = 'R-LSAMon' ) is export {*}
 
-multi ToLatentSemanticAnalysisWorkflowCode ( Str $command where not has-semicolon($command), Str $target = 'R-LSAMon' ) {
+multi ToLatentSemanticAnalysisWorkflowCode ( Str $command, Str $target = 'R-LSAMon' ) {
 
-    die 'Unknown target.' unless %targetToAction{$target}:exists;
+    DSL::Shared::Utilities::CommandProcessing::ToWorkflowCode( $command,
+                                                               grammar => DSL::English::LatentSemanticAnalysisWorkflows::Grammar,
+                                                               :%targetToAction,
+                                                               :%targetToSeparator,
+                                                               :$target )
 
-    my $match = DSL::English::LatentSemanticAnalysisWorkflows::Grammar.parse($command, actions => %targetToAction{$target} );
-    die 'Cannot parse the given command.' unless $match;
-    return $match.made;
-}
-
-multi ToLatentSemanticAnalysisWorkflowCode ( Str $command where has-semicolon($command), Str $target = 'R-LSAMon' ) {
-
-    my $specTarget = get-dsl-spec( $command, 'target');
-
-    $specTarget = $specTarget ?? $specTarget<DSLTARGET> !! $target;
-
-    die 'Unknown target.' unless %targetToAction{$specTarget}:exists;
-
-    my @commandLines = $command.trim.split(/ ';' \s* /);
-
-    @commandLines = grep { $_.Str.chars > 0 }, @commandLines;
-
-    my @cmdLines = map { ToLatentSemanticAnalysisWorkflowCode($_, $specTarget) }, @commandLines;
-
-    @cmdLines = grep { $_.^name eq 'Str' }, @cmdLines;
-
-    my Str $res = @cmdLines.join( %targetToSeparator{$specTarget} ).trim;
-
-    return $res.subst( / ^^ \h* <{ '\'' ~ %targetToSeparator{$specTarget}.trim ~ '\'' }> \h* /, ''):g
 }
 
 #-----------------------------------------------------------
