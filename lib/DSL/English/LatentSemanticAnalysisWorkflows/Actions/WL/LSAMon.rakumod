@@ -46,6 +46,9 @@ use DSL::Shared::Actions::English::WL::PipelineCommand;
 class DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon
         is DSL::Shared::Actions::English::WL::PipelineCommand {
 
+  # Separator
+  method separator() { " \\[DoubleLongRightArrow]\n" }
+
   # Top
   method TOP($/) { make $/.values[0].made; }
 
@@ -244,7 +247,7 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon
 
   ## Setup code
   method setup-code-command($/) {
-    make q:to/SETUPEND/
+    make 'SETUPCODE' => q:to/SETUPEND/
     Import["https://raw.githubusercontent.com/antononcube/MathematicaForPrediction/master/MonadicProgramming/MonadicLatentSemanticAnalysis.m"];
     SETUPEND
   }

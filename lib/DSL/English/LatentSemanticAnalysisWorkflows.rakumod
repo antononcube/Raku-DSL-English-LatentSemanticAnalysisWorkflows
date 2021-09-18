@@ -52,16 +52,16 @@ sub has-semicolon (Str $word) {
 }
 
 #-----------------------------------------------------------
-proto ToLatentSemanticAnalysisWorkflowCode(Str $command, Str $target = 'R-LSAMon' ) is export {*}
+proto ToLatentSemanticAnalysisWorkflowCode(Str $command, Str $target = 'R-LSAMon', | ) is export {*}
 
-multi ToLatentSemanticAnalysisWorkflowCode ( Str $command, Str $target = 'R-LSAMon' ) {
+multi ToLatentSemanticAnalysisWorkflowCode ( Str $command, Str $target = 'R-LSAMon', *%args ) {
 
     DSL::Shared::Utilities::CommandProcessing::ToWorkflowCode( $command,
                                                                grammar => DSL::English::LatentSemanticAnalysisWorkflows::Grammar,
                                                                :%targetToAction,
                                                                :%targetToSeparator,
-                                                               :$target )
-
+                                                               :$target,
+                                                               |%args )
 }
 
 #-----------------------------------------------------------

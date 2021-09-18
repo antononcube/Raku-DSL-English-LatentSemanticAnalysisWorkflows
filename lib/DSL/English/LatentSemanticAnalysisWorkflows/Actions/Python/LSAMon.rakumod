@@ -209,6 +209,6 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
 
   ## Setup code
   method setup-code-command($/) {
-    make "print(\"Not implemented\")\n";
+    make 'SETUPCODE' => "print(\"Not implemented\")\n";
   }
 }
