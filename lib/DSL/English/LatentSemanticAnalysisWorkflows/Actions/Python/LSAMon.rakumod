@@ -1,8 +1,8 @@
 =begin comment
 #==============================================================================
 #
-#   LSAMon-Py actions in Raku Perl 6
-#   Copyright (C) 2019  Anton Antonov
+#   Python-LSAMon actions in Raku Perl 6
+#   Copyright (C) 2019-2021  Anton Antonov
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -39,19 +39,21 @@
 =end comment
 
 use v6;
-#use lib '.';
-#use lib '../../../EBNF/English/RakuPerl6/';
+
 use DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
 use DSL::Shared::Actions::English::Python::PipelineCommand;
 
 class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
         is DSL::Shared::Actions::English::Python::PipelineCommand {
 
+  # Separator
+  method separator() { '' }
+
   # Top
   method TOP($/) { make $/.values[0].made; }
 
   # workflow-command-list
-  method workflow-commands-list($/) { make $/.values>>.made.join("\n"); }
+  method workflow-commands-list($/) { '(' ~ make $/.values>>.made.join("\n") ~ ')'; }
 
   # workflow-command
   method workflow-command($/) { make $/.values[0].made; }
@@ -65,21 +67,21 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
 
   # Data load commands
   method data-load-command($/) { make $/.values[0].made; }
-  method load-data($/) { make 'obj = LSAMonSetData( lsaObj = obj, ' ~ $/.values[0].made ~ ')'; }
+  method load-data($/) { make '.set_data( obj, ' ~ $/.values[0].made ~ ')'; }
   method data-location-spec($/) { make $<dataset-name>.made; }
   method use-lsa-object($/) { make $<dataset-name>.made; }
 
   # Create command
   method create-command($/) { make $/.values[0].made; }
-  method create-simple($/) { make 'obj = LSAMonUnit()'; }
-  method create-by-dataset($/) { make 'obj = LSAMonUnit(' ~ $<dataset-name> ~ ')'; }
+  method create-simple($/) { make 'LatentSemanticAnalyzer()'; }
+  method create-by-dataset($/) { make 'LatentSemanticAnalyzer(' ~ $<dataset-name> ~ ')'; }
 
   # Make document-term matrix command
   method make-doc-term-matrix-command($/) {
     if $<doc-term-matrix-parameters-spec> {
-      make 'obj = LSAMonMakeDocumentTermMatrix( lsaObj = obj, ' ~ $<doc-term-matrix-parameters-spec>.made ~ ')';
+      make '.make_document_term_matrix( ' ~ $<doc-term-matrix-parameters-spec>.made ~ ')';
     } else {
-      make 'obj = LSAMonMakeDocumentTermMatrix( lsaObj = obj )';
+      make '.make_document_term_matrix( )';
     }
   }
 
@@ -88,42 +90,42 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
   method doc-term-matrix-parameter($/) { make $/.values[0].made; }
 
   method doc-term-matrix-stemming-rules($/) { make $/.values[0].made; }
-  method stemming-rules-spec($/) { make 'stemWordsQ = ' ~ $/.values[0].made; }
-  method no-stemming-rules-spec($/) { make 'stemWordsQ = false'; }
-  method stemming-spec-simple($/) {  make 'stemWordsQ = NULL'; }
+  method stemming-rules-spec($/) { make 'stemming_rules = ' ~ $/.values[0].made; }
+  method no-stemming-rules-spec($/) { make 'stemming_rules = False'; }
+  method stemming-spec-simple($/) {  make 'stemming_rules = None'; }
 
   method doc-term-matrix-stop-words($/) { make $/.values[0].made; }
-  method stop-words-spec($/) { make 'stopWords = ' ~ $/.values[0].made; }
-  method no-stop-words-spec($/) { make 'stopWords = false' }
-  method stop-words-simple-spec($/) { make 'stopWords = NULL'; }
+  method stop-words-spec($/) { make 'stop_words = ' ~ $/.values[0].made; }
+  method no-stop-words-spec($/) { make 'stop_words = False' }
+  method stop-words-simple-spec($/) { make 'stop_words = NULL'; }
 
   # Data transformation commands
-  method data-transformation-command($/) { make 'obj = LSMonFailure( lsaObj = obj, "Not implemented yet.")'; }
+  method data-transformation-command($/) { make '.failure("Not implemented yet.")'; }
 
   # Data statistics commands
-  method data-statistics-command($/) { make 'obj = LSAMonEchoDocumentTermMatrixStatistics( lsaObj = obj )'; }
+  method data-statistics-command($/) { make '.echo_document_term_matrix_statistics()'; }
 
   # Statistics command
   method statistics-command($/) { make 'Not implemented'; }
 
   # LSI command is programmed as a role.
-  method lsi-apply-command($/) { make 'obj = LSAMonApplyTermWeightFunctions( lsaObj = obj, ' ~ $/.values[0].made ~ ')'; }
+  method lsi-apply-command($/) { make '.apply_term_weight_functions(' ~ $/.values[0].made ~ ')'; }
   method lsi-apply-verb($/) { make $/.Str; }
   method lsi-funcs-simple-list($/) { make $<lsi-global-func>.made ~ ', ' ~ $<lsi-local-func>.made ~ ", " ~ $<lsi-normalizer-func>; }
   method lsi-funcs-list($/) { make $<lsi-func>>>.made.join(', '); }
   method lsi-func($/) { make $/.values[0].made; }
-  method lsi-global-func($/) { make 'globalWeightFunction = ' ~  $/.values[0].made; }
+  method lsi-global-func($/) { make 'global_weight_func = ' ~  $/.values[0].made; }
   method lsi-global-func-idf($/) { make '"IDF"'; }
   method lsi-global-func-entropy($/) { make '"Entropy"'; }
   method lsi-global-func-sum($/) { make '"ColummStochastic"'; }
   method lsi-func-none($/) { make '"None"';}
 
-  method lsi-local-func($/) { make 'localWeightFunction = ' ~  $/.values[0].made; }
+  method lsi-local-func($/) { make 'local_weight_func = ' ~  $/.values[0].made; }
   method lsi-local-func-frequency($/) { make '"None"'; }
   method lsi-local-func-binary($/) { make '"Binary"'; }
   method lsi-local-func-log($/) { make '"Log"'; }
 
-  method lsi-normalizer-func($/) { make 'normalizerFunction = ' ~  $/.values[0].made; }
+  method lsi-normalizer-func($/) { make 'normalizer_func = ' ~  $/.values[0].made; }
   method lsi-normalizer-func-sum($/) { make '"Sum"'; }
   method lsi-normalizer-func-max($/) { make '"Max"'; }
   method lsi-normalizer-func-cosine($/) { make '"Cosine"'; }
@@ -131,9 +133,9 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
   # Topics extraction
   method topics-extraction-command($/) {
     if $<topics-parameters-spec> {
-      make 'obj = LSAMonExtractTopics( lsaObj = obj, numberOfTopics = ' ~ $<topics-spec>.made ~ ", " ~ $<topics-parameters-spec>.made ~ ")";
+      make '.extract_topics(number_of_topics = ' ~ $<topics-spec>.made ~ ", " ~ $<topics-parameters-spec>.made ~ ")";
     } else {
-      make 'obj = LSAMonExtractTopics( lsaObj = obj, mumberOfTopics = ' ~ $<topics-spec>.made ~ ")";
+      make '.extract_topics(number_of_topics = ' ~ $<topics-spec>.made ~ ")";
     }
   }
 
@@ -144,11 +146,11 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
   method topics-parameter($/) { make $/.values[0].made; }
 
 
-  method topics-max-iterations($/) { make ' maxSteps = ' ~ $<number-value>.made; }
+  method topics-max-iterations($/) { make 'max_steps = ' ~ $<number-value>.made; }
 
-  method topics-initialization($/) { make ' numberOfInitializingDocuments =' ~ $<number-value>.made; }
+  method topics-initialization($/) { make 'number_of_initializing_documents =' ~ $<number-value>.made; }
 
-  method min-number-of-documents-per-term($/) { make 'minNumberOfDocumentsPerTerm = ' ~ $<number-value>.made; }
+  method min-number-of-documents-per-term($/) { make 'min_number_of_documents_per_term = ' ~ $<number-value>.made; }
 
   method topics-method($/) { make $/.values[0].made; }
   method topics-method-name($/) { make 'method = ' ~ $/.values[0].made; }
@@ -163,9 +165,9 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
   # Show topic table command
   method show-topics-table-command($/) {
     if $<topics-table-parameters-spec> {
-      make 'obj = LSAMonEchoTopicsTable( lsaObj = obj, ' ~ $<topics-table-parameters-spec>.made ~ ')';
+      make '.echo_topics_table(' ~ $<topics-table-parameters-spec>.made ~ ')';
     } else {
-      make 'obj = LSAMonEchoTopicsTable( lsaObj = obj )';
+      make '.echo_topics_table( )';
     }
   }
 
@@ -181,14 +183,14 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
   # Show thesaurus table command
   method show-thesaurus-table-command($/) {
     if $<thesaurus-words-spec> {
-      make 'obj = LSAMonEchoStatisticalThesaurus( lsaObj = obj, words = ' ~ $<thesaurus-words-spec>.made ~ ')';
+      make '.echo_statistical_thesaurus(words = ' ~ $<thesaurus-words-spec>.made ~ ')';
     } else {
-      make 'obj = LSAMonEchoStatisticalThesaurus( lsaObj = obj )';
+      make '.echo_statistical_thesaurus( )';
     }
   }
 
   # What are the term NN's command
-  method what-are-the-term-nns($/) { make 'obj = LSAMonEchoStatisticalThesaurus( lsaObj = obj, words = ' ~ $<thesaurus-words-spec>.made ~ ')'; }
+  method what-are-the-term-nns($/) { make '.echo_statistical_thesaurus(words = ' ~ $<thesaurus-words-spec>.made ~ ')'; }
 
   method thesaurus-words-spec($/) { make $/.values[0].made; }
   method thesaurus-words-list($/) {
@@ -198,8 +200,8 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
 
   # Representation commands
   method represent-query-command($/) { make $/.values[0].made; }
-  method represent-query-by-topics($/) { make 'obj = LSAMonRepresentByTopics( query = ' ~ $<query-spec>.made ~ ')'; }
-  method represent-query-by-terms($/) { make 'obj = LSAMonRepresentByTerms( query = ' ~ $<query-spec>.made ~ ')'; }
+  method represent-query-by-topics($/) { make '.represent_by_topics(query = ' ~ $<query-spec>.made ~ ')'; }
+  method represent-query-by-terms($/) { make '.represent_by_terms(query = ' ~ $<query-spec>.made ~ ')'; }
   method query-spec($/) { make $/.values[0].made; }
   method query-words-list($/) { make '"' ~ $<variable-name>>>.made.join(' ') ~ '"'; }
   method query-variable($/) { make $/.Str; }
@@ -209,6 +211,8 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
 
   ## Setup code
   method setup-code-command($/) {
-    make 'SETUPCODE' => "print(\"Not implemented\")\n";
+    make 'SETUPCODE' => q:to/SETUPEND/
+    from LatentSemanticAnalyzer import *
+    SETUPEND
   }
 }
