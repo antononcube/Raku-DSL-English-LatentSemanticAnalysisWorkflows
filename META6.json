@@ -1,27 +1,27 @@
 {
-  "perl": "6.d",
   "name": "DSL::English::LatentSemanticAnalysisWorkflows",
-  "api": "1",
-  "auth": "github:antononcube",
-  "version": "0.8.0",
   "description": "Latent Semantic Analysis workflows building by natural language commands.",
+  "version": "0.8.0",
+  "perl": "6.d",
   "authors": [
     "Anton Antonov"
   ],
-  "license": "GPL-3.0-or-later",
-  "provides": {
-    "DSL::English::LatentSemanticAnalysisWorkflows": "lib/DSL/English/LatentSemanticAnalysisWorkflows.rakumod",
-    "DSL::English::LatentSemanticAnalysisWorkflows::Grammar": "lib/DSL/English/LatentSemanticAnalysisWorkflows/Grammar.rakumod",
-    "DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnalysisPhrases": "lib/DSL/English/LatentSemanticAnalysisWorkflows/Grammar/LatentSemanticAnalysisPhrases.rakumod",
-    "DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LSIApplyCommand": "lib/DSL/English/LatentSemanticAnalysisWorkflows/Grammar/LSIApplyCommand.rakumod",
-    "DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon": "lib/DSL/English/LatentSemanticAnalysisWorkflows/Actions/Python/LSAMon.rakumod",
-    "DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon": "lib/DSL/English/LatentSemanticAnalysisWorkflows/Actions/R/LSAMon.rakumod",
-    "DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon": "lib/DSL/English/LatentSemanticAnalysisWorkflows/Actions/WL/LSAMon.rakumod"
-  },
+  "auth": "github:antononcube",
   "depends": [],
   "build-depends": [],
   "test-depends": [],
+  "provides": {
+    "DSL::English::LatentSemanticAnalysisWorkflows": "lib/DSL/English/LatentSemanticAnalysisWorkflows.rakumod",
+    "DSL::English::LatentSemanticAnalysisWorkflows::Actions::Bulgarian::Standard": "lib/DSL/English/LatentSemanticAnalysisWorkflows/Actions/Bulgarian/Standard.rakumod",
+    "DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon": "lib/DSL/English/LatentSemanticAnalysisWorkflows/Actions/Python/LSAMon.rakumod",
+    "DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon": "lib/DSL/English/LatentSemanticAnalysisWorkflows/Actions/R/LSAMon.rakumod",
+    "DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon": "lib/DSL/English/LatentSemanticAnalysisWorkflows/Actions/WL/LSAMon.rakumod",
+    "DSL::English::LatentSemanticAnalysisWorkflows::Grammar": "lib/DSL/English/LatentSemanticAnalysisWorkflows/Grammar.rakumod",
+    "DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LSIApplyCommand": "lib/DSL/English/LatentSemanticAnalysisWorkflows/Grammar/LSIApplyCommand.rakumod",
+    "DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnalysisPhrases": "lib/DSL/English/LatentSemanticAnalysisWorkflows/Grammar/LatentSemanticAnalysisPhrases.rakumod"
+  },
   "resources": [],
+  "license": "GPL-3.0-or-later",
   "tags": [
     "Latent",
     "Semantic",
@@ -35,5 +35,6 @@
     "Workflow",
     "Pipeline"
   ],
+  "api": "1",
   "source-url": "https://github.com/antononcube/Raku-DSL-English-LatentSemanticAnalysisWorkflows.git"
 }
