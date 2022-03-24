@@ -18,11 +18,11 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::English::Standard
   method workflow-command($/) { make $/.values[0].made; }
 
   # General
-  method variable-names-list($/) { make 'c(' ~ $<variable-name>>>.made.join(', ') ~ ')'; }
-  method quoted-variable-names-list($/) { make 'c(' ~ $<quoted-variable-name>>>.made.join(', ') ~ ')'; }
-  method mixed-quoted-variable-names-list($/) { make 'c(' ~ $<mixed-quoted-variable-name>>>.made.join(', ') ~ ')'; }
-  method quoted-keyword-variable-names-list($/) { make 'c(' ~ $<quoted-keyword-variable-name>>>.made.join(', ') ~ ')'; }
-  method mixed-quoted-keyword-variable-names-list($/) { make 'c(' ~ $<mixed-quoted-keyword-variable-name>>>.made.join(', ') ~ ')'; }
+  method variable-names-list($/) { make '(' ~ $<variable-name>>>.made.join(', ') ~ ')'; }
+  method quoted-variable-names-list($/) { make '(' ~ $<quoted-variable-name>>>.made.join(', ') ~ ')'; }
+  method mixed-quoted-variable-names-list($/) { make '(' ~ $<mixed-quoted-variable-name>>>.made.join(', ') ~ ')'; }
+  method quoted-keyword-variable-names-list($/) { make '(' ~ $<quoted-keyword-variable-name>>>.made.join(', ') ~ ')'; }
+  method mixed-quoted-keyword-variable-names-list($/) { make '(' ~ $<mixed-quoted-keyword-variable-name>>>.made.join(', ') ~ ')'; }
 
   # Trivial
   method trivial-parameter($/) { make $/.values[0].made; }
@@ -58,7 +58,7 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::English::Standard
   method doc-term-matrix-parameter($/) { make $/.values[0].made; }
 
   method doc-term-matrix-stemming-rules($/) { make $/.values[0].made; }
-  method stemming-rules-spec($/) { make 'use if stemming rules: ' ~ $/.values[0].made; }
+  method stemming-rules-spec($/) { make 'use stemming rules: ' ~ $/.values[0].made; }
   method no-stemming-rules-spec($/) { make 'do not use stemming rules'; }
   method stemming-spec-simple($/) {  make 'use automatica stemming rules'; }
 
@@ -77,7 +77,7 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::English::Standard
   method statistics-command($/) { make 'show statistics'; }
 
   # LSI command is programmed as a role.
-  method lsi-apply-command($/) { make 'apply the LSI functions: ' ~ $/.values[0].made; }
+  method lsi-apply-command($/) { make 'apply the latent semantic analysis (LSI) functions: ' ~ $/.values[0].made; }
   method lsi-apply-verb($/) { make $/.Str; }
   method lsi-funcs-simple-list($/) { make $<lsi-global-func>.made ~ ', ' ~ $<lsi-local-func>.made ~ ", " ~ $<lsi-normalizer-func>; }
   method lsi-funcs-list($/) { make $<lsi-func>>>.made.join(', '); }
@@ -114,9 +114,9 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::English::Standard
   method topics-parameter($/) { make $/.values[0].made; }
 
 
-  method topics-max-iterations($/) { make ' max number of steps : ' ~ $<number-value>.made; }
+  method topics-max-iterations($/) { make 'max number of steps : ' ~ $<number-value>.made; }
 
-  method topics-initialization($/) { make ' number of initializing documents : ' ~ $<number-value>.made; }
+  method topics-initialization($/) { make 'number of initializing documents : ' ~ $<number-value>.made; }
 
   method min-number-of-documents-per-term($/) { make 'min number of documents per term : ' ~ $<number-value>.made; }
 
