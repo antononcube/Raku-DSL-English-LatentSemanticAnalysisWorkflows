@@ -97,7 +97,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammarish {
     rule trivial-parameter { <trivial-parameter-none> | <trivial-parameter-empty> | <trivial-parameter-automatic> | <trivial-parameter-false> | <trivial-parameter-true> }
     rule trivial-parameter-none { 'none' | 'no' | 'NA' }
     rule trivial-parameter-empty { 'empty' | '{}' | 'c()' }
-    rule trivial-parameter-automatic { 'automatic' | 'NULL' | 'default' }
+    rule trivial-parameter-automatic { <.automatic> | 'NULL' | 'default' }
     rule trivial-parameter-false { 'False' | 'FALSE' | 'F' | 'false' }
     rule trivial-parameter-true { 'True' | 'TRUE' | 'T' | 'true' }
 
