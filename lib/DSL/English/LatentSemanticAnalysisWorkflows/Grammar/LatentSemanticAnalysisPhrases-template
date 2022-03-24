@@ -55,16 +55,16 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     rule data-elements { 'sentences' | 'paragraphs' | 'sections' | 'chapters' | 'words' }
 
     rule docs { <document-noun> | <documents-noun> | 'docs' | <item-noun> | <items-noun> }
-    rule terms { 'word' | 'words' | 'term' | 'terms' }
+    rule terms-phrase { <word-noun> | <words-noun> | <term-noun> | <terms-noun> }
 
-    rule stemming-rules-phrase { 'stemming' ['rules']? }
-    rule stop-words-phrase { 'stop' 'words' }
+    rule stemming-rules-phrase { <stemming-noun> [<rules-noun>]? }
+    rule stop-words-phrase { <stop-adjective> <words-noun> }
 
     rule text-corpus-phrase { 'texts' | 'text' [ 'corpus' | 'collection' ]? }
 
     # Topics and thesaurus
     rule statistical-thesaurus-phrase { <statistical>? <thesaurus-noun> }
-    rule topics-table-phrase { 'topics' 'table' }
+    rule topics-table-phrase { <topics-noun> <table-noun> | <table-noun> <of-preposition> <topics-noun>}
 
 
     # LSI specific
@@ -81,4 +81,9 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     rule local-function-phrase { <local-adjective> <term-noun>? <weight-noun>? <function-noun> }
     rule normalizer-function-phrase { [ <normalizer-noun> | <normalizing-noun> | <normalization-noun> ] <term-noun>? <weight-noun>? <function-noun>? }
 
+    # Matrix factorization specific
+    rule ICA-phrase { <independent-adjective> <component-noun> <analysis-noun> }
+    rule NNMF-phrase { [ <non-prefix> <negative-adjective> | <nonnegative-adjective> ] <matrix-noun> <factorization-noun> }
+    rule PCA-phrase { <principal-adjective> <component-noun> <analysis-noun> }
+    rule SVD-phrase { <singular-adjective> <value-noun> <decomposition-noun> }
 }

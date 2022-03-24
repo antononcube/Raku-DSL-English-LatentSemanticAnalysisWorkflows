@@ -138,15 +138,15 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     proto rule docs {*}
     rule docs:sym<English> {  <document-noun> | <documents-noun> | 'docs' | <item-noun> | <items-noun>  }
 
-    proto rule terms {*}
-    rule terms:sym<English> { 'word' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'word', 2) }> | 'words' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'words', 2) }> | 'term' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'term', 2) }> | 'terms' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'terms', 2) }> }
+    proto rule terms-phrase {*}
+    rule terms-phrase:sym<English> {  <word-noun> | <words-noun> | <term-noun> | <terms-noun>  }
 
 
     proto rule stemming-rules-phrase {*}
-    rule stemming-rules-phrase:sym<English> {  'stemming' ['rules']?  }
+    rule stemming-rules-phrase:sym<English> {  <stemming-noun> [<rules-noun>]?  }
 
     proto rule stop-words-phrase {*}
-    rule stop-words-phrase:sym<English> {  'stop' 'words'  }
+    rule stop-words-phrase:sym<English> {  <stop-adjective> <words-noun>  }
 
 
     proto rule text-corpus-phrase {*}
@@ -158,7 +158,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     rule statistical-thesaurus-phrase:sym<English> {  <statistical>? <thesaurus-noun>  }
 
     proto rule topics-table-phrase {*}
-    rule topics-table-phrase:sym<English> {  'topics' 'table'  }
+    rule topics-table-phrase:sym<English> {  <topics-noun> <table-noun> | <table-noun> <of-preposition> <topics-noun> }
 
 
     # LSI specific
@@ -197,4 +197,17 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     proto rule normalizer-function-phrase {*}
     rule normalizer-function-phrase:sym<English> {  [ <normalizer-noun> | <normalizing-noun> | <normalization-noun> ] <term-noun>? <weight-noun>? <function-noun>?  }
 
+    # Matrix factorization specific
+
+    proto rule ICA-phrase {*}
+    rule ICA-phrase:sym<English> {  <independent-adjective> <component-noun> <analysis-noun>  }
+
+    proto rule NNMF-phrase {*}
+    rule NNMF-phrase:sym<English> {  [ <non-prefix> <negative-adjective> | <nonnegative-adjective> ] <matrix-noun> <factorization-noun>  }
+
+    proto rule PCA-phrase {*}
+    rule PCA-phrase:sym<English> {  <principal-adjective> <component-noun> <analysis-noun>  }
+
+    proto rule SVD-phrase {*}
+    rule SVD-phrase:sym<English> {  <singular-adjective> <value-noun> <decomposition-noun>  }
 }

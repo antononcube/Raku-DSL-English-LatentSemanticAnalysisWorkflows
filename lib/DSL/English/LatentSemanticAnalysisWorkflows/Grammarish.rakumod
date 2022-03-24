@@ -117,8 +117,8 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammarish {
     # Statistics command
     rule statistics-command { <.statistics-preamble> [ <docs-term-matrix-statistics> | <docs-per-term> | <terms-per-doc> ] }
     rule statistics-preamble { [ <compute-and-display> | <display-directive> ] [ <the-determiner> | <a-determiner> | <some-determiner> ]? }
-    rule docs-per-term { <docs> <per-preposition>? <terms-noun> <statistic-spec>? }
-    rule terms-per-doc { <terms-noun> <per-preposition>? <docs> <statistic-spec>? }
+    rule docs-per-term { <docs> <per-preposition>? <terms-phrase> <statistic-spec>? }
+    rule terms-per-doc { <terms-phrase> <per-preposition>? <docs> <statistic-spec>? }
     rule statistic-spec { <diagram-spec> | <summary-spec> }
     rule diagram-spec { <histogram> }
     rule summary-spec { <summary> | <statistics-noun> }
@@ -128,7 +128,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammarish {
     rule thesaurus-extraction-command {[ <compute-directive> | <extract-directive> ] <thesaurus-spec>}
     rule thesaurus-spec { <statistical-thesaurus-phrase> [ <with-preposition> <thesaurus-parameters-spec> ]? }
     rule thesaurus-parameters-spec {<thesaurus-number-of-nns>}
-    rule thesaurus-number-of-nns {<number-value> [ <number-of>? [ <nearest-neighbors-phrase> | <synonyms-noun> | <synonym-noun> <terms-noun> ] [ <per-preposition> <terms-noun> ]?] }
+    rule thesaurus-number-of-nns {<number-value> [ <number-of>? [ <nearest-neighbors-phrase> | <synonyms-noun> | <synonym-noun> <terms-phrase> ] [ <per-preposition> <terms-phrase> ]?] }
 
     # Topics extraction
     rule topics-extraction-command {[ <compute-directive> | <extract-directive> ] <topics-spec> [ <topics-parameters-spec> ]?}
@@ -140,7 +140,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammarish {
     rule topics-max-iterations { <.max-iterations-phrase> <number-value> | <number-value> <.max-iterations-phrase> }
     rule topics-initialization {  <random-adjective>? <number-value> <columns> <clusters> }
     rule min-number-of-documents-per-term { <.min-number-of-documents-per-term-phrase> <number-value> | <number-value> <.min-number-of-documents-per-term-phrase> }
-    rule min-number-of-documents-per-term-phrase { <minimum> <number-of> <documents-noun> <per-preposition> <terms-noun> }
+    rule min-number-of-documents-per-term-phrase { <minimum> <number-of> <documents-noun> <per-preposition> <terms-phrase> }
     rule topics-method {[ <.the-determiner>? <.method-noun> ]? <topics-method-name> }
 
     ## May be this should be slot?
