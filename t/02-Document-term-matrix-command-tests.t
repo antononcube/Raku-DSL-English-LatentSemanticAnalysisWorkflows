@@ -1,5 +1,3 @@
-use v6;
-use lib 'lib';
 use DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
 use Test;
 
@@ -41,7 +39,8 @@ ok $pLSAMONCOMMAND.parse('make the document term matrix without stemming and wit
         'make the document term matrix without stemming and with automatic stop words';
 
 # 8
-ok $pLSAMONCOMMAND.parse('make the document term matrix with `Automatic` stemming rules and with `Automatic` stop words'),
+ok $pLSAMONCOMMAND
+        .parse('make the document term matrix with `Automatic` stemming rules and with `Automatic` stop words'),
         'make the document term matrix with `Automatic` stemming rules and with `Automatic` stop words';
 
 # 9

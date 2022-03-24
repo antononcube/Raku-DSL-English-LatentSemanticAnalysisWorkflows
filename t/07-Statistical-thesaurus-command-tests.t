@@ -1,5 +1,4 @@
-use v6;
-use lib 'lib';
+
 use DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
 use Test;
 
