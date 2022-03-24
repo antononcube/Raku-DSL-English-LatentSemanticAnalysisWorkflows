@@ -10,83 +10,191 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     # For some reason using <item-noun> below gives the error: "Too many positionals passed; expected 1 argument but got 2".
 
     # LSA specific
-    token analysis { 'analysis' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'analysis') }> }
-    token component { 'component' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'component') }> }
-    token decomposition { 'decomposition' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'decomposition') }> }
-    token document { 'document' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'document') }> }
-    token documents { 'documents' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'documents') }> }
-    token entries { 'entries' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'entries') }> }
-    token factorization { 'factorization' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'factorization') }> }
-    token identifier { 'identifier' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'identifier') }> }
-    token independent { 'independent' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'independent') }> }
-    token indexing { 'indexing' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'indexing') }> }
-    token ingest { 'ingest' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'ingest') }> | 'load' | 'use' | 'get' }
-    token item-noun { 'item' | ([\w]+) <?{ $0.Str ne 'items' and is-fuzzy-match( $0.Str, 'item') }> }
-    token items-noun { 'items' | ([\w]+) <?{ $0.Str ne 'item' and is-fuzzy-match( $0.Str, 'items') }> }
-    token latent { 'latent' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'latent') }> }
-    token matrix { 'matrix' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'matrix') }> }
-    token negative { 'negative' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'negative') }> }
-    token nonnegative { 'non-negative' | 'nonnegative' }
-    token partition { 'partition' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'partition') }> }
-    token principal { 'principal' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'principal') }> }
-    token query { 'query' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'query') }> }
-    token represent { 'represent' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'represent') }> }
-    token rules-noun { 'rules' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'rules') }> }
-    token semantic { 'semantic' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'semantic') }> }
-    token singular { 'singular' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'singular') }> }
-    token stemming-noun { 'stemming' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'stemming') }> }
-    token stop-noun { 'stop' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'stop') }> }
-    token synonym { 'synonym' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'synonym') }> }
-    token synonyms { 'synonyms' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'synonyms') }> }
-    token term { 'term' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'term') }> }
-    token thesaurus { 'thesaurus' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'thesaurus') }> }
-    token threshold { 'threshold' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'threshold') }> }
-    token topic { 'topic' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'topic') }> }
-    token topics { 'topics' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'topics') }> }
-    token word { 'word' | ([\w]+) <?{ $0.Str ne 'words' and is-fuzzy-match( $0.Str, 'word') }> }
 
-    token document-term-phrase {[ <document> | 'doc' | 'item' ] [ '-' | '-vs-' | \h+ ] [ <term> | <word> ] }
-    rule doc-term-mat-phrase { <document-term-phrase> <matrix> }
-    rule lsa-object { <lsa-phrase>? <object-noun> }
-    rule lsa-phrase { <latent> <semantic> <analysis> | 'lsa' | 'LSA' }
-    rule lsi-phrase { <latent> <semantic> <indexing> | 'lsi' | 'LSI' }
-    rule matrix-entries { [ <doc-term-mat-phrase> | <matrix> ]? <entries> }
-    rule number-of-terms-phrase { <number-of>? <terms> }
-    rule the-outliers { <the-determiner> <outliers> }
+    proto token analysis-noun {*}
+    token analysis-noun:sym<English> { :i 'analysis' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'analysis', 2) }> }
+
+    proto token component-noun {*}
+    token component-noun:sym<English> { :i 'component' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'component', 2) }> }
+
+    proto token decomposition-noun {*}
+    token decomposition-noun:sym<English> { :i 'decomposition' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'decomposition', 2) }> }
+
+    proto token entries-noun {*}
+    token entries-noun:sym<English> { :i 'entries' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'entries', 2) }> }
+
+    proto token factorization-noun {*}
+    token factorization-noun:sym<English> { :i 'factorization' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'factorization', 2) }> }
+
+    proto token independent-adjective {*}
+    token independent-adjective:sym<English> { :i 'independent' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'independent', 2) }> }
+
+    proto token indexing-noun {*}
+    token indexing-noun:sym<English> { :i 'indexing' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'indexing', 2) }> }
+
+    proto token item-noun {*}
+    token item-noun:sym<English> { :i 'item' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'item', 2) }> }
+
+    proto token items-noun {*}
+    token items-noun:sym<English> { :i 'items' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'items', 2) }> }
+
+    proto token latent-adjective {*}
+    token latent-adjective:sym<English> { :i 'latent' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'latent', 2) }> }
+
+    proto token negative-adjective {*}
+    token negative-adjective:sym<English> { :i 'negative' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'negative', 2) }> }
+
+    proto token nonnegative-adjective {*}
+    token nonnegative-adjective:sym<English> { :i  'non-negative' | 'nonnegative'  }
+
+    proto token partition-noun {*}
+    token partition-noun:sym<English> { :i 'partition' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'partition', 2) }> }
+
+    proto token principal-adjective {*}
+    token principal-adjective:sym<English> { :i 'principal' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'principal', 2) }> }
+
+    proto token query-noun {*}
+    token query-noun:sym<English> { :i 'query' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'query', 2) }> }
+
+    proto token rules-noun {*}
+    token rules-noun:sym<English> { :i 'rules' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'rules', 2) }> }
+
+    proto token semantic-adjective {*}
+    token semantic-adjective:sym<English> { :i 'semantic' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'semantic', 2) }> }
+
+    proto token singular-adjective {*}
+    token singular-adjective:sym<English> { :i 'singular' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'singular', 2) }> }
+
+    proto token stemming-noun {*}
+    token stemming-noun:sym<English> { :i 'stemming' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'stemming', 2) }> }
+
+    proto token stop-adjective {*}
+    token stop-adjective:sym<English> { :i 'stop' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'stop', 2) }> }
+
+    proto token stop-noun {*}
+    token stop-noun:sym<English> { :i 'stop' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'stop', 2) }> }
+
+    proto token synonym-noun {*}
+    token synonym-noun:sym<English> { :i 'synonym' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'synonym', 2) }> }
+
+    proto token synonyms-noun {*}
+    token synonyms-noun:sym<English> { :i 'synonyms' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'synonyms', 2) }> }
+
+    proto token term-noun {*}
+    token term-noun:sym<English> { :i 'term' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'term', 2) }> }
+
+    proto token terms-noun {*}
+    token terms-noun:sym<English> { :i 'terms' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'terms', 2) }> }
+
+    proto token thesaurus-noun {*}
+    token thesaurus-noun:sym<English> { :i 'thesaurus' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'thesaurus', 2) }> }
+
+    proto token topic-noun {*}
+    token topic-noun:sym<English> { :i 'topic' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'topic', 2) }> }
+
+    proto token topics-noun {*}
+    token topics-noun:sym<English> { :i 'topics' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'topics', 2) }> }
+
+
+    proto token document-term-phrase {*}
+    token document-term-phrase:sym<English> { :i [ <document-noun> | 'doc' | 'item' ] [ '-' | '-vs-' | \h+ ] [ <term-noun> | <word-noun> ]  }
+
+    proto rule doc-term-mat {*}
+    rule doc-term-mat:sym<English> {  [ <document-noun> | <item-noun> ] [ <term-noun> | <word-noun> ] <matrix-noun>  }
+
+    proto rule doc-term-mat-phrase {*}
+    rule doc-term-mat-phrase:sym<English> {  <document-term-phrase> <matrix-noun>  }
+
+    proto rule ingest-directive {*}
+    rule ingest-directive:sym<English> {  <ingest-verb> | <load-verb> | <use-verb> | <get-verb>  }
+
+    proto rule lsa-object {*}
+    rule lsa-object:sym<English> {  <lsa-phrase>? <object-noun>  }
+
+    proto rule lsa-phrase {*}
+    rule lsa-phrase:sym<English> {  <latent-adjective> <semantic-adjective> <analysis-noun> | 'lsa' | 'LSA'  }
+
+    proto rule lsi-phrase {*}
+    rule lsi-phrase:sym<English> {  <latent-adjective> <semantic-adjective> <indexing-noun> | 'lsi' | 'LSI'  }
+
+    proto rule matrix-entries {*}
+    rule matrix-entries:sym<English> {  [ <doc-term-mat-phrase> | <matrix-noun> ]? <entries-noun>  }
+
+    proto rule number-of-terms-phrase {*}
+    rule number-of-terms-phrase:sym<English> {  <number-of>? <terms-noun>  }
+
+    proto rule the-outliers {*}
+    rule the-outliers:sym<English> {  <the-determiner> <outliers>  }
 
     # Document term matrix creation related
-    rule data-element { 'sentence' | 'paragraph' | 'section' | 'chapter' | 'word' }
-    rule data-elements { 'sentences' | 'paragraphs' | 'sections' | 'chapters' | 'words' }
 
-    rule docs { <document> | <documents> | 'docs' | <item-noun> | <items-noun> }
-    rule terms { 'word' | 'words' | 'term' | 'terms' }
+    proto rule data-element {*}
+    rule data-element:sym<English> { 'sentence' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'sentence', 2) }> | 'paragraph' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'paragraph', 2) }> | 'section' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'section', 2) }> | 'chapter' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'chapter', 2) }> | 'word' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'word', 2) }> }
 
-    rule stemming-rules-phrase { <stemming-noun> <rules-noun>? }
-    rule stop-words-phrase { <stop-noun> <words-noun> }
+    proto rule data-elements {*}
+    rule data-elements:sym<English> { 'sentences' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'sentences', 2) }> | 'paragraphs' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'paragraphs', 2) }> | 'sections' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'sections', 2) }> | 'chapters' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'chapters', 2) }> | 'words' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'words', 2) }> }
 
-    rule text-corpus-phrase { 'texts' | 'text' [ 'corpus' | 'collection' ]? }
+
+    proto rule docs {*}
+    rule docs:sym<English> {  <document-noun> | <documents-noun> | 'docs' | <item-noun> | <items-noun>  }
+
+    proto rule terms {*}
+    rule terms:sym<English> { 'word' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'word', 2) }> | 'words' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'words', 2) }> | 'term' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'term', 2) }> | 'terms' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'terms', 2) }> }
+
+
+    proto rule stemming-rules-phrase {*}
+    rule stemming-rules-phrase:sym<English> {  'stemming' ['rules']?  }
+
+    proto rule stop-words-phrase {*}
+    rule stop-words-phrase:sym<English> {  'stop' 'words'  }
+
+
+    proto rule text-corpus-phrase {*}
+    rule text-corpus-phrase:sym<English> {  'texts' | 'text' [ 'corpus' | 'collection' ]?  }
 
     # Topics and thesaurus
-    rule statistical-thesaurus-phrase { <statistical>? <thesaurus> }
-    rule topics-table-phrase { 'topics' 'table' }
+
+    proto rule statistical-thesaurus-phrase {*}
+    rule statistical-thesaurus-phrase:sym<English> {  <statistical>? <thesaurus-noun>  }
+
+    proto rule topics-table-phrase {*}
+    rule topics-table-phrase:sym<English> {  'topics' 'table'  }
+
 
     # LSI specific
-    token frequency { 'frequency' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'frequency') }> }
-    #token function { 'function' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'function') }> }
-    #token functions { 'function' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'function') }> | 'functions' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'functions') }> }
-    token global { 'global' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'global') }> }
-    token local { 'local' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'local') }> }
-    token normalization { 'normalization' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'normalization') }> }
-    token normalizer { 'normalizer' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'normalizer') }> }
-    token normalizing { 'normalizing' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'normalizing') }> }
 
-    rule global-function-phrase { <global> <term> ?<weight>? <function> }
-    rule local-function-phrase { <local> <term>? <weight>? <function> }
-    rule normalizer-function-phrase { [ <normalizer> | <normalizing> | <normalization> ] <term>? <weight>? <function>? }
+    proto token frequency-noun {*}
+    token frequency-noun:sym<English> { :i 'frequency' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'frequency', 2) }> }
 
-    # Matrix factorization specific
-    rule ICA-phrase { <independent> <component> <analysis> }
-    rule NNMF-phrase { [ <non-prefix> <negative> | <nonnegative> ] <matrix> <factorization> }
-    rule PCA-phrase { <principal> <component> <analysis> }
-    rule SVD-phrase { <singular> <value-noun> <decomposition> }
+    proto token global-adjective {*}
+    token global-adjective:sym<English> { :i 'global' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'global', 2) }> }
+
+    proto token inverse-adjective {*}
+    token inverse-adjective:sym<English> { :i 'inverse' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'inverse', 2) }> }
+
+    proto token local-adjective {*}
+    token local-adjective:sym<English> { :i 'local' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'local', 2) }> }
+
+    proto token normalization-noun {*}
+    token normalization-noun:sym<English> { :i 'normalization' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'normalization', 2) }> }
+
+    proto token normalizer-noun {*}
+    token normalizer-noun:sym<English> { :i 'normalizer' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'normalizer', 2) }> }
+
+    proto token normalizing-noun {*}
+    token normalizing-noun:sym<English> { :i 'normalizing' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'normalizing', 2) }> }
+
+
+    proto rule global-function-phrase {*}
+    rule global-function-phrase:sym<English> {  <global-adjective> <term-noun> ?<weight-noun>? <function-noun>  }
+
+    proto rule join-type-phrase {*}
+    rule join-type-phrase:sym<English> {  <join-verb>? <type-noun>  }
+
+    proto rule local-function-phrase {*}
+    rule local-function-phrase:sym<English> {  <local-adjective> <term-noun>? <weight-noun>? <function-noun>  }
+
+    proto rule normalizer-function-phrase {*}
+    rule normalizer-function-phrase:sym<English> {  [ <normalizer-noun> | <normalizing-noun> | <normalization-noun> ] <term-noun>? <weight-noun>? <function-noun>?  }
+
 }

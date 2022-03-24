@@ -10,55 +10,51 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     # For some reason using <item-noun> below gives the error: "Too many positionals passed; expected 1 argument but got 2".
 
     # LSA specific
-    token analysis { 'analysis' }
-    token component { 'component' }
-    token decomposition { 'decomposition' }
-    token document { 'document' }
-    token documents { 'documents' }
-    token entries { 'entries' }
-    token factorization { 'factorization' }
-    token identifier { 'identifier' }
-    token independent { 'independent' }
-    token indexing { 'indexing' }
-    token ingest { 'ingest' | 'load' | 'use' | 'get' }
+    token analysis-noun { 'analysis' }
+    token component-noun { 'component' }
+    token decomposition-noun { 'decomposition' }
+    token entries-noun { 'entries' }
+    token factorization-noun { 'factorization' }
+    token independent-adjective { 'independent' }
+    token indexing-noun { 'indexing' }
     token item-noun { 'item' }
     token items-noun { 'items' }
-    token latent { 'latent' }
-    token matrix { 'matrix' }
-    token negative { 'negative' }
-    token nonnegative { 'non-negative' | 'nonnegative' }
-    token partition { 'partition' }
-    token principal { 'principal' }
-    token query { 'query' }
-    token represent { 'represent' }
+    token latent-adjective { 'latent' }
+    token negative-adjective { 'negative' }
+    token nonnegative-adjective { 'non-negative' | 'nonnegative' }
+    token partition-noun { 'partition' }
+    token principal-adjective { 'principal' }
+    token query-noun { 'query' }
     token rules-noun { 'rules' }
-    token semantic { 'semantic' }
+    token semantic-adjective { 'semantic' }
+    token singular-adjective { 'singular' }
     token stemming-noun { 'stemming' }
+    token stop-adjective { 'stop' }
     token stop-noun { 'stop' }
-    token singular { 'singular' }
-    token synonym { 'synonym' }
-    token synonyms { 'synonyms' }
-    token term { 'term' }
-    token thesaurus { 'thesaurus' }
-    token threshold { 'threshold' }
-    token topic { 'topic' }
-    token topics { 'topics' }
-    token word { 'word' }
+    token synonym-noun { 'synonym' }
+    token synonyms-noun { 'synonyms' }
+    token term-noun { 'term' }
+    token terms-noun { 'terms' }
+    token thesaurus-noun { 'thesaurus' }
+    token topic-noun { 'topic' }
+    token topics-noun { 'topics' }
 
-    token document-term-phrase {[ <document> | 'doc' | 'item' ] [ '-' | '-vs-' | \h+ ] [ <term> | <word> ] }
-    rule doc-term-mat-phrase { <document-term-phrase> <matrix> }
-    rule lsa-object { <lsa-phrase>? 'object' }
-    rule lsa-phrase { <latent> <semantic> <analysis> | 'lsa' | 'LSA' }
-    rule lsi-phrase { <latent> <semantic> <indexing> | 'lsi' | 'LSI' }
-    rule matrix-entries { [ <doc-term-mat-phrase> | <matrix> ]? <entries> }
-    rule number-of-terms-phrase { <number-of>? <terms> }
+    token document-term-phrase {[ <document-noun> | 'doc' | 'item' ] [ '-' | '-vs-' | \h+ ] [ <term-noun> | <word-noun> ] }
+    rule doc-term-mat { [ <document-noun> | <item-noun> ] [ <term-noun> | <word-noun> ] <matrix-noun> }
+    rule doc-term-mat-phrase { <document-term-phrase> <matrix-noun> }
+    rule ingest-directive { <ingest-verb> | <load-verb> | <use-verb> | <get-verb> }
+    rule lsa-object { <lsa-phrase>? <object-noun> }
+    rule lsa-phrase { <latent-adjective> <semantic-adjective> <analysis-noun> | 'lsa' | 'LSA' }
+    rule lsi-phrase { <latent-adjective> <semantic-adjective> <indexing-noun> | 'lsi' | 'LSI' }
+    rule matrix-entries { [ <doc-term-mat-phrase> | <matrix-noun> ]? <entries-noun> }
+    rule number-of-terms-phrase { <number-of>? <terms-noun> }
     rule the-outliers { <the-determiner> <outliers> }
 
     # Document term matrix creation related
     rule data-element { 'sentence' | 'paragraph' | 'section' | 'chapter' | 'word' }
     rule data-elements { 'sentences' | 'paragraphs' | 'sections' | 'chapters' | 'words' }
 
-    rule docs { <document> | <documents> | 'docs' | <item-noun> | <items-noun> }
+    rule docs { <document-noun> | <documents-noun> | 'docs' | <item-noun> | <items-noun> }
     rule terms { 'word' | 'words' | 'term' | 'terms' }
 
     rule stemming-rules-phrase { 'stemming' ['rules']? }
@@ -67,26 +63,22 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     rule text-corpus-phrase { 'texts' | 'text' [ 'corpus' | 'collection' ]? }
 
     # Topics and thesaurus
-    rule statistical-thesaurus-phrase { <statistical>? <thesaurus> }
+    rule statistical-thesaurus-phrase { <statistical>? <thesaurus-noun> }
     rule topics-table-phrase { 'topics' 'table' }
 
+
     # LSI specific
-    token frequency { 'frequency' }
-    #token function { 'function' }
-    #token functions { 'function' | 'functions' }
-    token global { 'global' }
-    token local { 'local' }
-    token normalization { 'normalization' }
-    token normalizer { 'normalizer' }
-    token normalizing { 'normalizing' }
+    token frequency-noun { 'frequency' }
+    token global-adjective { 'global' }
+    token inverse-adjective { 'inverse' }
+    token local-adjective { 'local' }
+    token normalization-noun { 'normalization' }
+    token normalizer-noun { 'normalizer' }
+    token normalizing-noun { 'normalizing' }
 
-    rule global-function-phrase { <global> <term> ?<weight>? <function> }
-    rule local-function-phrase { <local> <term>? <weight>? <function> }
-    rule normalizer-function-phrase { [ <normalizer> | <normalizing> | <normalization> ] <term>? <weight>? <function>? }
+    rule global-function-phrase { <global-adjective> <term-noun> ?<weight-noun>? <function-noun> }
+    rule join-type-phrase { <join-verb>? <type-noun> }
+    rule local-function-phrase { <local-adjective> <term-noun>? <weight-noun>? <function-noun> }
+    rule normalizer-function-phrase { [ <normalizer-noun> | <normalizing-noun> | <normalization-noun> ] <term-noun>? <weight-noun>? <function-noun>? }
 
-    # Matrix factorization specific
-    rule ICA-phrase { <independent> <component> <analysis> }
-    rule NNMF-phrase { [ <non-prefix> <negative> | <nonnegative> ] <matrix> <factorization> }
-    rule PCA-phrase { <principal> <component> <analysis> }
-    rule SVD-phrase { <singular> <value-noun> <decomposition> }
 }

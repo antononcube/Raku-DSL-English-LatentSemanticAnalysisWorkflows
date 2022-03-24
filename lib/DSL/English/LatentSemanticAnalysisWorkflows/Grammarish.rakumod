@@ -103,7 +103,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammarish {
 
     # Data transformation command
     rule data-transformation-command { <data-partition> }
-    rule data-partition { <partition> <data-reference>? [ <to-preposition> | <into-preposition> ] <data-elements> }
+    rule data-partition { <partition-noun> <data-reference>? [ <to-preposition> | <into-preposition> ] <data-elements> }
     rule data-spec-opening {<transform-verb>}
     rule data-type-filler { <data-noun> | <records> }
 
@@ -117,8 +117,8 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammarish {
     # Statistics command
     rule statistics-command { <.statistics-preamble> [ <docs-term-matrix-statistics> | <docs-per-term> | <terms-per-doc> ] }
     rule statistics-preamble { [ <compute-and-display> | <display-directive> ] [ <the-determiner> | <a-determiner> | <some-determiner> ]? }
-    rule docs-per-term { <docs> <per-preposition>? <terms> <statistic-spec>? }
-    rule terms-per-doc { <terms> <per-preposition>? <docs> <statistic-spec>? }
+    rule docs-per-term { <docs> <per-preposition>? <terms-noun> <statistic-spec>? }
+    rule terms-per-doc { <terms-noun> <per-preposition>? <docs> <statistic-spec>? }
     rule statistic-spec { <diagram-spec> | <summary-spec> }
     rule diagram-spec { <histogram> }
     rule summary-spec { <summary> | <statistics-noun> }
@@ -128,11 +128,11 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammarish {
     rule thesaurus-extraction-command {[ <compute-directive> | <extract-directive> ] <thesaurus-spec>}
     rule thesaurus-spec { <statistical-thesaurus-phrase> [ <with-preposition> <thesaurus-parameters-spec> ]? }
     rule thesaurus-parameters-spec {<thesaurus-number-of-nns>}
-    rule thesaurus-number-of-nns {<number-value> [ <number-of>? [ <nearest-neighbors-phrase> | <synonyms> | <synonym> <terms> ] [ <per-preposition> <terms> ]?] }
+    rule thesaurus-number-of-nns {<number-value> [ <number-of>? [ <nearest-neighbors-phrase> | <synonyms-noun> | <synonym-noun> <terms-noun> ] [ <per-preposition> <terms-noun> ]?] }
 
     # Topics extraction
     rule topics-extraction-command {[ <compute-directive> | <extract-directive> ] <topics-spec> [ <topics-parameters-spec> ]?}
-    rule topics-spec { <number-value> <topics> | <topics> <number-value> }
+    rule topics-spec { <number-value> <topics-noun> | <topics-noun> <number-value> }
     rule topics-parameters-spec { <.with-preposition> <topics-parameters-list>}
     rule topics-parameters-list { <topics-parameter>+ % <list-separator> }
 
@@ -140,7 +140,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammarish {
     rule topics-max-iterations { <.max-iterations-phrase> <number-value> | <number-value> <.max-iterations-phrase> }
     rule topics-initialization {  <random-adjective>? <number-value> <columns> <clusters> }
     rule min-number-of-documents-per-term { <.min-number-of-documents-per-term-phrase> <number-value> | <number-value> <.min-number-of-documents-per-term-phrase> }
-    rule min-number-of-documents-per-term-phrase { <minimum> <number-of> <documents> <per-preposition> <terms> }
+    rule min-number-of-documents-per-term-phrase { <minimum> <number-of> <documents-noun> <per-preposition> <terms-noun> }
     rule topics-method {[ <.the-determiner>? <.method-noun> ]? <topics-method-name> }
 
     ## May be this should be slot?
@@ -164,15 +164,15 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammarish {
     rule topics-table-number-of-terms {  <.number-of-terms-phrase> <integer-value> | <integer-value> <.number-of-terms-phrase> }
 
     rule show-thesaurus-command { <show-thesaurus-table-command> | <what-are-the-term-nns> }
-    rule show-thesaurus-table-command { [ <compute-and-display> | <display-directive> ] <statistical>? <thesaurus> <table-noun>? <thesaurus-words-spec>? }
+    rule show-thesaurus-table-command { [ <compute-and-display> | <display-directive> ] <statistical>? <thesaurus-noun> <table-noun>? <thesaurus-words-spec>? }
     rule what-are-the-term-nns { <what-pronoun> <are-verb> <the-determiner>? <top-noun>? <nearest-neighbors-phrase> <thesaurus-words-spec> }
     rule thesaurus-words-spec { [ <.for-preposition> | <.of-preposition> ] <thesaurus-words-list>}
     rule thesaurus-words-list { <mixed-quoted-variable-names-list> }
 
     # Representation command
     rule represent-query-command { <represent-query-by-topics> | <represent-query-by-terms> }
-    rule represent-query-by-topics { <represent-directive> <by-preposition> <topics> <.the-determiner>? <.query>? <query-spec> }
-    rule represent-query-by-terms { <represent-directive> <by-preposition> <terms> <.the-determiner>? <.query>? <query-spec> }
+    rule represent-query-by-topics { <represent-directive> <by-preposition> <topics-noun> <.the-determiner>? <.query-noun>? <query-spec> }
+    rule represent-query-by-terms { <represent-directive> <by-preposition> <terms-noun> <.the-determiner>? <.query-noun>? <query-spec> }
     rule query-spec { <query-text> | <query-words-list> | <query-variable> }
     rule query-words-list { <variable-name>+ % ( <list-separator> | \h+ )  }
     rule query-variable { <variable-name> }
