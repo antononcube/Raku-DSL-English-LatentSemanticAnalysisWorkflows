@@ -13,6 +13,7 @@
   "provides": {
     "DSL::English::LatentSemanticAnalysisWorkflows": "lib/DSL/English/LatentSemanticAnalysisWorkflows.rakumod",
     "DSL::English::LatentSemanticAnalysisWorkflows::Actions::Bulgarian::Standard": "lib/DSL/English/LatentSemanticAnalysisWorkflows/Actions/Bulgarian/Standard.rakumod",
+    "DSL::English::LatentSemanticAnalysisWorkflows::Actions::English::Standard": "lib/DSL/English/LatentSemanticAnalysisWorkflows/Actions/English/Standard.rakumod",
     "DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon": "lib/DSL/English/LatentSemanticAnalysisWorkflows/Actions/Python/LSAMon.rakumod",
     "DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon": "lib/DSL/English/LatentSemanticAnalysisWorkflows/Actions/R/LSAMon.rakumod",
     "DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon": "lib/DSL/English/LatentSemanticAnalysisWorkflows/Actions/WL/LSAMon.rakumod",

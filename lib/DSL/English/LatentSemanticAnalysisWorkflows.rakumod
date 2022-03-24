@@ -18,12 +18,14 @@ use DSL::Shared::Utilities::CommandProcessing;
 
 use DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
 use DSL::English::LatentSemanticAnalysisWorkflows::Actions::Bulgarian::Standard;
+use DSL::English::LatentSemanticAnalysisWorkflows::Actions::English::Standard;
 use DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon;
 use DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon;
 use DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon;
 
 my %targetToAction{Str} =
     "Bulgarian"        => DSL::English::LatentSemanticAnalysisWorkflows::Actions::Bulgarian::Standard,
+    "English"          => DSL::English::LatentSemanticAnalysisWorkflows::Actions::English::Standard,
     "Python"           => DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon,
     "Python-LSAMon"    => DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon,
     "LSAMon-Python"    => DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon,
@@ -43,6 +45,7 @@ my %targetToAction{Str} =
 
 my Str %targetToSeparator{Str} =
     "Bulgarian"        => "\n",
+    "English"          => "\n",
     "R"                => " %>%\n",
     "R-LSAMon"         => " %>%\n",
     "LSAMon-R"         => " %>%\n",
