@@ -35,7 +35,7 @@ my %targetToAction{Str} =
     "Mathematica"      => DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon,
     "WL"               => DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon,
     "WL-LSAMon"        => DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon,
-    "LSAMon-WL"        => DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon,
+    "LSAMon-WL"        => DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon;
 
 my %targetToAction2{Str} = %targetToAction.grep({ $_.key.contains('-') }).map({ $_.key.subst('-', '::') => $_.value }).Hash;
 %targetToAction = |%targetToAction , |%targetToAction2;
@@ -52,7 +52,7 @@ my Str %targetToSeparator{Str} =
     "LSAMon-Python"    => "",
     "WL"               => " \\[DoubleLongRightArrow]\n",
     "WL-LSAMon"        => " \\[DoubleLongRightArrow]\n",
-    "LSAMon-WL"        => " \\[DoubleLongRightArrow]\n",
+    "LSAMon-WL"        => " \\[DoubleLongRightArrow]\n";
 
 my Str %targetToSeparator2{Str} = %targetToSeparator.grep({ $_.key.contains('-') }).map({ $_.key.subst('-', '::') => $_.value }).Hash;
 %targetToSeparator = |%targetToSeparator , |%targetToSeparator2;
