@@ -32,8 +32,8 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Bulgarian::Standar
 
   # Create command
   method create-command($/) { make $/.values[0].made; }
-  method create-simple($/) { make 'създай латетно семантичен анализатор'; }
-  method create-by-dataset($/) { make 'създай латетно семантичен анализатор с данните: ' ~ $<location-specification> }
+  method create-simple($/) { make 'създай латентно семантичен анализатор'; }
+  method create-by-dataset($/) { make 'създай латентно семантичен анализатор с данните: ' ~ $<location-specification> }
 
   # Make document-term matrix command
   method make-doc-term-matrix-command($/) {
