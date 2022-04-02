@@ -69,12 +69,12 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon
   method data-load-command($/) { make $/.values[0].made; }
   method load-data($/) { make 'LSAMonSetData[' ~ $/.values[0].made ~ ']'; }
   method data-location-spec($/) { make $<dataset-name>.made; }
-  method use-lsa-object($/) { make $<dataset-name>.made; }
+  method use-lsa-object($/) { make $<location-specification>.made; }
 
   # Create command
   method create-command($/) { make $/.values[0].made; }
   method create-simple($/) { make 'LSAMonUnit[]'; }
-  method create-by-dataset($/) { make 'LSAMonUnit[' ~ $<dataset-name> ~ ']'; }
+  method create-by-dataset($/) { make 'LSAMonUnit[' ~ $<location-specification> ~ ']'; }
 
   # Make document-term matrix command
   method make-doc-term-matrix-command($/) {
@@ -105,7 +105,7 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon
   # Data statistics commands.
   method data-statistics-command($/) { make $/.values[0].made; }
   method summarize-data($/) { make 'LSAMonEchoDocumentTermMatrixStatistics[ ]'; }
-  method docs-term-matrix-statistics($/) { make 'LSAMonEchoDocumentTermMatrixStatistics[ ]'; }
+  method docs-term-matrix-statistics($/) { make 'LSAMonEchoDocumentTermMatrixStatistics["LogBase"->10]'; }
 
   # Statistics command
   method statistics-command($/) { make $/.values[0].made; }

@@ -37,12 +37,12 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::English::Standard
   method data-load-command($/) { make $/.values[0].made; }
   method load-data($/) { make 'LSAMonSetData(' ~ $/.values[0].made ~ ')'; }
   method data-location-spec($/) { make $<dataset-name>.made; }
-  method use-lsa-object($/) { make $<dataset-name>.made; }
+  method use-lsa-object($/) { make $<location-specification>.made; }
 
   # Create command
   method create-command($/) { make $/.values[0].made; }
-  method create-simple($/) { make 'LSAMonUnit()'; }
-  method create-by-dataset($/) { make 'LSAMonUnit(' ~ $<dataset-name> ~ ')'; }
+  method create-simple($/) { make 'create LSA object'; }
+  method create-by-dataset($/) { make 'create LSA object with the data: ' ~ $<location-specification>; }
 
   # Make document-term matrix command
   method make-doc-term-matrix-command($/) {
@@ -71,7 +71,9 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::English::Standard
   method data-transformation-command($/) { make 'transform data'; }
 
   # Data statistics commands
-  method data-statistics-command($/) { make 'show document-term matrix statistics'; }
+  method data-statistics-command($/) { make $/.values[0].made; }
+  method summarize-data($/) { make 'show data summary'; }
+  method docs-term-matrix-statistics($/) { make 'show document-term matrix statistics'; }
 
   # Statistics command
   method statistics-command($/) { make 'show statistics'; }

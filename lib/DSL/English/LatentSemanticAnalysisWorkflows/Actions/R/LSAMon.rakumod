@@ -18,7 +18,7 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #   Written by Anton Antonov,
-#   antononcube @ gmai l . c om,
+#   ʇǝu˙oǝʇsod@ǝqnɔuouoʇuɐ
 #   Windermere, Florida, USA.
 #
 #==============================================================================
@@ -78,12 +78,12 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon
   method data-load-command($/) { make $/.values[0].made; }
   method load-data($/) { make 'LSAMonSetData(' ~ $/.values[0].made ~ ')'; }
   method data-location-spec($/) { make $<dataset-name>.made; }
-  method use-lsa-object($/) { make $<dataset-name>.made; }
+  method use-lsa-object($/) { make $<location-specification>.made; }
 
   # Create command
   method create-command($/) { make $/.values[0].made; }
   method create-simple($/) { make 'LSAMonUnit()'; }
-  method create-by-dataset($/) { make 'LSAMonUnit(' ~ $<dataset-name> ~ ')'; }
+  method create-by-dataset($/) { make 'LSAMonUnit(' ~ $<location-specification> ~ ')'; }
 
   # Make document-term matrix command
   method make-doc-term-matrix-command($/) {
@@ -101,7 +101,7 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon
   method doc-term-matrix-stemming-rules($/) { make $/.values[0].made; }
   method stemming-rules-spec($/) { make 'stemWordsQ = ' ~ $/.values[0].made; }
   method no-stemming-rules-spec($/) { make 'stemWordsQ = FALSE'; }
-  method stemming-spec-simple($/) {  make 'stemWordsQ = NULL'; }
+  method stemming-spec-simple($/) {  make 'stemWordsQ = TRUE, stemRules = NULL'; }
 
   method doc-term-matrix-stop-words($/) { make $/.values[0].made; }
   method stop-words-spec($/) { make 'stopWords = ' ~ $/.values[0].made; }
@@ -112,10 +112,12 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon
   method data-transformation-command($/) { make 'LSMonFailure("Not implemented yet.")'; }
 
   # Data statistics commands
-  method data-statistics-command($/) { make 'LSAMonEchoDocumentTermMatrixStatistics( )'; }
+  method data-statistics-command($/) { make $/.values[0].made; }
+  method summarize-data($/) { make 'LSAMonEchoDocumentTermMatrixStatistics()'; }
+  method docs-term-matrix-statistics($/) { make 'LSAMonEchoDocumentTermMatrixStatistics(logBase = 10)'; }
 
   # Statistics command
-  method statistics-command($/) { make 'Not implemented'; }
+  method statistics-command($/) { make 'LSAMonEchoDocumentTermMatrixStatistics(logBase=10)'; }
 
   # LSI command is programmed as a role.
   method lsi-apply-command($/) { make 'LSAMonApplyTermWeightFunctions(' ~ $/.values[0].made ~ ')'; }

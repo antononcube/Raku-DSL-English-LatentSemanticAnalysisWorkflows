@@ -69,12 +69,12 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
   method data-load-command($/) { make $/.values[0].made; }
   method load-data($/) { make '.set_data( obj, ' ~ $/.values[0].made ~ ')'; }
   method data-location-spec($/) { make $<dataset-name>.made; }
-  method use-lsa-object($/) { make $<dataset-name>.made; }
+  method use-lsa-object($/) { make $<location-specification>.made; }
 
   # Create command
   method create-command($/) { make $/.values[0].made; }
   method create-simple($/) { make 'LatentSemanticAnalyzer()'; }
-  method create-by-dataset($/) { make 'LatentSemanticAnalyzer(' ~ $<dataset-name> ~ ')'; }
+  method create-by-dataset($/) { make 'LatentSemanticAnalyzer(' ~ $<location-specification> ~ ')'; }
 
   # Make document-term matrix command
   method make-doc-term-matrix-command($/) {
@@ -103,10 +103,12 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
   method data-transformation-command($/) { make '.failure("Not implemented yet.")'; }
 
   # Data statistics commands
-  method data-statistics-command($/) { make '.echo_document_term_matrix_statistics()'; }
+  method data-statistics-command($/) { make $/.values[0].made; }
+  method summarize-data($/) { make '.echo_document_term_matrix_statistics()'; }
+  method docs-term-matrix-statistics($/) { make '.echo_document_term_matrix_statistics()'; }
 
   # Statistics command
-  method statistics-command($/) { make 'Not implemented'; }
+  method statistics-command($/) { make '.echo_document_term_matrix_statistics()'; }
 
   # LSI command is programmed as a role.
   method lsi-apply-command($/) { make '.apply_term_weight_functions(' ~ $/.values[0].made ~ ')'; }

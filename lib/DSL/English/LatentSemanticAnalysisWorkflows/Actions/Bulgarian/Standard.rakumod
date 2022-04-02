@@ -28,12 +28,12 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Bulgarian::Standar
   method data-load-command($/) { make $/.values[0].made; }
   method load-data($/) { make 'присвои данните: ' ~ $/.values[0].made ~ ')'; }
   method data-location-spec($/) { make $<dataset-name>.made; }
-  method use-lsa-object($/) { make $<dataset-name>.made; }
+  method use-lsa-object($/) { make $<location-specification>.made; }
 
   # Create command
   method create-command($/) { make $/.values[0].made; }
   method create-simple($/) { make 'създай латетно семантичен анализатор'; }
-  method create-by-dataset($/) { make 'създай латетно семантичен анализатор с данните: ' ~ $<dataset-name> }
+  method create-by-dataset($/) { make 'създай латетно семантичен анализатор с данните: ' ~ $<location-specification> }
 
   # Make document-term matrix command
   method make-doc-term-matrix-command($/) {
@@ -62,7 +62,9 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Bulgarian::Standar
   method data-transformation-command($/) { make 'трансформирай данните с: ' ~ $/.Str; }
 
   # Data statistics commands
-  method data-statistics-command($/) { make 'покажи матрицта документи по термини'; }
+  method data-statistics-command($/) { make $/.values[0].made; }
+  method summarize-data($/) { make 'покажи обобщение на данните'; }
+  method docs-term-matrix-statistics($/) { make 'покажи статистики на документната матрица';}
 
   # Statistics command
   method statistics-command($/) { make 'покажи статистиките'; }

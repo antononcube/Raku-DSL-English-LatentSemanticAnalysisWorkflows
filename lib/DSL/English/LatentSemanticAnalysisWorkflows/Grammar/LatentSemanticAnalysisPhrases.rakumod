@@ -99,6 +99,9 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     proto token document-term-phrase {*}
     token document-term-phrase:sym<English> { :i [ <document-noun> | 'doc' | 'item' ] [ '-' | '-vs-' | \h+ ] [ <term-noun> | <word-noun> ]  }
 
+    proto token term-weight-phrase {*}
+    token term-weight-phrase:sym<English> { :i <term-noun> \h* '-'? \h* <weight-noun> }
+
     proto rule doc-term-mat {*}
     rule doc-term-mat:sym<English> {  [ <document-noun> | <item-noun> ] [ <term-noun> | <word-noun> ] <matrix-noun>  }
 

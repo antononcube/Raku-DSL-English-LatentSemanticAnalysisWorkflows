@@ -40,6 +40,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     token topics-noun { 'topics' }
 
     token document-term-phrase {[ <document-noun> | 'doc' | 'item' ] [ '-' | '-vs-' | \h+ ] [ <term-noun> | <word-noun> ] }
+    token term-weight-phrase { <term-noun> \h* '-'? \h* <weight-noun> }
     rule doc-term-mat { [ <document-noun> | <item-noun> ] [ <term-noun> | <word-noun> ] <matrix-noun> }
     rule doc-term-mat-phrase { <document-term-phrase> <matrix-noun> }
     rule ingest-directive { <ingest-verb> | <load-verb> | <use-verb> | <get-verb> }

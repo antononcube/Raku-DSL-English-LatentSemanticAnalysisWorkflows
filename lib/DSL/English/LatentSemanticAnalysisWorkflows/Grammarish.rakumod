@@ -65,18 +65,18 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammarish {
     rule data-reference { <data-noun> | <text-corpus-phrase> <data-noun>? }
     rule load-data-opening { <load-directive> <the-determiner>? <data-reference>}
     rule load-preposition { <for-preposition> | <of-preposition> | <at-preposition> | <from-preposition> }
-    rule location-specification {[ <web-address> | <database-name> ]}
+    rule location-specification { <web-address> | <database-name> | <wl-expr> }
     rule web-address { <variable-name> }
     rule database-name { <variable-name> }
     rule data-kind { <variable-name> }
 
-    rule use-lsa-object { <.use-verb> <.the-determiner>? <.lsa-object> <dataset-name> }
+    rule use-lsa-object { <.use-verb> <.the-determiner>? <.lsa-object> <location-specification> }
 
     # Create command
     rule create-command { <create-simple> | <create-by-dataset> }
     rule create-simple { <create-directive> <a-determiner>? <simple>? <object-noun> <simple-way-phrase>? | <simple> <object-noun> [ <creation-noun> | <making> ] }
     rule create-by-dataset {
-        [ <create-simple> | <create-directive> | <use-directive> ] [ <.by-preposition> | <.with-preposition> | <.from-preposition> ]? <dataset-name> }
+        [ <create-simple> | <create-directive> | <use-directive> ] [ <.by-preposition> | <.with-preposition> | <.from-preposition> ]? [ <location-specification>]}
 
     # Make document-term matrix command
     rule make-doc-term-matrix-command { [ <compute-directive> | <generate-directive> ] [ <.the-determiner> | <.a-determiner> ]? <doc-term-mat-phrase> <doc-term-matrix-parameters-spec>? }
