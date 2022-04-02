@@ -18,7 +18,7 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #   Written by Anton Antonov,
-#   antononcube @ gmai l . c om,
+#   ʇǝu˙oǝʇsod@ǝqnɔuouoʇuɐ,
 #   Windermere, Florida, USA.
 #
 #==============================================================================
@@ -210,11 +210,33 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
   method query-text($/) { make $/.Str; }
 
   # Pipeline command overwrites
+  ## Object
+  method assign-pipeline-object-to($/) { make 'assign_to( ' ~ $/.values[0].made ~ ' )'; }
+
+  ## Value
+  method assign-pipeline-value-to($/) { make '.assign_value_to( ' ~ $/.values[0].made ~ ' )'; }
+  method take-pipeline-value($/) { make '.take_value())'; }
+  method echo-pipeline-value($/) { make '.echo_value()'; }
+  method echo-pipeline-funciton-value($/) { make '.echo_function_value( ' ~ $<pipeline-function-spec>.made ~ ' )'; }
+
+  ## Context
+  method take-pipeline-context($/) { make '.take_context()'; }
+  method echo-pipeline-context($/) { make '.take_context()'; }
+  method echo-pipeline-function-context($/) { make '.echo_function_context( ' ~ $<pipeline-function-spec>.made ~ ' )'; }
+
+  ## Echo messages
+  method echo-command($/) { make 'echo( ' ~ $<echo-message-spec>.made ~ ' )'; }
 
   ## Setup code
   method setup-code-command($/) {
     make 'SETUPCODE' => q:to/SETUPEND/
+    # This first two package load/import commands should be "enough."
+    # The others imports are for tests and experiments
     from LatentSemanticAnalyzer import *
+    import snowballstemmer
+    from LatentSemanticAnalyzer.LatentSemanticAnalyzer import *
+    from LatentSemanticAnalyzer.DocumentTermMatrixConstruction import *
+    from LatentSemanticAnalyzer.DataLoaders import *
     SETUPEND
   }
 }
