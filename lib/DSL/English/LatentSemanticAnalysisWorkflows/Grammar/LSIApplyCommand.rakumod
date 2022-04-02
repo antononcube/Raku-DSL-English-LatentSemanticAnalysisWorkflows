@@ -13,8 +13,8 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LSIApplyCommand {
 
     rule lsi-funcs-simple-list { <lsi-global-func> <lsi-local-func> <lsi-normalizer-func> }
 
-    rule lsi-apply-verb { <apply-verb> 'to'? | <transform-verb> | <use-verb> }
-    rule lsi-apply-phrase { <lsi-apply-verb> <the-determiner>? [ <matrix-noun> | <matrix-entries> ]? <the-determiner>? <lsi-phrase>? <functions>? }
+    rule lsi-apply-verb { <apply-verb> <to-preposition>? | <transform-verb> | <use-verb> }
+    rule lsi-apply-phrase { <lsi-apply-verb> <the-determiner>? [ <matrix-noun> | <matrix-entries> ]? <term-weight-phrase>? <the-determiner>? <lsi-phrase>? <functions>? }
 
     rule lsi-funcs-list { <lsi-func>+ % <list-separator> }
 
