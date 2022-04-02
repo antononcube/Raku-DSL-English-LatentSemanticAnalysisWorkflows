@@ -1,8 +1,10 @@
 
 use DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
 use DSL::Shared::Actions::Bulgarian::PipelineCommand;
+use DSL::Shared::Actions::Bulgarian::Standard::PipelineCommand;
 
 class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Bulgarian::Standard
+        does DSL::Shared::Actions::Bulgarian::Standard::PipelineCommand
         is DSL::Shared::Actions::Bulgarian::PipelineCommand {
 
   # Separator
@@ -50,7 +52,7 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Bulgarian::Standar
 
   method doc-term-matrix-stemming-rules($/) { make $/.values[0].made; }
   method stemming-rules-spec($/) { make 'намиране не стъблата на думите: ' ~ $/.values[0].made; }
-  method no-stemming-rules-spec($/) { make 'без намиране не стъблата на думите'; }
+  method no-stemming-rules-spec($/) { make 'без намиране на стъблата на думите'; }
   method stemming-spec-simple($/) {  make 'автоматично намиране не стъблата на думите'; }
 
   method doc-term-matrix-stop-words($/) { make $/.values[0].made; }
@@ -144,14 +146,14 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Bulgarian::Standar
   # Show thesaurus table command
   method show-thesaurus-table-command($/) {
     if $<thesaurus-words-spec> {
-      make 'покажи таблица със статистическия тълкувене на думите: ' ~ $<thesaurus-words-spec>.made ~ ')';
+      make 'покажи таблица със статистическо тълкуване на думите: ' ~ $<thesaurus-words-spec>.made ~ ')';
     } else {
       make 'покажи таблица със статистическия тълковен речник';
     }
   }
 
   # What are the term NN's command
-  method what-are-the-term-nns($/) { make 'покажи таблица със статистическия тълкувене на думите: ' ~ $<thesaurus-words-spec>.made ~ ')'; }
+  method what-are-the-term-nns($/) { make 'покажи таблица със статистическо тълкуване на думите: ' ~ $<thesaurus-words-spec>.made ~ ')'; }
 
   method thesaurus-words-spec($/) { make $/.values[0].made; }
   method thesaurus-words-list($/) {
@@ -167,24 +169,6 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Bulgarian::Standar
   method query-words-list($/) { make '"' ~ $<variable-name>>>.made.join(' ') ~ '"'; }
   method query-variable($/) { make $/.Str; }
   method query-text($/) { make $/.Str; }
-
-  # Pipeline command overwrites
-  ## Object
-  method assign-pipeline-object-to($/) { make 'присвои лентовия обект на: ' ~ $/.values[0].made; }
-
-  ## Value
-  method assign-pipeline-value-to($/) { make  'присвои лентовата стойност на: ' ~ $/.values[0].made; }
-  method take-pipeline-value($/) { make 'вземи лентовата стойност'; }
-  method echo-pipeline-value($/) { make 'покажи лентовата стойност'; }
-  method echo-pipeline-funciton-value($/) { make 'покажи лентовата стойност трансформирана с: ' ~ $<pipeline-function-spec>.made; }
-
-  ## Context
-  method take-pipeline-context($/) { make 'вземи контекста'; }
-  method echo-pipeline-context($/) { make 'покажи контекста'; }
-  method echo-pipeline-function-context($/) { make 'покажи контекста трансформиран с: ' ~ $<pipeline-function-spec>.made ~ ' )'; }
-
-  ## Echo messages
-  method echo-command($/) { make 'покажи съобщението: ' ~ $<echo-message-spec>.made; }
 
   ## Setup code
   method setup-code-command($/) {
