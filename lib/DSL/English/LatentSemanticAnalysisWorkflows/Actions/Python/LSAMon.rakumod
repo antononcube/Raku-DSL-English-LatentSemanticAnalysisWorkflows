@@ -53,7 +53,7 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
   method TOP($/) { make $/.values[0].made; }
 
   # workflow-command-list
-  method workflow-commands-list($/) { '(' ~ make $/.values>>.made.join("\n") ~ ')'; }
+  method workflow-commands-list($/) { make '(' ~ $/.values>>.made.join(" \n") ~ ')'; }
 
   # workflow-command
   method workflow-command($/) { make $/.values[0].made; }
@@ -211,7 +211,7 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
 
   # Pipeline command overwrites
   ## Object
-  method assign-pipeline-object-to($/) { make 'assign_to( ' ~ $/.values[0].made ~ ' )'; }
+  method assign-pipeline-object-to($/) { make '.assign_to( ' ~ $/.values[0].made ~ ' )'; }
 
   ## Value
   method assign-pipeline-value-to($/) { make '.assign_value_to( ' ~ $/.values[0].made ~ ' )'; }
