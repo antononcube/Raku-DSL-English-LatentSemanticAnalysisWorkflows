@@ -21,6 +21,7 @@ use DSL::English::LatentSemanticAnalysisWorkflows::Actions::Bulgarian::Standard;
 use DSL::English::LatentSemanticAnalysisWorkflows::Actions::English::Standard;
 use DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon;
 use DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon;
+use DSL::English::LatentSemanticAnalysisWorkflows::Actions::Russian::Standard;
 use DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon;
 
 my %targetToAction{Str} =
@@ -33,6 +34,7 @@ my %targetToAction{Str} =
     "LSAMon-R"         => DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon,
     "R-LSAMon"         => DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon,
     "Mathematica"      => DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon,
+    "Russian"          => DSL::English::LatentSemanticAnalysisWorkflows::Actions::Russian::Standard,
     "WL"               => DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon,
     "WL-LSAMon"        => DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon,
     "LSAMon-WL"        => DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon;
@@ -50,6 +52,7 @@ my Str %targetToSeparator{Str} =
     "Python"           => "",
     "Python-LSAMon"    => "",
     "LSAMon-Python"    => "",
+    "Russian"          => "\n",
     "WL"               => " \\[DoubleLongRightArrow]\n",
     "WL-LSAMon"        => " \\[DoubleLongRightArrow]\n",
     "LSAMon-WL"        => " \\[DoubleLongRightArrow]\n";
