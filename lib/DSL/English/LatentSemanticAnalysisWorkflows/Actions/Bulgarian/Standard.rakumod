@@ -96,7 +96,7 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Bulgarian::Standar
   # Topics extraction
   method topics-extraction-command($/) {
     if $<topics-parameters-spec> {
-      make 'добий ' ~ $<topics-spec>.made ~ ' теми, с параметри: ' ~ $<topics-parameters-spec>.made;
+      make 'добий ' ~ $<topics-spec>.made ~ ' теми с параметри: ' ~ $<topics-parameters-spec>.made;
     } else {
       make 'добий ' ~ $<topics-spec>.made ~ ' теми';
     }
