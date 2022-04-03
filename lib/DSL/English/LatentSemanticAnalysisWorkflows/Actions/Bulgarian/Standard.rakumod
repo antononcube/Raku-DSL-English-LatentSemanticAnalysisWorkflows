@@ -51,9 +51,9 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Bulgarian::Standar
   method doc-term-matrix-parameter($/) { make $/.values[0].made; }
 
   method doc-term-matrix-stemming-rules($/) { make $/.values[0].made; }
-  method stemming-rules-spec($/) { make 'намиране не стъблата на думите: ' ~ $/.values[0].made; }
+  method stemming-rules-spec($/) { make 'намиране нa стъблата на думите: ' ~ $/.values[0].made; }
   method no-stemming-rules-spec($/) { make 'без намиране на стъблата на думите'; }
-  method stemming-spec-simple($/) {  make 'автоматично намиране не стъблата на думите'; }
+  method stemming-spec-simple($/) {  make 'автоматично намиране нa стъблата на думите'; }
 
   method doc-term-matrix-stop-words($/) { make $/.values[0].made; }
   method stop-words-spec($/) { make 'спиращи думи: ' ~ $/.values[0].made; }
@@ -77,7 +77,7 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Bulgarian::Standar
   method lsi-funcs-simple-list($/) { make $<lsi-global-func>.made ~ ', ' ~ $<lsi-local-func>.made ~ ", " ~ $<lsi-normalizer-func>; }
   method lsi-funcs-list($/) { make $<lsi-func>>>.made.join(', '); }
   method lsi-func($/) { make $/.values[0].made; }
-  method lsi-global-func($/) { make 'глобална теглова функция: ' ~  $/.values[0].made; }
+  method lsi-global-func($/) { make 'глобално теглова функция: ' ~  $/.values[0].made; }
   method lsi-global-func-idf($/) { make '"IDF"'; }
   method lsi-global-func-entropy($/) { make '"Entropy"'; }
   method lsi-global-func-sum($/) { make '"ColummStochastic"'; }
@@ -119,7 +119,7 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Bulgarian::Standar
   method topics-method-name($/) { make 'метод: ' ~ $/.values[0].made; }
   method topics-method-SVD($/){ make 'Разлагане по Сингулярни Стойности (SVD)'; }
   method topics-method-PCA($/){ make 'Анализ на Главните Компоненти (PCA)'; }
-  method topics-method-NNMF($/){ make 'Разлагане на Неотрицателни Матрични Фактори (NNMF)'; }
+  method topics-method-NNMF($/){ make 'Разлагане по Неотрицателни Матрични Фактори (NNMF)'; }
   method topics-method-ICA($/){ make 'Анализ на Независими Компоненти (ICA)'; }
 
   # Show topics command
