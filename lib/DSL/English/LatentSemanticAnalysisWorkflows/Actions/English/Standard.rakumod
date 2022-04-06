@@ -166,8 +166,8 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::English::Standard
 
   method thesaurus-words-spec($/) { make $/.values[0].made; }
   method thesaurus-words-list($/) {
-    my @words = $/.values[0].made.substr(2,*-1).subst(:g, '"', '').split(', ');
-    make 'c(' ~ map( { '"' ~ $_ ~ '"' }, @words ).join(', ') ~ ')';
+    my @words = $/.values[0].made.substr(1,*-1).subst(:g, '"', '').split(', ');
+    make '[' ~ map( { '"' ~ $_ ~ '"' }, @words ).join(', ') ~ ']';
   }
 
   # Representation commands
