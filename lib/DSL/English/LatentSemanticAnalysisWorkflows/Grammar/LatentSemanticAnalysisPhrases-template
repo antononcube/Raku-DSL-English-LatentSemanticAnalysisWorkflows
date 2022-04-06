@@ -49,6 +49,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     rule lsi-phrase { <latent-adjective> <semantic-adjective> <indexing-noun> | 'lsi' | 'LSI' }
     rule matrix-entries { [ <doc-term-mat-phrase> | <matrix-noun> ]? <entries-noun> }
     rule number-of-terms-phrase { <number-of>? <terms-noun> }
+    rule number-of-synonyms-phrase { <number-of>? <synonyms-noun> [ <per-preposition> [ <word-noun> | <term-noun> ] ]? }
     rule the-outliers { <the-determiner> <outliers> }
 
     # Document term matrix creation related

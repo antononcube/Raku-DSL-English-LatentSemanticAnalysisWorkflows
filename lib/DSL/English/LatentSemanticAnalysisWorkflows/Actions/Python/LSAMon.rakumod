@@ -184,11 +184,13 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
 
   # Show thesaurus table command
   method show-thesaurus-table-command($/) {
-    if $<thesaurus-words-spec> {
-      make '.echo_statistical_thesaurus(words = ' ~ $<thesaurus-words-spec>.made ~ ')';
-    } else {
-      make '.echo_statistical_thesaurus( )';
+    my $res = '.echo_statistical_thesaurus(';
+
+    if $<thesaurus-table-parameters-spec> {
+      $res = $res ~ $<thesaurus-table-parameters-spec>.values>>.made.join(', ') ;
     }
+
+    make $res ~ ')';
   }
 
   # What are the term NN's command
@@ -199,6 +201,12 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
     my @words = $/.values[0].made.substr(1,*-1).subst(:g, '"', '').split(', ');
     make '[' ~ map( { '"' ~ $_ ~ '"' }, @words ).join(', ') ~ ']';
   }
+
+  method thesaurus-table-parameters-spec($/) { make $/.values>>.made; }
+  method thesaurus-table-additional-parameters-spec($/) { make $/.values>>.made; }
+  method thesaurus-table-parameters-list($/) { make $<thesaurus-table-parameter>>>.made.join(', '); }
+  method thesaurus-table-parameter($/) { make $/.values[0].made; }
+  method thesaurus-number-of-synonyms($/) { make 'number_of_nearest_neighbors = ' ~  $<integer-value>.made; }
 
   # Representation commands
   method represent-query-command($/) { make $/.values[0].made; }

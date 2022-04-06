@@ -33,10 +33,10 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     token indexing-noun:sym<English> { :i 'indexing' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'indexing', 2) }> }
 
     proto token item-noun {*}
-    token item-noun:sym<English> { :i 'item' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'item', 2) }> }
+    token item-noun:sym<English> { :i 'item' | ([\w]+) <?{ $0.Str !(elem) <items term> and is-fuzzy-match($0.Str, 'item', 2) }> }
 
     proto token items-noun {*}
-    token items-noun:sym<English> { :i 'items' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'items', 2) }> }
+    token items-noun:sym<English> { :i 'items' | ([\w]+) <?{ $0.Str !(elem) <item terms> and is-fuzzy-match($0.Str, 'items', 2) }> }
 
     proto token latent-adjective {*}
     token latent-adjective:sym<English> { :i 'latent' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'latent', 2) }> }
@@ -45,7 +45,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     token negative-adjective:sym<English> { :i 'negative' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'negative', 2) }> }
 
     proto token nonnegative-adjective {*}
-    token nonnegative-adjective:sym<English> { :i  'non-negative' | 'nonnegative'  }
+    token nonnegative-adjective:sym<English> { :i 'non-negative' | ([\w]+) <?{ $0.Str ne 'nonnegative' and is-fuzzy-match($0.Str, 'non-negative', 2) }> | 'nonnegative' | ([\w]+) <?{ $0.Str ne 'non-negative' and is-fuzzy-match($0.Str, 'nonnegative', 2) }> }
 
     proto token partition-noun {*}
     token partition-noun:sym<English> { :i 'partition' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'partition', 2) }> }
@@ -75,32 +75,30 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     token stop-noun:sym<English> { :i 'stop' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'stop', 2) }> }
 
     proto token synonym-noun {*}
-    token synonym-noun:sym<English> { :i 'synonym' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'synonym', 2) }> }
+    token synonym-noun:sym<English> { :i 'synonym' | ([\w]+) <?{ $0.Str ne 'synonyms' and is-fuzzy-match($0.Str, 'synonym', 2) }> }
 
     proto token synonyms-noun {*}
-    token synonyms-noun:sym<English> { :i 'synonyms' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'synonyms', 2) }> }
+    token synonyms-noun:sym<English> { :i 'synonyms' | ([\w]+) <?{ $0.Str ne 'synonym' and is-fuzzy-match($0.Str, 'synonyms', 2) }> }
 
     proto token term-noun {*}
-    token term-noun:sym<English> { :i 'term' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'term', 2) }> }
+    token term-noun:sym<English> { :i 'term' | ([\w]+) <?{ $0.Str !(elem) <item terms> and is-fuzzy-match($0.Str, 'term', 2) }> }
 
     proto token terms-noun {*}
-    token terms-noun:sym<English> { :i 'terms' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'terms', 2) }> }
+    token terms-noun:sym<English> { :i 'terms' | ([\w]+) <?{ $0.Str !(elem) <items term> and is-fuzzy-match($0.Str, 'terms', 2) }> }
 
     proto token thesaurus-noun {*}
     token thesaurus-noun:sym<English> { :i 'thesaurus' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'thesaurus', 2) }> }
 
     proto token topic-noun {*}
-    token topic-noun:sym<English> { :i 'topic' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'topic', 2) }> }
+    token topic-noun:sym<English> { :i 'topic' | ([\w]+) <?{ $0.Str ne 'topics' and is-fuzzy-match($0.Str, 'topic', 2) }> }
 
     proto token topics-noun {*}
-    token topics-noun:sym<English> { :i 'topics' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'topics', 2) }> }
+    token topics-noun:sym<English> { :i 'topics' | ([\w]+) <?{ $0.Str ne 'topic' and is-fuzzy-match($0.Str, 'topics', 2) }> }
 
 
     proto token document-term-phrase {*}
     token document-term-phrase:sym<English> { :i [ <document-noun> | 'doc' | 'item' ] [ '-' | '-vs-' | \h+ ] [ <term-noun> | <word-noun> ]  }
-
-    proto token term-weight-phrase {*}
-    token term-weight-phrase:sym<English> { :i <term-noun> \h* '-'? \h* <weight-noun> }
+    token term-weight-phrase { <term-noun> \h* '-'? \h* <weight-noun> }
 
     proto rule doc-term-mat {*}
     rule doc-term-mat:sym<English> {  [ <document-noun> | <item-noun> ] [ <term-noun> | <word-noun> ] <matrix-noun>  }
@@ -109,7 +107,11 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     rule doc-term-mat-phrase:sym<English> {  <document-term-phrase> <matrix-noun>  }
 
     proto rule ingest-directive {*}
-    rule ingest-directive:sym<English> {  <ingest-verb> | <load-verb> | <use-verb> | <get-verb>  }
+    rule ingest-directive:sym<English> { 
+        <ingest-verb> |
+        <load-verb> |
+        <use-verb> |
+        <get-verb> }
 
     proto rule lsa-object {*}
     rule lsa-object:sym<English> {  <lsa-phrase>? <object-noun>  }
@@ -126,23 +128,30 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     proto rule number-of-terms-phrase {*}
     rule number-of-terms-phrase:sym<English> {  <number-of>? <terms-noun>  }
 
+    proto rule number-of-synonyms-phrase {*}
+    rule number-of-synonyms-phrase:sym<English> {  <number-of>? <synonyms-noun> [ <per-preposition> [ <word-noun> | <term-noun> ] ]?  }
+
     proto rule the-outliers {*}
     rule the-outliers:sym<English> {  <the-determiner> <outliers>  }
 
     # Document term matrix creation related
 
     proto rule data-element {*}
-    rule data-element:sym<English> { 'sentence' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'sentence', 2) }> | 'paragraph' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'paragraph', 2) }> | 'section' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'section', 2) }> | 'chapter' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'chapter', 2) }> | 'word' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'word', 2) }> }
+    rule data-element:sym<English> { 'sentence' | ([\w]+) <?{ $0.Str ne 'sentences' and is-fuzzy-match($0.Str, 'sentence', 2) }> | 'paragraph' | ([\w]+) <?{ $0.Str ne 'paragraphs' and is-fuzzy-match($0.Str, 'paragraph', 2) }> | 'section' | ([\w]+) <?{ $0.Str ne 'sections' and is-fuzzy-match($0.Str, 'section', 2) }> | 'chapter' | ([\w]+) <?{ $0.Str ne 'chapters' and is-fuzzy-match($0.Str, 'chapter', 2) }> | 'word' | ([\w]+) <?{ $0.Str ne 'words' and is-fuzzy-match($0.Str, 'word', 2) }> }
 
     proto rule data-elements {*}
-    rule data-elements:sym<English> { 'sentences' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'sentences', 2) }> | 'paragraphs' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'paragraphs', 2) }> | 'sections' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'sections', 2) }> | 'chapters' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'chapters', 2) }> | 'words' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'words', 2) }> }
+    rule data-elements:sym<English> { 'sentences' | ([\w]+) <?{ $0.Str ne 'sentence' and is-fuzzy-match($0.Str, 'sentences', 2) }> | 'paragraphs' | ([\w]+) <?{ $0.Str ne 'paragraph' and is-fuzzy-match($0.Str, 'paragraphs', 2) }> | 'sections' | ([\w]+) <?{ $0.Str ne 'section' and is-fuzzy-match($0.Str, 'sections', 2) }> | 'chapters' | ([\w]+) <?{ $0.Str ne 'chapter' and is-fuzzy-match($0.Str, 'chapters', 2) }> | 'words' | ([\w]+) <?{ $0.Str ne 'word' and is-fuzzy-match($0.Str, 'words', 2) }> }
 
 
     proto rule docs {*}
     rule docs:sym<English> {  <document-noun> | <documents-noun> | 'docs' | <item-noun> | <items-noun>  }
 
     proto rule terms-phrase {*}
-    rule terms-phrase:sym<English> {  <word-noun> | <words-noun> | <term-noun> | <terms-noun>  }
+    rule terms-phrase:sym<English> { 
+        <word-noun> |
+        <words-noun> |
+        <term-noun> |
+        <terms-noun> }
 
 
     proto rule stemming-rules-phrase {*}
@@ -170,13 +179,13 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     token frequency-noun:sym<English> { :i 'frequency' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'frequency', 2) }> }
 
     proto token global-adjective {*}
-    token global-adjective:sym<English> { :i 'global' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'global', 2) }> }
+    token global-adjective:sym<English> { :i 'global' | ([\w]+) <?{ $0.Str ne 'local' and is-fuzzy-match($0.Str, 'global', 2) }> }
 
     proto token inverse-adjective {*}
     token inverse-adjective:sym<English> { :i 'inverse' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'inverse', 2) }> }
 
     proto token local-adjective {*}
-    token local-adjective:sym<English> { :i 'local' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'local', 2) }> }
+    token local-adjective:sym<English> { :i 'local' | ([\w]+) <?{ $0.Str ne 'global' and is-fuzzy-match($0.Str, 'local', 2) }> }
 
     proto token normalization-noun {*}
     token normalization-noun:sym<English> { :i 'normalization' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'normalization', 2) }> }
@@ -214,3 +223,4 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     proto rule SVD-phrase {*}
     rule SVD-phrase:sym<English> {  <singular-adjective> <value-noun> <decomposition-noun>  }
 }
+

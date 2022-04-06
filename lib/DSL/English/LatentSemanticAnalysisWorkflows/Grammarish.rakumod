@@ -165,10 +165,17 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammarish {
     rule topics-table-number-of-terms {  <.number-of-terms-phrase> <integer-value> | <integer-value> <.number-of-terms-phrase> }
 
     rule show-thesaurus-command { <show-thesaurus-table-command> | <what-are-the-term-nns> }
-    rule show-thesaurus-table-command { [ <compute-and-display> | <display-directive> ] <statistical>? <thesaurus-noun> <table-noun>? <thesaurus-words-spec>? }
+    rule show-thesaurus-table-command { [ <compute-and-display> | <display-directive> ] <statistical>? <thesaurus-noun> <table-noun>? <thesaurus-table-parameters-spec>? }
+    rule thesaurus-table-parameters-spec { [ <thesaurus-words-spec> | <thesaurus-table-additional-parameters-spec> ]+ }
     rule what-are-the-term-nns { <what-pronoun> <are-verb> <the-determiner>? <top-noun>? <nearest-neighbors-phrase> <thesaurus-words-spec> }
-    rule thesaurus-words-spec { [ <.for-preposition> | <.of-preposition> ] <thesaurus-words-list>}
+    token words-noun-colon { <words-noun> [ \h* ':' ]? }
+    rule thesaurus-words-spec { [ <.for-preposition> | <.of-preposition> ] <.the-determiner>? <.words-noun-colon>? <thesaurus-words-list>}
     rule thesaurus-words-list { <mixed-quoted-variable-names-list> }
+    rule thesaurus-table-additional-parameters-spec { <.using-preposition> <thesaurus-table-parameters-list> }
+    rule thesaurus-table-parameters-list { <thesaurus-table-parameter>+ % <list-separator> }
+    rule thesaurus-table-parameter { <topics-table-number-of-table-columns> | <thesaurus-number-of-synonyms> }
+
+    rule thesaurus-number-of-synonyms { <.number-of-synonyms-phrase> <integer-value> | <integer-value> <.number-of-synonyms-phrase> }
 
     # Representation command
     rule represent-query-command { <represent-query-by-topics> | <represent-query-by-terms> }
