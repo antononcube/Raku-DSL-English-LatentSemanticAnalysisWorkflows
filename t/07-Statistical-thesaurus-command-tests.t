@@ -2,7 +2,7 @@
 use DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
 use Test;
 
-plan 6;
+plan 7;
 
 # Shortcut
 my $pLSAMONCOMMAND = DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
@@ -24,14 +24,18 @@ ok $pLSAMONCOMMAND.parse('show statistical thesaurus of word1, word2, and word3'
         'show statistical thesaurus of word1, word2, and word2';
 
 # 4
+ok $pLSAMONCOMMAND.parse('show statistical thesaurus for the words: word1, word2, and word3' ),
+        'show statistical thesaurus of for the words: word1, word2, and word2';
+
+# 5
 ok $pLSAMONCOMMAND.parse('show statistical thesaurus of word1, word2, and word3 using 12 synonyms per word' ),
         'show statistical thesaurus of word1, word2, and word2 using 12 synonyms per word';
 
-# 5
+# 6
 ok $pLSAMONCOMMAND.parse('what are the top nearest neighbors of word1, word2, and word3' ),
         'what are the top nearest neighbors of word1, word2, and word3';
 
-# 6
+# 7
 ok $pLSAMONCOMMAND.parse('what are the nns of word1, word2, word3' ),
         'what are the nns of word1, word2, word2';
 
