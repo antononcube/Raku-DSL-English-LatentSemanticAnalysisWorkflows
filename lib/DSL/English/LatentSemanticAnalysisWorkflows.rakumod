@@ -62,9 +62,13 @@ my Str %targetToSeparator2{Str} = %targetToSeparator.grep({ $_.key.contains('-')
 
 
 #-----------------------------------------------------------
-proto ToLatentSemanticAnalysisWorkflowCode(Str $command, Str $target = 'R-LSAMon', | ) is export {*}
+proto ToLatentSemanticAnalysisWorkflowCode(Str $command, | ) is export {*}
 
-multi ToLatentSemanticAnalysisWorkflowCode ( Str $command, Str $target = 'R-LSAMon', *%args ) {
+multi ToLatentSemanticAnalysisWorkflowCode( Str $command, :$target = 'R-LSAMon',  *%args ) {
+    return ToLatentSemanticAnalysisWorkflowCode( $command, $target, |%args);
+}
+
+multi ToLatentSemanticAnalysisWorkflowCode( Str $command, Str $target = 'R-LSAMon', *%args ) {
 
     my $lang = %args<language>:exists ?? %args<language> !! 'English';
     $lang = $lang.wordcase;
