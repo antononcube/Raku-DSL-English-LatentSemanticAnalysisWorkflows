@@ -2,7 +2,7 @@
 use DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
 use Test;
 
-plan 3;
+plan 4;
 
 # Shortcut
 my $pLSAMONCOMMAND = DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
@@ -16,10 +16,14 @@ ok $pLSAMONCOMMAND.parse('echo document term matrix statistics'),
         'echo document term matrix statistics';
 
 # 2
+ok $pLSAMONCOMMAND.parse('show statistics of the document term matrix'),
+        'show statistics of the document term matrix';
+
+# 3
 ok $pLSAMONCOMMAND.parse('echo data summary'),
         'echo data summary';
 
-# 3
+# 4
 ok $pLSAMONCOMMAND.parse('summarize the data'),
         'summarize the data';
 
