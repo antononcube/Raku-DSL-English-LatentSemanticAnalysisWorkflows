@@ -115,7 +115,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammarish {
     # <lsi-apply-command>
 
     # Statistics command
-    rule statistics-command { <.statistics-preamble> [ <docs-term-matrix-statistics> | <docs-per-term> | <terms-per-doc> ] }
+    rule statistics-command { <.statistics-preamble> [ <docs-term-matrix-statistics> | <statistics-of-docs-term-matrix> | <docs-per-term> | <terms-per-doc> ] }
     rule statistics-preamble { [ <compute-and-display> | <display-directive> ] [ <the-determiner> | <a-determiner> | <some-determiner> ]? }
     rule docs-per-term { <docs> <per-preposition>? <terms-phrase> <statistic-spec>? }
     rule terms-per-doc { <terms-phrase> <per-preposition>? <docs> <statistic-spec>? }
@@ -123,6 +123,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammarish {
     rule diagram-spec { <histogram> }
     rule summary-spec { <summary> | <statistics-noun> }
     rule docs-term-matrix-statistics { <doc-term-mat-phrase> <statistics-noun> }
+    rule statistics-of-docs-term-matrix { <statistics-noun> [ <of-preposition> | <for-preposition> ] <the-determiner> <doc-term-mat-phrase> }
 
     # Thesaurus command
     rule thesaurus-extraction-command {[ <compute-directive> | <extract-directive> ] <thesaurus-spec>}
