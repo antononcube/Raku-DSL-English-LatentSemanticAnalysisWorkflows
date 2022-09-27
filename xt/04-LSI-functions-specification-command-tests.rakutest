@@ -1,0 +1,18 @@
+
+use DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
+use Test;
+
+plan 1;
+
+# Shortcut
+my $pLSAMONCOMMAND = DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
+
+#-----------------------------------------------------------
+# LSI command tests
+#-----------------------------------------------------------
+
+# 1
+ok $pLSAMONCOMMAND.parse('use the lsi functions idf none cosine'),
+        'use the lsi functions idf none cosine';
+
+done-testing;

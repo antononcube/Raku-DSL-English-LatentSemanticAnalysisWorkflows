@@ -10,19 +10,19 @@ my $pLSAMONCOMMAND = DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
 # Make document-term matrix command tests
 #-----------------------------------------------------------
 
-# 7
+# 1
 ok $pLSAMONCOMMAND.parse('make the document term matrix without stemming and with automatic stop words'),
         'make the document term matrix without stemming and with automatic stop words';
 
-# 11
+# 2
 ok $pLSAMONCOMMAND.parse('make the document term matrix with stemming and without stop words'),
         'make the document term matrix with stemming and without stop words';
 
-# 12
+# 3
 ok $pLSAMONCOMMAND.parse('make the document term matrix without stemming'),
         'make the document term matrix without stemming';
 
-# 13
+# 4
 ok $pLSAMONCOMMAND.parse('make the document term matrix without stop words'),
         'make the document term matrix without stop words';
 

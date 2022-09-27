@@ -44,14 +44,10 @@ ok $pLSAMONCOMMAND.parse('apply lsi functions idf, none, cosine'),
         'apply lsi functions idf, none, cosine';
 
 # 9
-ok $pLSAMONCOMMAND.parse('use the lsi functions idf none cosine'),
-        'use the lsi functions idf none cosine';
-
-# 10
 ok $pLSAMONCOMMAND.parse('apply lsi functions global weight function idf, local term weight function none, normalizer function cosine'),
         'apply lsi functions global weight function idf, local term weight function none, normalizer function cosine';
 
-# 11
+# 10
 ok $pLSAMONCOMMAND.parse('apply the lsi normalization function cosine'),
         'apply the lsi normalization function cosine';
 
