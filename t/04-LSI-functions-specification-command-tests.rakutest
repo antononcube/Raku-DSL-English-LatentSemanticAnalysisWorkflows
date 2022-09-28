@@ -2,7 +2,7 @@
 use DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
 use Test;
 
-plan 11;
+plan 10;
 
 # Shortcut
 my $pLSAMONCOMMAND = DSL::English::LatentSemanticAnalysisWorkflows::Grammar;
