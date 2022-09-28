@@ -64,8 +64,6 @@ END
 say $_.key, "\n", $_.value, "\n"  for ($_ => ToLatentSemanticAnalysisWorkflowCode($command, $_ ) for <R::LSAMon WL::LSAMon Python::LSAMon>);
 ```
 
-The command above should print out R code for the R package `SMRMon-R`, [AAp1].
-
 ### Natural languages
 
 ```perl6

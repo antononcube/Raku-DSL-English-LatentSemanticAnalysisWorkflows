@@ -87,8 +87,6 @@ say $_.key, "\n", $_.value, "\n"  for ($_ => ToLatentSemanticAnalysisWorkflowCod
 # LatentSemanticAnalyzer(textHamlet).make_document_term_matrix( stemming_rules = False, stop_words = None).apply_term_weight_functions(global_weight_func = "IDF", local_weight_func = "None", normalizer_func = "Cosine").extract_topics(number_of_topics = 12, method = "NNMF", max_steps = 12, min_number_of_documents_per_term = 20).echo_topics_table(numberOfTerms = 12).echo_statistical_thesaurus(["king", "castle", "denmark"])
 ```
 
-The command above should print out R code for the R package `SMRMon-R`, [AAp1].
-
 ### Natural languages
 
 ```perl6
