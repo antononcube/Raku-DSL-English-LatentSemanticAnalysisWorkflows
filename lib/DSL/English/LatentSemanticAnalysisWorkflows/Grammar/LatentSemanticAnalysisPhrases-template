@@ -67,7 +67,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     # Topics and thesaurus
     rule statistical-thesaurus-phrase { <statistical>? <thesaurus-noun> }
     rule topics-table-phrase { <topics-noun> <table-noun> | <table-noun> <of-preposition> <topics-noun>}
-
+    rule per-topic-phrase { [ <per-preposition> | <for-preposition> <a-determiner>? ] <one-pronoun>? <topic-noun> }
 
     # LSI specific
     token frequency-noun { 'frequency' }

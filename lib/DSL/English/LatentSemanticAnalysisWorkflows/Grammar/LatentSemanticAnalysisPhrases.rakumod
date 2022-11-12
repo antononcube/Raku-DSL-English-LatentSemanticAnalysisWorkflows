@@ -172,6 +172,8 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
     proto rule topics-table-phrase {*}
     rule topics-table-phrase:sym<English> {  <topics-noun> <table-noun> | <table-noun> <of-preposition> <topics-noun> }
 
+    proto rule per-topic-phrase {*}
+    rule per-topic-phrase:sym<English> { [ <per-preposition> | <for-preposition> <a-determiner>? ] <one-pronoun>? <topic-noun> }
 
     # LSI specific
 

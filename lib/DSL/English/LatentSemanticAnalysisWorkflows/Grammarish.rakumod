@@ -154,7 +154,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammarish {
 
     # Show topics table commands
     rule show-topics-command { <show-topics-table-command> }
-    rule show-topics-table-command { <display-directive> <the-determiner>? <topics-table-phrase> <topics-table-parameters-spec>? }
+    rule show-topics-table-command { <display-directive> [ <a-determiner> | <the-determiner> ]? <topics-table-phrase> <topics-table-parameters-spec>? }
     rule topics-table-parameters-spec { <.using-preposition> <topics-table-parameters-list> }
     rule topics-table-parameters-list { <topics-table-parameter>+ % <list-separator> }
     rule topics-table-parameter { <topics-table-number-of-table-columns> | <topics-table-number-of-terms> }
@@ -162,7 +162,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammarish {
     rule number-of-table-columns-phrase { <number-of>? <table-noun>? <columns> }
     rule topics-table-number-of-table-columns { <.number-of-table-columns-phrase> <integer-value> | <integer-value> <.number-of-table-columns-phrase> }
 
-    rule topics-table-number-of-terms {  <.number-of-terms-phrase> <integer-value> | <integer-value> <.number-of-terms-phrase> }
+    rule topics-table-number-of-terms { [ <.number-of-terms-phrase> <integer-value> | <integer-value> <.number-of-terms-phrase> ] <.per-topic-phrase>}
 
     rule show-thesaurus-command { <show-thesaurus-table-command> | <what-are-the-term-nns> }
     rule show-thesaurus-table-command { [ <compute-and-display> | <display-directive> ] <statistical>? <thesaurus-noun> <table-noun>? <thesaurus-table-parameters-spec>? }
