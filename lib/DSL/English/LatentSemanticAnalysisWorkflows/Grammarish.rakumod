@@ -139,7 +139,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammarish {
 
     rule topics-parameter { <topics-max-iterations> | <topics-initialization> | <min-number-of-documents-per-term> | <topics-method>}
     rule topics-max-iterations { <.max-iterations-phrase> <number-value> | <number-value> <.max-iterations-phrase> }
-    rule topics-initialization {  <random-adjective>? <number-value> <columns> <clusters> }
+    rule topics-initialization {  <random-adjective>? <number-value> <columns> <clusters-noun> }
     rule min-number-of-documents-per-term { <.min-number-of-documents-per-term-phrase> <number-value> | <number-value> <.min-number-of-documents-per-term-phrase> }
     rule min-number-of-documents-per-term-phrase { <minimum> <number-of> <documents-noun> <per-preposition> <terms-phrase> }
     rule topics-method {[ <.the-determiner>? <.method-noun> ]? <topics-method-name> }
@@ -162,7 +162,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammarish {
     rule number-of-table-columns-phrase { <number-of>? <table-noun>? <columns> }
     rule topics-table-number-of-table-columns { <.number-of-table-columns-phrase> <integer-value> | <integer-value> <.number-of-table-columns-phrase> }
 
-    rule topics-table-number-of-terms { [ <.number-of-terms-phrase> <integer-value> | <integer-value> <.number-of-terms-phrase> ] <.per-topic-phrase>}
+    rule topics-table-number-of-terms { [ <.number-of-terms-phrase> <integer-value> | <integer-value> <.number-of-terms-phrase> ] <.per-topic-phrase>? }
 
     rule show-thesaurus-command { <show-thesaurus-table-command> | <what-are-the-term-nns> }
     rule show-thesaurus-table-command { [ <compute-and-display> | <display-directive> ] <statistical>? <thesaurus-noun> <table-noun>? <thesaurus-table-parameters-spec>? }
