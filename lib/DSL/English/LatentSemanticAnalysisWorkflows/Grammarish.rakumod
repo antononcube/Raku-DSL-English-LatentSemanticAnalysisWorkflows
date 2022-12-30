@@ -74,7 +74,7 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammarish {
 
     # Create command
     rule create-command { <create-simple> | <create-by-dataset> }
-    rule create-simple { <create-directive> <a-determiner>? <simple>? <object-noun> <simple-way-phrase>? | <simple> <object-noun> [ <creation-noun> | <making> ] }
+    rule create-simple { <create-directive> <a-determiner>? <simple>? <object-noun> <simple-way-phrase>? | <simple> <object-noun> [ <creation-noun> | <making-noun> ] }
     rule create-by-dataset {
         [ <create-simple> | <create-directive> | <use-directive> ] [ <.by-preposition> | <.with-preposition> | <.from-preposition> ]? <.textual-adjective>? <.data>? [ <location-specification>]}
 
