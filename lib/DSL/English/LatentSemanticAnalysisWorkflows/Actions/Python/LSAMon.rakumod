@@ -176,8 +176,8 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
   method topics-table-parameters-spec($/) { make $/.values[0].made; }
   method topics-table-parameters-list($/) { make $<topics-table-parameter>>>.made.join(', '); }
   method topics-table-parameter($/) { make $/.values[0].made; }
-  method topics-table-number-of-table-columns($/) { make 'numberOfTableColumns = ' ~ $<integer-value>.made; }
-  method topics-table-number-of-terms($/) { make 'numberOfTerms = ' ~  $<integer-value>.made; }
+  method topics-table-number-of-table-columns($/) { make 'number_of_table_columns = ' ~ $<integer-value>.made; }
+  method topics-table-number-of-terms($/) { make 'number_of_terms = ' ~  $<integer-value>.made; }
 
   # Show thesaurus command
   method show-thesaurus-command($/) { make $/.values[0].made;  }
