@@ -200,16 +200,16 @@ role DSL::English::LatentSemanticAnalysisWorkflows::Grammar::LatentSemanticAnaly
 
 
     proto rule global-function-phrase {*}
-    rule global-function-phrase:sym<English> {  <global-adjective> <term-noun> ?<weight-noun>? <function-noun>  }
+    rule global-function-phrase:sym<English> {  <global-adjective> <term-noun>? <weight-adjective>? <function-noun>  }
 
     proto rule join-type-phrase {*}
     rule join-type-phrase:sym<English> {  <join-verb>? <type-noun>  }
 
     proto rule local-function-phrase {*}
-    rule local-function-phrase:sym<English> {  <local-adjective> <term-noun>? <weight-noun>? <function-noun>  }
+    rule local-function-phrase:sym<English> {  <local-adjective> <term-noun>? <weight-adjective>? <function-noun>  }
 
     proto rule normalizer-function-phrase {*}
-    rule normalizer-function-phrase:sym<English> {  [ <normalizer-noun> | <normalizing-noun> | <normalization-noun> ] <term-noun>? <weight-noun>? <function-noun>?  }
+    rule normalizer-function-phrase:sym<English> {  [ <normalizer-noun> | <normalizing-noun> | <normalization-noun> ] <term-noun>? <weight-adjective>? <function-noun>?  }
 
     # Matrix factorization specific
 
