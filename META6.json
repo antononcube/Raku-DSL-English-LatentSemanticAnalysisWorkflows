@@ -1,13 +1,14 @@
 {
   "name": "DSL::English::LatentSemanticAnalysisWorkflows",
   "description": "Latent Semantic Analysis workflows building by natural language commands.",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "perl": "6.d",
   "authors": [
     "Anton Antonov"
   ],
   "auth": "zef:antononcube",
   "depends": [
+    "Clipboard:ver<0.1.1>",
     "DSL::Shared:ver<0.1.4+>"
   ],
   "build-depends": [],
