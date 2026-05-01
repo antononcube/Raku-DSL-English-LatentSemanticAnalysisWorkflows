@@ -1,5 +1,4 @@
-use lib './lib';
-use lib '.';
+#use lib <. lib>;
 use DSL::English::LatentSemanticAnalysisWorkflows;
 
 # Shortcuts
@@ -10,15 +9,24 @@ sub lsa-parse( Str:D $command, Str:D :$rule = 'TOP' ) {
         $pCOMMAND.parse($command, :$rule);
 }
 
+sub lsa-subparse( Str:D $command, Str:D :$rule = 'TOP' ) {
+    $pCOMMAND.subparse($command, :$rule);
+}
+
 sub lsa-interpret( Str:D $command,
-                   Str:D:$rule = 'TOP',
-                   :$actions = DSL::English::LatentSemanticAnalysisWorkflows::Actions::WL::LSAMon.new) {
+                   Str:D:$rule = 'workflow-commands-list',
+                   :$actions = DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon.new) {
         $pCOMMAND.parse( $command, :$rule, :$actions ).made;
 }
 
 #----------------------------------------------------------
 
-#
+#say lsa-subparse('show statistical thesaurus for the words: interested, likely, want using 12 synonyms per word');
+#say lsa-subparse('12 number of synonyms per word', rule =>'thesaurus-number-of-synonyms');
+#say lsa-subparse('12 synonyms per word', rule =>'thesaurus-number-of-synonyms');
+#say lsa-subparse('show statistical thesaurus for the words: interested, likely, want using 12 synonyms per word', rule =>'show-thesaurus-command');
+
+
 #say $pLSAMONCOMMAND.subparse('create document term matrix with stemming rules and with stop words', rule => 'make-doc-term-matrix-command' );
 
 #
@@ -64,17 +72,43 @@ sub lsa-interpret( Str:D $command,
 #show thesaurus table for sing, left, home;
 #';
 
-my $commands = "
-DSL TARGET Python-LSAMon;
-use aTexts;
-make document term matrix with automatic stop words and without stemming rules;
-echo data summary;
-echo context function Keys;
-apply lsi functions global weight function idf, local term weight function none, normalizer function cosine;
-extract 12 topics using method singular value decomposition and max steps 12;
-show topics table with 12 columns and 10 terms;
-show thesaurus table for sing, left, home;
-";
+#my $commands = "
+#include setup code;
+#use aTexts;
+#make document term matrix with automatic stop words and without stemming rules;
+#echo data summary;
+#echo context function Keys;
+#apply lsi functions global weight function idf, local term weight function none, normalizer function cosine;
+#extract 12 topics using method singular value decomposition and max steps 12;
+#show topics table with 12 columns and 10 terms;
+#show thesaurus table for sing, left, home;
+#";
+
+#`(
+my @commands = (
+'DSL MODULE LSAMon;
+create from textHamlet;
+make document term matrix with stemming FALSE and automatic stop words;
+apply LSI functions global weight function IDF, local term weight function TermFrequency, normalizer function Cosine;
+extract 12 topics using method NNMF and max steps 12 and 20 min number of documents per term;
+show topics table with 12 terms;
+show thesaurus table for king, castle, denmark;',
+);
+)
+
+my @commands = (
+"create from textual data `sample(aDocs,20)`;
+create document term matrix with stemming;
+show document term matrix statistics;
+apply term weight functions IDF, None, Cosine;
+extract 60 topics with the method NNMF;
+echo topics table;
+show statistical thesaurus for the words: interested, likely, want using 12 synonyms per word;
+show pipeline value;
+echo context;
+assign object to lsaObj;
+"
+);
 
 #my $commands = "
 #use aJobDescriptions;
@@ -89,18 +123,22 @@ show thesaurus table for sing, left, home;
 #";
 
 
-say "\n", '=' x 60;
-say '-' x 3, 'WL-LSAMon:';
-say '=' x 60;
+#my @targets = <WL-SMRMon R-SMRMon Python-SMRMon Raku-SBR>;
+#my @targets = <Bulgarian English Russian>;
+my @targets = <Python-LSAMon R-LSAMon Raku-LSAMon>;
 
-#say lsa-parse( $commands, rule => 'workflow-commands-list' );
-say lsa-interpret(
-        $commands,
-        rule => 'workflow-commands-list',
-        actions => DSL::English::LatentSemanticAnalysisWorkflows::Actions::R::LSAMon.new);
-#say ToLatentSemanticAnalysisWorkflowCode($commands, 'WL-LSAMon');
+for @commands -> $c {
+    say "\n", '=' x 20;
+    say $c.trim;
+    for @targets -> $t {
+        say '-' x 20;
+        say $t.trim;
+        say '-' x 20;
+        say ToLatentSemanticAnalysisWorkflowCode($c, $t, format => 'hash');
+        #say lsa-interpret($c)
+    }
+}
 
-say '=' x 60;
 
 #my $commandBulgarian = '
 #създай от aText;
