@@ -188,8 +188,8 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Raku::LSAMon
   method echo-pipeline-funciton-value($/) { make '.echo-function-value( ' ~ $<pipeline-function-spec>.made ~ ' )'; }
 
   ## Context
-  method take-pipeline-context($/) { make '.Hash'; }
-  method echo-pipeline-context($/) { make '.Hash'; }
+  method take-pipeline-context($/) { make '.take-context()'; }
+  method echo-pipeline-context($/) { make '.take-context()'; }
   method echo-pipeline-function-context($/) { make '.echo-function-context( ' ~ $<pipeline-function-spec>.made ~ ' )'; }
 
   ## Echo messages
