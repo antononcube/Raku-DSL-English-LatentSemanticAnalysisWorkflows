@@ -16,7 +16,7 @@ The generated pipelines are for the software monads
 ["LSAMon-R"](https://github.com/antononcube/R-packages/tree/master/LSAMon-R) 
 and
 ["LSAMon-WL"](https://github.com/antononcube/MathematicaForPrediction/blob/master/MonadicProgramming/MonadicLatentSemanticAnalysis.m),
-[AA1, AA2], and the object oriented Python implementation [AAp4].
+[AA1, AA2], and the object-oriented Python implementation [AAp4].
 
 --------------
 
@@ -24,13 +24,13 @@ and
 
 Zef ecosystem:
 
-```shell
+```
 zef install DSL::English::LatentSemanticAnalysisWorkflows
 ```
 
 GitHub:
 
-```shell
+```
 zef install https://github.com/antononcube/Raku-DSL-English-LatentSemanticAnalysisWorkflows.git
 ```
 
@@ -64,7 +64,7 @@ show topics table with 12 terms;
 show thesaurus table for king, castle, denmark
 END
 
-say $_.key, "\n", $_.value, "\n"  for ($_ => ToLatentSemanticAnalysisWorkflowCode($command, $_ ) for <R::LSAMon WL::LSAMon Python::LSAMon>);
+say $_.key, "\n", $_.value, "\n"  for ($_ => ToLatentSemanticAnalysisWorkflowCode($command, $_ ) for <R::LSAMon WL::LSAMon Python::LSAMon Raku::LSAMon>);
 ```
 ```
 # R::LSAMon
@@ -84,7 +84,15 @@ say $_.key, "\n", $_.value, "\n"  for ($_ => ToLatentSemanticAnalysisWorkflowCod
 # LSAMonEchoStatisticalThesaurus["Words" -> {"king", "castle", "denmark"}]
 # 
 # Python::LSAMon
-# LatentSemanticAnalyzer(textHamlet).make_document_term_matrix( stemming_rules = False, stop_words = None).apply_term_weight_functions(global_weight_func = "IDF", local_weight_func = "None", normalizer_func = "Cosine").extract_topics(number_of_topics = 12, method = "NNMF", max_steps = 12, min_number_of_documents_per_term = 20).echo_topics_table(numberOfTerms = 12).echo_statistical_thesaurus(["king", "castle", "denmark"])
+# LatentSemanticAnalyzer(textHamlet).make_document_term_matrix( stemming_rules = False, stop_words = None).apply_term_weight_functions(global_weight_func = "IDF", local_weight_func = "None", normalizer_func = "Cosine").extract_topics(number_of_topics = 12, method = "NNMF", max_steps = 12, min_number_of_documents_per_term = 20).echo_topics_table(number_of_terms = 12).echo_statistical_thesaurus(terms = ["king", "castle", "denmark"])
+# 
+# Raku::LSAMon
+# ML::LatentSemanticAnalyzer.new(textHamlet)
+# .make-document-term-matrix( stemming-rules => False, stop-words => Whatever)
+# .apply-term-weight-functions(global-weight-func => "IDF", local-weight-func => "None", normalizer-func => "Cosine")
+# .extract-topics(number-of-topics => 12, method => "NNMF", max-steps => 12, min-number-of-documents-per-term => 20)
+# .echo-topics-table(number-of-terms => 12)
+# .echo-statistical-thesaurus(terms => ["king", "castle", "denmark"])
 ```
 
 ### Natural languages

@@ -16,7 +16,7 @@ The generated pipelines are for the software monads
 ["LSAMon-R"](https://github.com/antononcube/R-packages/tree/master/LSAMon-R) 
 and
 ["LSAMon-WL"](https://github.com/antononcube/MathematicaForPrediction/blob/master/MonadicProgramming/MonadicLatentSemanticAnalysis.m),
-[AA1, AA2], and the object oriented Python implementation [AAp4].
+[AA1, AA2], and the object-oriented Python implementation [AAp4].
 
 --------------
 
@@ -24,13 +24,13 @@ and
 
 Zef ecosystem:
 
-```shell
+```
 zef install DSL::English::LatentSemanticAnalysisWorkflows
 ```
 
 GitHub:
 
-```shell
+```
 zef install https://github.com/antononcube/Raku-DSL-English-LatentSemanticAnalysisWorkflows.git
 ```
 
@@ -61,7 +61,7 @@ show topics table with 12 terms;
 show thesaurus table for king, castle, denmark
 END
 
-say $_.key, "\n", $_.value, "\n"  for ($_ => ToLatentSemanticAnalysisWorkflowCode($command, $_ ) for <R::LSAMon WL::LSAMon Python::LSAMon>);
+say $_.key, "\n", $_.value, "\n"  for ($_ => ToLatentSemanticAnalysisWorkflowCode($command, $_ ) for <R::LSAMon WL::LSAMon Python::LSAMon Raku::LSAMon>);
 ```
 
 ### Natural languages
