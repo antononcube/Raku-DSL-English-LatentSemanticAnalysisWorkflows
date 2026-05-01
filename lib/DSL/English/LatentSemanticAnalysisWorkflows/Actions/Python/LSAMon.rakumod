@@ -154,12 +154,12 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Python::LSAMon
   }
 
   # What are the term NN's command
-  method what-are-the-term-nns($/) { make '.echo_statistical_thesaurus(words = ' ~ $<thesaurus-words-spec>.made ~ ')'; }
+  method what-are-the-term-nns($/) { make '.echo_statistical_thesaurus(terms = ' ~ $<thesaurus-words-spec>.made ~ ')'; }
 
   method thesaurus-words-spec($/) { make $/.values[0].made; }
   method thesaurus-words-list($/) {
     my @words = $/.values[0].made.substr(1,*-1).subst(:g, '"', '').split(', ');
-    make '[' ~ map( { '"' ~ $_ ~ '"' }, @words ).join(', ') ~ ']';
+    make 'terms = [' ~ map( { '"' ~ $_ ~ '"' }, @words ).join(', ') ~ ']';
   }
 
   method thesaurus-table-parameters-spec($/) { make $/.values>>.made; }
