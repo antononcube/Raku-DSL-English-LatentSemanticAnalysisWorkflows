@@ -33,8 +33,8 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Raku::LSAMon
 
   # Create command
   method create-command($/) { make $/.values[0].made; }
-  method create-simple($/) { make 'LatentSemanticAnalyzer.new'; }
-  method create-by-dataset($/) { make 'LatentSemanticAnalyzer.new(' ~ $<location-specification> ~ ')'; }
+  method create-simple($/) { make 'ML::LatentSemanticAnalyzer.new'; }
+  method create-by-dataset($/) { make 'ML::LatentSemanticAnalyzer.new(' ~ $<location-specification> ~ ')'; }
 
   # Make document-term matrix command
   method make-doc-term-matrix-command($/) {
@@ -183,13 +183,13 @@ class DSL::English::LatentSemanticAnalysisWorkflows::Actions::Raku::LSAMon
 
   ## Value
   method assign-pipeline-value-to($/) { make '.assign-value-to( ' ~ $/.values[0].made ~ ' )'; }
-  method take-pipeline-value($/) { make '.take-value())'; }
+  method take-pipeline-value($/) { make '.take-value()'; }
   method echo-pipeline-value($/) { make '.echo-value()'; }
   method echo-pipeline-funciton-value($/) { make '.echo-function-value( ' ~ $<pipeline-function-spec>.made ~ ' )'; }
 
   ## Context
-  method take-pipeline-context($/) { make '.take-context()'; }
-  method echo-pipeline-context($/) { make '.take-context()'; }
+  method take-pipeline-context($/) { make '.Hash'; }
+  method echo-pipeline-context($/) { make '.Hash'; }
   method echo-pipeline-function-context($/) { make '.echo-function-context( ' ~ $<pipeline-function-spec>.made ~ ' )'; }
 
   ## Echo messages
